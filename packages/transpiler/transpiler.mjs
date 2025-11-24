@@ -42,7 +42,7 @@ export function transpiler(input, options = {}) {
   let widgets = [];
 
   walk(ast, {
-    enter(node, parent /* , prop, index */) {
+    enter(node, parent, prop, index) {
       if (isLanguageLiteral(node)) {
         const { name } = node.tag;
         const language = languages.get(name);
@@ -79,6 +79,11 @@ export function transpiler(input, options = {}) {
         return this.replace(miniWithLocation(value, node));
       }
       if (isSliderFunction(node)) {
+        // Check if this slider is assigned to a variable (master control)
+        const isNamed = isNamedSlider(node, parent);
+        const sliderType = isNamed ? 'named-slider' : 'slider';
+        const variableName = isNamed ? getVariableNameFromAssignment(parent) : null;
+
         emitWidgets &&
           widgets.push({
             from: node.arguments[0].start,
@@ -87,9 +92,36 @@ export function transpiler(input, options = {}) {
             min: node.arguments[1]?.value ?? 0,
             max: node.arguments[2]?.value ?? 1,
             step: node.arguments[3]?.value,
-            type: 'slider',
+            type: sliderType,
+            name: variableName,
           });
-        return this.replace(sliderWithLocation(node));
+        return this.replace(sliderWithLocation(node, variableName));
+      }
+      if (isSelectFunction(node)) {
+        // Check if this select is assigned to a variable (always named)
+        const isNamed = isNamedSelect(node, parent);
+        if (!isNamed) {
+          throw new Error('select() must be assigned to a variable: varName = select(defaultValue, [options])');
+        }
+        const variableName = getVariableNameFromAssignment(parent);
+
+        // Extract options from second argument (array literal)
+        const optionsArg = node.arguments[1];
+        let options = [];
+        if (optionsArg && optionsArg.type === 'ArrayExpression') {
+          options = optionsArg.elements.map(el => el.value || el.raw);
+        }
+
+        emitWidgets &&
+          widgets.push({
+            from: node.arguments[0].start,
+            to: node.arguments[0].end,
+            value: node.arguments[0].raw || node.arguments[0].value,
+            options,
+            type: 'named-selector',
+            name: variableName,
+          });
+        return this.replace(selectWithLocation(node, variableName));
       }
       if (isWidgetMethod(node)) {
         const type = node.callee.property.name;
@@ -128,13 +160,41 @@ export function transpiler(input, options = {}) {
     throw new Error('unexpected ast format without body expression');
   }
 
+  // Convert assignment expressions with namedSliderWithID or selectWithID to variable declarations
+  body = body.map((statement, index) => {
+    if (statement.type === 'ExpressionStatement' &&
+        statement.expression.type === 'AssignmentExpression' &&
+        statement.expression.right.type === 'CallExpression' &&
+        (statement.expression.right.callee.name === 'namedSliderWithID' ||
+         statement.expression.right.callee.name === 'selectWithID')) {
+      // Convert: major = namedSliderWithID(...) or sound = selectWithID(...)
+      // To: let major = namedSliderWithID(...) or let sound = selectWithID(...)
+      return {
+        type: 'VariableDeclaration',
+        declarations: [{
+          type: 'VariableDeclarator',
+          id: statement.expression.left,
+          init: statement.expression.right
+        }],
+        kind: 'let'
+      };
+    }
+    return statement;
+  });
+
+  ast.body = body;
+
   // add return to last statement
   if (addReturn) {
-    const { expression } = body[body.length - 1];
-    body[body.length - 1] = {
-      type: 'ReturnStatement',
-      argument: expression,
-    };
+    const lastStatement = body[body.length - 1];
+    const expression = lastStatement.expression || (lastStatement.type === 'VariableDeclaration' ? lastStatement.declarations[0].init : null);
+
+    if (expression) {
+      body[body.length - 1] = {
+        type: 'ReturnStatement',
+        argument: expression,
+      };
+    }
   }
   let output = escodegen.generate(ast);
   if (wrapAsync) {
@@ -186,12 +246,16 @@ function isSliderFunction(node) {
   return node.type === 'CallExpression' && node.callee.name === 'slider';
 }
 
+function isSelectFunction(node) {
+  return node.type === 'CallExpression' && node.callee.name === 'select';
+}
+
 function isWidgetMethod(node) {
   return node.type === 'CallExpression' && widgetMethods.includes(node.callee.property?.name);
 }
 
-function sliderWithLocation(node) {
-  const id = 'slider_' + node.arguments[0].start; // use loc of first arg for id
+function sliderWithLocation(node, variableName) {
+  const id = variableName ? `named_slider_${variableName}` : 'slider_' + node.arguments[0].start; // use variable name for named sliders
   // add loc as identifier to first argument
   // the sliderWithID function is assumed to be sliderWithID(id, value, min?, max?)
   node.arguments.unshift({
@@ -199,8 +263,34 @@ function sliderWithLocation(node) {
     value: id,
     raw: id,
   });
-  node.callee.name = 'sliderWithID';
+  node.callee.name = variableName ? 'namedSliderWithID' : 'sliderWithID';
   return node;
+}
+
+function selectWithLocation(node, variableName) {
+  const id = `named_selector_${variableName}`;
+  // the selectWithID function is selectWithID(id, value, options)
+  node.arguments.unshift({
+    type: 'Literal',
+    value: id,
+    raw: id,
+  });
+  node.callee.name = 'selectWithID';
+  return node;
+}
+
+// Check if slider/select call is being assigned to a variable
+function isNamedSlider(node, parent) {
+  return parent?.type === 'AssignmentExpression' && parent?.left?.type === 'Identifier';
+}
+
+function isNamedSelect(node, parent) {
+  return parent?.type === 'AssignmentExpression' && parent?.left?.type === 'Identifier';
+}
+
+// Extract variable name from assignment expression
+function getVariableNameFromAssignment(parent) {
+  return parent?.left?.name;
 }
 
 export function getWidgetID(widgetConfig) {

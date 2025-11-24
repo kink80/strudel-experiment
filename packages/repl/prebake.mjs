@@ -14,6 +14,7 @@ export async function prebake() {
     import('@strudel/hydra'),
     import('@strudel/soundfonts'),
     import('@strudel/midi'),
+    import('@strudel/recorder'),
     // import('@strudel/xen'),
     // import('@strudel/serial'),
     // import('@strudel/csound'),

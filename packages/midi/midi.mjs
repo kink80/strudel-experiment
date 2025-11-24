@@ -479,6 +479,8 @@ Pattern.prototype.midi = function (midiport, options = {}) {
 
 let listeners = {};
 const refs = {};
+const ccSliderListeners = {};
+const ccSliderMappings = {};
 
 /**
  * MIDI input: Opens a MIDI input port to receive MIDI control change messages.
@@ -525,4 +527,405 @@ export async function midin(input) {
   };
   device.addListener('midimessage', listeners[input]);
   return cc;
+}
+
+/**
+ * MIDI CC Control for Named Sliders: Maps MIDI CC messages to named sliders in code
+ * @param {string | number} input MIDI device name or index defaulting to 0
+ * @param {Object} mappings Object mapping CC numbers to slider names, e.g., { 74: 'cutoff', 1: 'resonance' }
+ * @returns {Object} Control object with methods: setMapping, clearMappings, getMappings, setSliderMetadata
+ * @example
+ * // Basic usage - map CC 74 to cutoff slider, CC 1 to resonance slider
+ * await midicc('MS-20i', { 74: 'cutoff', 1: 'resonance' })
+ *
+ * cutoff = slider(1000, 100, 5000)
+ * resonance = slider(0.5, 0, 1)
+ * s("bd sd").lpf(cutoff).resonance(resonance)
+ *
+ * @example
+ * // Dynamic mapping with configuration
+ * const cc = await midicc('MS-20i')
+ * cc.setMapping(74, 'cutoff', { min: 100, max: 5000 })
+ * cc.setMapping(1, 'resonance', { min: 0, max: 1 })
+ */
+export async function midicc(input, mappings = {}) {
+  if (isPattern(input)) {
+    throw new Error(
+      `midicc: does not accept Pattern as input. Make sure to pass device name with single quotes. Example: midicc('${
+        WebMidi.inputs?.[0]?.name || 'MS-20i'
+      }')`,
+    );
+  }
+
+  const initial = await enableWebMidi();
+  const device = getDevice(input, WebMidi.inputs);
+
+  if (!device) {
+    throw new Error(
+      `midicc: device "${input}" not found.. connected devices: ${getMidiDeviceNamesString(WebMidi.inputs)}`,
+    );
+  }
+
+  if (initial) {
+    const otherInputs = WebMidi.inputs.filter((o) => o.name !== device.name);
+    logger(
+      `MIDI CC enabled! Using "${device.name}". ${
+        otherInputs?.length ? `Also available: ${getMidiDeviceNamesString(otherInputs)}` : ''
+      }`,
+    );
+  }
+
+  // Initialize mappings storage for this input
+  if (!ccSliderMappings[input]) {
+    ccSliderMappings[input] = {};
+  }
+
+  // Metadata storage (min/max for scaling)
+  // Shared across all instances for this input device
+  if (!ccSliderMappings[`${input}_metadata`]) {
+    ccSliderMappings[`${input}_metadata`] = {};
+  }
+  const sliderMetadata = ccSliderMappings[`${input}_metadata`];
+
+  // Apply initial mappings
+  Object.entries(mappings).forEach(([ccNum, config]) => {
+    let sliderName, inputMin = 0, inputMax = 127;
+
+    if (typeof config === 'string') {
+      // Simple mapping: 74: 'cutoff'
+      sliderName = config;
+    } else if (typeof config === 'object') {
+      // Extended mapping: 74: { slider: 'cutoff', inputMin: 0, inputMax: 10 }
+      sliderName = config.slider;
+      inputMin = config.inputMin ?? 0;
+      inputMax = config.inputMax ?? 127;
+    }
+
+    const sliderId = `named_slider_${sliderName}`;
+    ccSliderMappings[input][ccNum] = { sliderId, sliderName, inputMin, inputMax };
+  });
+
+  // Listen for widget metadata from transpiler
+  if (typeof window !== 'undefined') {
+    const metadataHandler = (e) => {
+      if (e.data.type === 'widgets-metadata' && e.data.widgets) {
+        // Update metadata for all named sliders
+        e.data.widgets
+          .filter((w) => w.type === 'named-slider')
+          .forEach((w) => {
+            const sliderId = `named_slider_${w.name}`;
+            sliderMetadata[sliderId] = { min: w.min, max: w.max };
+          });
+      }
+    };
+    window.addEventListener('message', metadataHandler);
+  }
+
+  // Remove old listener if exists
+  if (ccSliderListeners[input]) {
+    device.removeListener('controlchange', ccSliderListeners[input]);
+  }
+
+  // Create control change listener
+  ccSliderListeners[input] = (e) => {
+    const ccNumber = e.controller.number;
+    const ccValue = e.value; // 0-127 from MIDI controller
+    const mapping = ccSliderMappings[input][ccNumber];
+
+    if (!mapping) return;
+
+    const { sliderId, inputMin, inputMax } = mapping;
+
+    // Broadcast for UI learn mode
+    if (typeof window !== 'undefined') {
+      window.postMessage({ type: 'midi-cc-activity', ccNumber, ccValue });
+    }
+
+    // Get metadata for scaling
+    const metadata = sliderMetadata[sliderId];
+    if (!metadata) {
+      console.warn(`MIDI CC ${ccNumber} mapped to ${sliderId}, but no metadata found. Did you evaluate the slider code first?`);
+      return;
+    }
+
+    // First: Normalize CC value from input range to 0-1
+    const normalizedInput = Math.max(0, Math.min(1, (ccValue - inputMin) / (inputMax - inputMin)));
+
+    // Second: Scale normalized value to slider range
+    const scaledValue = metadata.min + normalizedInput * (metadata.max - metadata.min);
+
+    // Update slider via message passing (slider.mjs listens for this)
+    if (typeof window !== 'undefined') {
+      window.postMessage({
+        type: 'named-slider',
+        value: scaledValue,
+        id: sliderId
+      });
+    }
+  };
+
+  device.addListener('controlchange', ccSliderListeners[input]);
+
+  // Return control object with helper methods
+  return {
+    /**
+     * Set a CC to slider mapping
+     * @param {number} ccNumber - MIDI CC number (0-127)
+     * @param {string} sliderName - Slider variable name (without 'named_slider_' prefix)
+     * @param {Object} options - Optional {min, max, inputMin, inputMax}
+     */
+    setMapping(ccNumber, sliderName, options = null) {
+      const sliderId = `named_slider_${sliderName}`;
+      const inputMin = options?.inputMin ?? 0;
+      const inputMax = options?.inputMax ?? 127;
+
+      ccSliderMappings[input][ccNumber] = { sliderId, sliderName, inputMin, inputMax };
+
+      if (options && (options.min !== undefined || options.max !== undefined)) {
+        sliderMetadata[sliderId] = { min: options.min, max: options.max };
+      }
+
+      logger(`Mapped CC ${ccNumber} -> ${sliderName} (input: ${inputMin}-${inputMax})`, options);
+      return this;
+    },
+
+    /**
+     * Remove a CC mapping
+     * @param {number} ccNumber - CC number to unmap
+     */
+    removeMapping(ccNumber) {
+      delete ccSliderMappings[input][ccNumber];
+      return this;
+    },
+
+    /**
+     * Clear all mappings
+     */
+    clearMappings() {
+      ccSliderMappings[input] = {};
+      logger('Cleared all MIDI CC mappings');
+      return this;
+    },
+
+    /**
+     * Get current mappings
+     * @returns {Object} Current CC mappings
+     */
+    getMappings() {
+      return { ...ccSliderMappings[input] };
+    },
+
+    /**
+     * Set slider metadata for CC value scaling
+     * @param {string} sliderName - Slider variable name
+     * @param {number} min - Minimum value
+     * @param {number} max - Maximum value
+     */
+    setSliderMetadata(sliderName, min, max) {
+      const sliderId = `named_slider_${sliderName}`;
+      sliderMetadata[sliderId] = { min, max };
+      return this;
+    },
+
+    /**
+     * Get slider metadata
+     * @returns {Object} Slider metadata
+     */
+    getSliderMetadata() {
+      return { ...sliderMetadata };
+    },
+
+    /**
+     * Get device info
+     */
+    getDevice() {
+      return device;
+    },
+  };
+}
+
+/**
+ * Get all MIDI CC mappings (for UI introspection)
+ */
+export function getMidiCCMappings() {
+  return ccSliderMappings;
+}
+
+// Storage for midiselect
+const ccSelectorListeners = {};
+const ccSelectorMappings = {};
+
+/**
+ * MIDI CC Control for Discrete Selectors: Maps MIDI CC messages to discrete options
+ * @param {string | number} input MIDI device name or index defaulting to 0
+ * @param {Object} mappings Object mapping CC numbers to selector config, e.g., { 16: { selector: 'sound', options: ['saw', 'sin', 'square'] } }
+ * @returns {Object} Control object with methods: setMapping, clearMappings, getMappings
+ * @example
+ * // Map CC 16 to sound selector with 4 options
+ * await midiselect('MS-20 Controller', {
+ *   16: { selector: 'sound', options: ['sawtooth', 'sine', 'square', 'triangle'] }
+ * })
+ *
+ * sound = select("sawtooth", ["sawtooth", "sine", "square", "triangle"])
+ * s("bd sd").sound(sound)
+ */
+export async function midiselect(input, mappings = {}) {
+  if (isPattern(input)) {
+    throw new Error(
+      `midiselect: does not accept Pattern as input. Make sure to pass device name with single quotes. Example: midiselect('${
+        WebMidi.inputs?.[0]?.name || 'MS-20 Controller'
+      }')`,
+    );
+  }
+
+  const initial = await enableWebMidi();
+  const device = getDevice(input, WebMidi.inputs);
+
+  if (!device) {
+    throw new Error(
+      `midiselect: device "${input}" not found.. connected devices: ${getMidiDeviceNamesString(WebMidi.inputs)}`,
+    );
+  }
+
+  if (initial) {
+    const otherInputs = WebMidi.inputs.filter((o) => o.name !== device.name);
+    logger(
+      `MIDI Select enabled! Using "${device.name}". ${
+        otherInputs?.length ? `Also available: ${getMidiDeviceNamesString(otherInputs)}` : ''
+      }`,
+    );
+  }
+
+  // Initialize mappings storage for this input
+  if (!ccSelectorMappings[input]) {
+    ccSelectorMappings[input] = {};
+  }
+
+  // Apply initial mappings
+  Object.entries(mappings).forEach(([ccNum, config]) => {
+    const { selector: selectorName, options } = config;
+    const selectorId = `named_selector_${selectorName}`;
+    ccSelectorMappings[input][Number(ccNum)] = { selectorId, selectorName, options };
+  });
+
+  // Listen for widget metadata from transpiler
+  if (typeof window !== 'undefined') {
+    const metadataHandler = (e) => {
+      if (e.data.type === 'widgets-metadata' && e.data.widgets) {
+        // Update options for all named selectors
+        e.data.widgets
+          .filter((w) => w.type === 'named-selector')
+          .forEach((w) => {
+            const selectorId = `named_selector_${w.name}`;
+            // Find mappings that use this selector and update their options
+            Object.values(ccSelectorMappings).forEach((deviceMappings) => {
+              Object.values(deviceMappings).forEach((mapping) => {
+                if (mapping.selectorId === selectorId) {
+                  mapping.options = w.options;
+                }
+              });
+            });
+          });
+      }
+    };
+    window.addEventListener('message', metadataHandler);
+  }
+
+  // Remove old listener if exists
+  if (ccSelectorListeners[input]) {
+    device.removeListener('controlchange', ccSelectorListeners[input]);
+  }
+
+  // Create control change listener
+  ccSelectorListeners[input] = (e) => {
+    const ccNumber = e.controller.number;
+    const ccValue = e.rawValue; // Use rawValue (0-127), not e.value (0-1)
+    const mapping = ccSelectorMappings[input][ccNumber];
+
+    if (!mapping) return;
+
+    const { selectorId, options } = mapping;
+
+    // Broadcast for UI learn mode
+    if (typeof window !== 'undefined') {
+      window.postMessage({ type: 'midi-cc-activity', ccNumber, ccValue });
+    }
+
+    if (!options || options.length === 0) {
+      console.warn(`MIDI CC ${ccNumber} mapped to ${selectorId}, but no options found. Did you evaluate the select code first?`);
+      return;
+    }
+
+    // Map CC value (0-127) to option index
+    // Divide CC range equally among options
+    const index = Math.min(Math.floor((ccValue / 128) * options.length), options.length - 1);
+    const selectedValue = options[index];
+
+    // Update selector via message passing
+    if (typeof window !== 'undefined') {
+      window.postMessage({
+        type: 'named-selector',
+        value: selectedValue,
+        id: selectorId
+      });
+    }
+  };
+
+  device.addListener('controlchange', ccSelectorListeners[input]);
+
+  // Return control object with helper methods
+  return {
+    /**
+     * Set a CC to selector mapping
+     * @param {number} ccNumber - MIDI CC number (0-127)
+     * @param {string} selectorName - Selector variable name
+     * @param {Array} options - Array of possible values
+     */
+    setMapping(ccNumber, selectorName, options) {
+      const selectorId = `named_selector_${selectorName}`;
+      ccSelectorMappings[input][ccNumber] = { selectorId, selectorName, options };
+      logger(`Mapped CC ${ccNumber} -> ${selectorName} with ${options.length} options`);
+      return this;
+    },
+
+    /**
+     * Remove a CC mapping
+     * @param {number} ccNumber - CC number to unmap
+     */
+    removeMapping(ccNumber) {
+      delete ccSelectorMappings[input][ccNumber];
+      return this;
+    },
+
+    /**
+     * Clear all mappings
+     */
+    clearMappings() {
+      ccSelectorMappings[input] = {};
+      logger('Cleared all MIDI selector mappings');
+      return this;
+    },
+
+    /**
+     * Get current mappings
+     * @returns {Object} Current CC mappings
+     */
+    getMappings() {
+      return { ...ccSelectorMappings[input] };
+    },
+
+    /**
+     * Get device info
+     */
+    getDevice() {
+      return device;
+    },
+  };
+}
+
+/**
+ * Get all MIDI Select mappings (for UI introspection)
+ */
+export function getMidiSelectMappings() {
+  return ccSelectorMappings;
 }

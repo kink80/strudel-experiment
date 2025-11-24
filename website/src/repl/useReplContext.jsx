@@ -229,6 +229,7 @@ export function useReplContext() {
     error,
     editorRef,
     containerRef,
+    widgets: replState.widgets || [],
   };
   return context;
 }

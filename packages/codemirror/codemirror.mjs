@@ -201,11 +201,17 @@ export class StrudelMirror {
         // remember for when highlighting is toggled on
         this.miniLocations = options.meta?.miniLocations;
         this.widgets = options.meta?.widgets;
-        const sliders = this.widgets.filter((w) => w.type === 'slider');
+        const sliders = this.widgets.filter((w) => w.type === 'slider' || w.type === 'named-slider' || w.type === 'named-selector');
         updateSliderWidgets(this.editor, sliders);
-        const widgets = this.widgets.filter((w) => w.type !== 'slider');
+        const widgets = this.widgets.filter((w) => w.type !== 'slider' && w.type !== 'named-slider' && w.type !== 'named-selector');
         updateWidgets(this.editor, widgets);
         updateMiniLocations(this.editor, this.miniLocations);
+
+        // Broadcast widget metadata for MIDI CC (and other uses)
+        if (typeof window !== 'undefined' && this.widgets.length > 0) {
+          window.postMessage({ type: 'widgets-metadata', widgets: this.widgets });
+        }
+
         replOptions?.afterEval?.(options);
         // if no painters are set (.onPaint was not called), then we only need
         // the present moment (for highlighting)
