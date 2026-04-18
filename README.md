@@ -34,6 +34,26 @@ You will need to abide by the terms of the [GNU Affero Public Licence v3](LICENS
 
 Licensing info for the default sound banks can be found over on the [dough-samples](https://github.com/felixroos/dough-samples/blob/main/README.md) repository.
 
+## MIDI Controller Support
+
+Strudel supports MIDI input for live control of patterns via hardware controllers:
+
+- **MIDI CC mapping** — Use `midicc()` to map MIDI CC messages from your controller to named sliders in code. Supports MIDI learn mode and manual CC assignment.
+- **Named sliders** — Define parameters with `slider(default, min, max)` and assign them names (e.g., `cutoff = slider(1000, 100, 5000)`), then control them from a hardware knob or fader.
+- **Master Controls panel** — A floating UI panel that displays all named sliders with both slider and knob views.
+- **MIDI clock sync** — Use `midiclockin()` to sync Strudel's tempo to an external MIDI clock source (24 ppqn). Supports Start/Stop/Continue transport messages, configurable smoothing, and BPM change threshold.
+- **MS-20 patch library** — Pre-built synth patches inspired by the Korg MS-20, including bass, lead, sync, and pad sounds. Import from `@strudel/superdough/ms20-patches.mjs`.
+
+Example:
+
+```js
+await midicc('MS-20i', { 74: 'cutoff', 1: 'resonance' })
+
+cutoff = slider(1000, 100, 5000)
+resonance = slider(0.5, 0, 1)
+s("bd sd").lpf(cutoff).resonance(resonance)
+```
+
 ## Contributing
 
 There are many ways to contribute to this project! See [contribution guide](./CONTRIBUTING.md). You can find the full list of contributors [here](https://codeberg.org/uzu/strudel/activity/contributors).
