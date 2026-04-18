@@ -425,6 +425,46 @@ function chordHandler(context) {
   }
 }
 
+// Cached regex patterns for midiInputHandler
+const MIDI_INPUT_NO_QUOTES_REGEX = /(midiclockin|midin|midicc|midiselect)\(\s*$/;
+const MIDI_INPUT_WITH_QUOTES_REGEX = /(midiclockin|midin|midicc|midiselect)\(\s*['"][^'"]*$/;
+
+function midiInputHandler(context) {
+  // Block completions when no quotes yet
+  let noQuotesContext = context.matchBefore(MIDI_INPUT_NO_QUOTES_REGEX);
+  if (noQuotesContext) {
+    return {
+      from: noQuotesContext.to,
+      options: [],
+    };
+  }
+
+  let match = context.matchBefore(MIDI_INPUT_WITH_QUOTES_REGEX);
+  if (!match) return null;
+
+  const text = match.text;
+  const quoteIdx = Math.max(text.lastIndexOf('"'), text.lastIndexOf("'"));
+  if (quoteIdx === -1) return null;
+  const fragment = text.slice(quoteIdx + 1);
+
+  // Get MIDI inputs from WebMidi (available on globalThis after @strudel/midi loads)
+  const WebMidi = globalThis.WebMidi;
+
+  // If WebMidi isn't enabled yet, trigger it so devices are available on next keystroke
+  if (!WebMidi?.enabled && globalThis.enableWebMidi) {
+    globalThis.enableWebMidi();
+    return { from: match.to, options: [{ label: '(enabling MIDI...)', type: 'text', apply: '' }] };
+  }
+
+  const inputs = WebMidi?.inputs ?? [];
+  const deviceNames = inputs.map((d) => d.name);
+
+  const filtered = deviceNames.filter((name) => name.toLowerCase().includes(fragment.toLowerCase()));
+  const options = filtered.map((name) => ({ label: name, type: 'midi-device' }));
+  const from = match.to - fragment.length;
+  return { from, options };
+}
+
 // Cached regex patterns for fallbackHandler
 const FALLBACK_WORD_REGEX = /\w*/;
 
@@ -446,6 +486,7 @@ const handlers = [
   chordHandler,
   scaleHandler,
   modeHandler,
+  midiInputHandler,
   // this handler *must* be last
   fallbackHandler,
 ];

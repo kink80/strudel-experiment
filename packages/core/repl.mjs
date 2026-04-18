@@ -194,6 +194,9 @@ export function repl({
       setcps: setCps,
       setCpm,
       setcpm: setCpm,
+      start,
+      stop,
+      pause,
     });
   };
 

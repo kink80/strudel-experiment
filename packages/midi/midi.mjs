@@ -5,7 +5,7 @@ This program is free software: you can redistribute it and/or modify it under th
 */
 
 import * as _WebMidi from 'webmidi';
-import { Pattern, isPattern, logger, ref } from '@strudel/core';
+import { Pattern, isPattern, logger, ref, silence } from '@strudel/core';
 import { noteToMidi, getControlName } from '@strudel/core';
 import { Note } from 'webmidi';
 import { scheduleAtTime } from '../superdough/helpers.mjs';
@@ -89,6 +89,7 @@ if (typeof window !== 'undefined') {
     }
     if (e.data === 'strudel-stop') {
       WebMidi.outputs.forEach((output) => output.sendStop());
+      Object.values(clockCleanup).forEach((fn) => fn());
     }
     // cannot start here, since we have no timing info, see sendStart below
   });
@@ -481,6 +482,7 @@ let listeners = {};
 const refs = {};
 const ccSliderListeners = {};
 const ccSliderMappings = {};
+const clockCleanup = {};
 
 /**
  * MIDI input: Opens a MIDI input port to receive MIDI control change messages.
@@ -928,4 +930,139 @@ export async function midiselect(input, mappings = {}) {
  */
 export function getMidiSelectMappings() {
   return ccSelectorMappings;
+}
+
+// Persisted clock state per device, survives re-evaluation
+const clockState = {};
+
+function setupClockListeners(input, device, options) {
+  const { transport = true, smoothing = 48, threshold = 0.5 } = options;
+
+  // Clean up previous listener for this device
+  if (clockCleanup[input]) {
+    clockCleanup[input]();
+  }
+
+  // Reuse existing clock state for this device to avoid tempo spikes on live update
+  if (!clockState[input] || clockState[input].smoothing !== smoothing) {
+    clockState[input] = {
+      timestamps: new Float64Array(smoothing),
+      writeIndex: 0,
+      pulseCount: 0,
+      lastBpm: 0,
+      smoothing,
+    };
+  }
+  const state = clockState[input];
+
+  const onClock = () => {
+    const now = performance.now();
+    state.timestamps[state.writeIndex] = now;
+    state.writeIndex = (state.writeIndex + 1) % smoothing;
+    state.pulseCount++;
+
+    if (state.pulseCount < 2) return;
+
+    const count = Math.min(state.pulseCount, smoothing);
+    const newestIdx = (state.writeIndex - 1 + smoothing) % smoothing;
+    const oldestIdx = (state.writeIndex - count + smoothing) % smoothing;
+    const elapsed = state.timestamps[newestIdx] - state.timestamps[oldestIdx];
+    const avgInterval = elapsed / (count - 1);
+
+    const bpm = 60000 / (avgInterval * 24);
+
+    if (Math.abs(bpm - state.lastBpm) >= threshold && bpm > 20 && bpm < 400) {
+      state.lastBpm = bpm;
+      const cps = bpm / 60 / 4;
+      globalThis.setcps?.(cps);
+    }
+  };
+
+  device.addListener('clock', onClock);
+
+  let onStart, onStop, onContinue;
+  if (transport) {
+    onStart = () => {
+      state.pulseCount = 0;
+      globalThis.start?.();
+      logger('[midiclockin] Start received');
+    };
+    onStop = () => {
+      globalThis.stop?.();
+      logger('[midiclockin] Stop received');
+    };
+    onContinue = () => {
+      globalThis.start?.();
+      logger('[midiclockin] Continue received');
+    };
+    device.addListener('start', onStart);
+    device.addListener('stop', onStop);
+    device.addListener('continue', onContinue);
+  }
+
+  const cleanup = () => {
+    device.removeListener('clock', onClock);
+    if (onStart) device.removeListener('start', onStart);
+    if (onStop) device.removeListener('stop', onStop);
+    if (onContinue) device.removeListener('continue', onContinue);
+    delete clockCleanup[input];
+  };
+
+  clockCleanup[input] = cleanup;
+}
+
+/**
+ * MIDI Clock Input: Syncs strudel's tempo to an external MIDI clock source.
+ * Listens for MIDI clock messages (24 ppqn) and derives BPM to set CPS.
+ * Optionally responds to Start/Stop/Continue transport messages.
+ * @param {string | number} input MIDI device name or index
+ * @param {object} options Configuration options
+ * @param {boolean} [options.transport=true] Whether to respond to Start/Stop/Continue
+ * @param {number} [options.smoothing=48] Number of clock pulses to average over (48 = 2 quarter notes)
+ * @param {number} [options.threshold=0.5] Minimum BPM change to trigger CPS update
+ * @example
+ * // Sync to external MIDI clock
+ * midiclockin('USB MIDI Device')
+ * $: s("bd sd bd sd")
+ * @example
+ * // Sync tempo only, ignore transport
+ * midiclockin('USB MIDI Device', { transport: false })
+ */
+export function midiclockin(input, options = {}) {
+  if (isPattern(input)) {
+    throw new Error(
+      `midiclockin: does not accept Pattern as input. Pass device name with single quotes, e.g. midiclockin('${WebMidi.inputs?.[0]?.name || 'IAC Driver Bus 1'}')`,
+    );
+  }
+
+  // Empty string means "show device selector, don't listen yet"
+  if (input === '') {
+    if (!WebMidi.enabled) {
+      enableWebMidi();
+    }
+    return silence;
+  }
+
+  const startListening = () => {
+    if (!WebMidi.inputs.length) {
+      logger(`[midiclockin] No MIDI inputs found. Connect a device and try again.`, 'warning');
+      return;
+    }
+    const device = getDevice(input ?? undefined, WebMidi.inputs);
+    if (!device) {
+      throw new Error(
+        `midiclockin: device "${input}" not found. Available inputs: ${getMidiDeviceNamesString(WebMidi.inputs)}`,
+      );
+    }
+    logger(`[midiclockin] Listening to "${device.name}" for MIDI clock`);
+    setupClockListeners(input ?? device.name, device, options);
+  };
+
+  if (WebMidi.enabled) {
+    startListening();
+  } else {
+    enableWebMidi().then(startListening);
+  }
+
+  return silence;
 }

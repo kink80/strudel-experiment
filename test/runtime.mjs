@@ -130,6 +130,20 @@ const loadcsound = () => {};
 const midin = () => {
   return (ccNum) => strudel.ref(() => 0); // returns ref with default value 0
 };
+const midicc = () => ({
+  setMapping: () => {},
+  clearMappings: () => {},
+  getMappings: () => ({}),
+  setSliderMetadata: () => {},
+});
+const midiselect = () => ({
+  setMapping: () => {},
+  clearMappings: () => {},
+  getMappings: () => ({}),
+});
+const midiclockin = () => strudel.silence;
+const namedSliderWithID = (id, value) => strudel.ref(() => value);
+const selectWithID = (id, value, options) => strudel.ref(() => value);
 
 const sysex = ([id, data]) => {};
 
@@ -150,6 +164,11 @@ evalScope(
   */
   {
     midin,
+    midicc,
+    midiselect,
+    midiclockin,
+    namedSliderWithID,
+    selectWithID,
     sysex,
     // gist,
     // euclid,
@@ -172,6 +191,7 @@ evalScope(
 // TBD: use transpiler to support labeled statements
 export const queryCode = async (code, cycles = 1) => {
   const { pattern } = await evaluate(code);
+  if (!pattern) return [];
   const haps = pattern.sortHapsByPart().queryArc(0, cycles);
   return haps.map((h) => h.show(true));
 };

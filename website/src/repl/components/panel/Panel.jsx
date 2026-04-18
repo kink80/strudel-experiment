@@ -8,7 +8,6 @@ import { SoundsTab } from './SoundsTab';
 import { useLogger } from '../useLogger';
 import { WelcomeTab } from './WelcomeTab';
 import { PatternsTab } from './PatternsTab';
-import { RecorderTab } from './RecorderTab';
 import { ChevronLeftIcon, XMarkIcon } from '@heroicons/react/16/solid';
 
 const TAURI = typeof window !== 'undefined' && window.__TAURI__;
@@ -79,7 +78,6 @@ export function VerticalPanel({ context }) {
 const tabNames = {
   welcome: 'intro',
   patterns: 'patterns',
-  recorder: 'recorder',
   sounds: 'sounds',
   reference: 'reference',
   console: 'console',
@@ -122,8 +120,6 @@ function PanelContent({ context, tab }) {
   switch (tab) {
     case tabNames.patterns:
       return <PatternsTab context={context} />;
-    case tabNames.recorder:
-      return <RecorderTab context={context} />;
     case tabNames.console:
       return <ConsoleTab />;
     case tabNames.sounds:

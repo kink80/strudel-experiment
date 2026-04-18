@@ -1,3 +1,4 @@
+import { useState, useEffect, useRef, useCallback } from 'react';
 import PlayCircleIcon from '@heroicons/react/20/solid/PlayCircleIcon';
 import StopCircleIcon from '@heroicons/react/20/solid/StopCircleIcon';
 import cx from '@src/cx.mjs';
@@ -6,6 +7,56 @@ import '../Repl.css';
 
 const { BASE_URL } = import.meta.env;
 const baseNoTrailing = BASE_URL.endsWith('/') ? BASE_URL.slice(0, -1) : BASE_URL;
+
+function TempoIndicator({ context }) {
+  const [bpm, setBpm] = useState(null);
+  const [beat, setBeat] = useState(false);
+  const animRef = useRef(null);
+  const lastBeatRef = useRef(-1);
+  const beatsPerCycle = 4;
+
+  const getScheduler = useCallback(
+    () => context?.editorRef?.current?.repl?.scheduler,
+    [context],
+  );
+
+  useEffect(() => {
+    let running = true;
+
+    const tick = () => {
+      if (!running) return;
+      const scheduler = getScheduler();
+      if (scheduler?.started) {
+        const newBpm = Math.round(scheduler.cps * 60 * beatsPerCycle);
+        setBpm((prev) => (prev !== newBpm ? newBpm : prev));
+        const cyclePos = scheduler.now();
+        const beatIndex = ((cyclePos * beatsPerCycle) | 0);
+        if (beatIndex !== lastBeatRef.current) {
+          lastBeatRef.current = beatIndex;
+          setBeat(true);
+          setTimeout(() => setBeat(false), 80);
+        }
+      }
+      animRef.current = requestAnimationFrame(tick);
+    };
+
+    animRef.current = requestAnimationFrame(tick);
+    return () => {
+      running = false;
+      cancelAnimationFrame(animRef.current);
+    };
+  }, [getScheduler]);
+
+  if (bpm == null) return null;
+
+  return (
+    <div className="flex items-center space-x-1.5 px-2 text-foreground opacity-70 text-sm font-mono">
+      <div className={cx('w-1.5 h-1.5 rounded-full', beat ? 'bg-foreground' : 'bg-foreground/25')} />
+      <span>{bpm}</span>
+      <span className="text-xs opacity-50">bpm</span>
+    </div>
+  );
+}
 
 export function Header({ context, embedded = false }) {
   const { started, pending, isDirty, activeCode, handleTogglePlay, handleEvaluate, handleShuffle, handleShare } =
@@ -61,6 +112,7 @@ export function Header({ context, embedded = false }) {
             </div>
           )}
         </h1>
+        {!isZen && started && <TempoIndicator context={context} />}
       </div>
       {!isZen && !isButtonRowHidden && (
         <div className="flex max-w-full overflow-auto text-foreground px-1 md:px-2">
