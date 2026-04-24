@@ -47,6 +47,9 @@ export function SoundsTab() {
     if (soundsFilter === soundFilterType.WAVETABLES) {
       return filtered.filter(([_, { data }]) => data.type === 'wavetable');
     }
+    if (soundsFilter === soundFilterType.MS20) {
+      return filtered.filter(([_, { data }]) => data.tag === 'ms20');
+    }
     //TODO: tidy this up, it does not need to be saved in settings
     if (soundsFilter === 'importSounds') {
       return [];
@@ -79,6 +82,7 @@ export function SoundsTab() {
             drums: 'drum-machines',
             synths: 'Synths',
             wavetables: 'Wavetables',
+            ms20: 'MS-20',
             user: 'User',
             importSounds: 'import-sounds',
           }}

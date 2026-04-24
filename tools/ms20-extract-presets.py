@@ -86,7 +86,9 @@ def parse_fxp(path):
 
     # FXP header
     chunk = data[60:]
-    name = chunk[16:48].split(b'\x00')[0].decode('ascii', errors='replace').strip()
+    # Use filename as preset name — chunk name field is unreliable
+    # (Factory 2 presets have stale names from overwritten presets)
+    name = os.path.splitext(os.path.basename(path))[0].strip()
 
     # 84 float parameters
     params = []

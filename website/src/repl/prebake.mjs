@@ -1,5 +1,5 @@
 import { Pattern, noteToMidi, valueToMidi } from '@strudel/core';
-import { aliasBank, registerSynthSounds, registerZZFXSounds, samples } from '@strudel/webaudio';
+import { aliasBank, registerSynthSounds, registerMS20FactoryPresets, registerZZFXSounds, samples } from '@strudel/webaudio';
 import { registerSamplesFromDB } from './idbutils.mjs';
 import './piano.mjs';
 import './files.mjs';
@@ -12,7 +12,7 @@ export async function prebake() {
   // https://archive.org/details/SalamanderGrandPianoV3
   // License: CC-by http://creativecommons.org/licenses/by/3.0/ Author: Alexander Holm
   await Promise.all([
-    registerSynthSounds(),
+    Promise.resolve(registerSynthSounds()).then(() => registerMS20FactoryPresets()),
     registerZZFXSounds(),
     registerSamplesFromDB(),
     //registerSoundfonts(),

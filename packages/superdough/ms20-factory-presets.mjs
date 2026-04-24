@@ -745,7 +745,7 @@ export const ms20_simple_sq_bass = (pat) => pat
   .modmatrix([{src:21, dst:10}])
   .gain(0.6);
 
-export const ms20_snake_lead_bass = (pat) => pat
+export const ms20_snake_leadbass = (pat) => pat
   .s("ms20")
   .vco1wave("saw").vco1scale(0.5).vco1level(0.333)
   .vco2wave("tri").vco2level(0.5).vco2tune(-12.0)
@@ -998,7 +998,7 @@ export const ms20_yoi_choir = (pat) => pat
   .modmatrix([{src:17, dst:22}, {src:1, dst:12}, {src:0, dst:16}, {src:10, dst:21}, {src:14, dst:27}])
   .gain(0.6);
 
-export const ms20_sample_hold_factory2 = (pat) => pat
+export const ms20_n42thefloor = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(0.5).vco1level(0.333)
   .vco2wave("tri").vco2scale(0.25).vco2level(0.5).vco2tune(-12.0)
@@ -1010,7 +1010,7 @@ export const ms20_sample_hold_factory2 = (pat) => pat
   .modmatrix([{src:2, dst:6}, {src:26, dst:7}, {src:4, dst:10}, {src:32, dst:18}])
   .gain(0.6);
 
-export const ms20_init_program = (pat) => pat
+export const ms20_n5th_kiwi_juice = (pat) => pat
   .s("ms20")
   .vco1wave("square").vco1scale(0.25).vco1level(0.333)
   .vco2wave("tri").vco2level(0.5).vco2tune(-12.0)
@@ -1026,7 +1026,7 @@ export const ms20_init_program = (pat) => pat
   .modmatrix([{src:14, dst:27}, {src:12, dst:10}, {src:17, dst:16}])
   .gain(0.6);
 
-export const ms20_a_little_flutter_factory2 = (pat) => pat
+export const ms20_n8_bit_evolver = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(2.0).vco1level(0.333).vco1pw(0.755)
   .vco2wave("sine").vco2scale(2.0).vco2level(0.5).vco2tune(-12.0)
@@ -1042,7 +1042,7 @@ export const ms20_a_little_flutter_factory2 = (pat) => pat
   .modmatrix([{src:6, dst:0}, {src:21, dst:10}])
   .gain(0.6);
 
-export const ms20_init_program_factory2 = (pat) => pat
+export const ms20_ai_opera = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(0.5).vco1level(1.0)
   .vco2wave("sine").vco2level(0.5).vco2tune(-12.0)
@@ -1057,7 +1057,7 @@ export const ms20_init_program_factory2 = (pat) => pat
   .pitcheg(14.88)
   .gain(0.6);
 
-export const ms20_synthetic_snore_factory2 = (pat) => pat
+export const ms20_aftertaste_keys = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1level(0.667).vco1pw(0.088)
   .vco2wave("sine").vco2level(0.5).vco2tune(-12.0)
@@ -1070,7 +1070,7 @@ export const ms20_synthetic_snore_factory2 = (pat) => pat
   .portamento(0.083)
   .gain(0.6);
 
-export const ms20_init_program_factory2_2 = (pat) => pat
+export const ms20_aggro_salsa_lead = (pat) => pat
   .s("ms20")
   .vco1wave("saw").vco1level(0.0)
   .vco2wave("sine").vco2scale(0.5).vco2level(0.5).vco2tune(-1.92)
@@ -1084,7 +1084,7 @@ export const ms20_init_program_factory2_2 = (pat) => pat
   .portamento(2.917)
   .gain(0.6);
 
-export const ms20_init_program_factory2_3 = (pat) => pat
+export const ms20_angry_guitar = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(0.5).vco1level(0.333).vco1pw(0.167)
   .vco2wave("sine").vco2scale(0.5).vco2level(0.508).vco2tune(-12.0)
@@ -1100,7 +1100,7 @@ export const ms20_init_program_factory2_3 = (pat) => pat
   .modmatrix([{src:15, dst:3}, {src:9, dst:8}])
   .gain(0.6);
 
-export const ms20_synthetic_snore_factory2_2 = (pat) => pat
+export const ms20_bendy_pad = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(0.5).vco1level(0.667)
   .vco2wave("tri").vco2level(0.5).vco2tune(-6.48)
@@ -1115,7 +1115,7 @@ export const ms20_synthetic_snore_factory2_2 = (pat) => pat
   .portamento(0.083)
   .gain(0.6);
 
-export const ms20_init_program_factory2_4 = (pat) => pat
+export const ms20_blurred_memories = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(0.25).vco1level(0.667).vco1pw(0.382)
   .vco2wave("square").vco2scale(0.5).vco2level(0.506).vco2tune(-12.0)
@@ -1129,7 +1129,7 @@ export const ms20_init_program_factory2_4 = (pat) => pat
   .modmatrix([{src:6, dst:17}, {src:3, dst:23}, {src:12, dst:8}, {src:14, dst:27}, {src:0, dst:16}])
   .gain(0.6);
 
-export const ms20_solid_bass_factory2 = (pat) => pat
+export const ms20_butter_saw = (pat) => pat
   .s("ms20")
   .vco1wave("saw").vco1scale(0.5).vco1level(0.333)
   .vco2wave("tri").vco2scale(0.5).vco2level(0.526).vco2tune(-12.0)
@@ -1143,7 +1143,7 @@ export const ms20_solid_bass_factory2 = (pat) => pat
   .portamento(2.917)
   .gain(0.6);
 
-export const ms20_init_program_factory2_5 = (pat) => pat
+export const ms20_buzz_kill_bass = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(2.0).vco1level(0.0)
   .vco2wave("tri").vco2level(0.5).vco2tune(-12.0)
@@ -1157,7 +1157,7 @@ export const ms20_init_program_factory2_5 = (pat) => pat
   .pitcheg(1.68)
   .gain(0.6);
 
-export const ms20_synthetic_snore_factory2_3 = (pat) => pat
+export const ms20_chill_flange_pad = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(0.5).vco1level(0.667).vco1pw(0.373)
   .vco2wave("tri").vco2level(0.5).vco2tune(-8.16)
@@ -1172,7 +1172,7 @@ export const ms20_synthetic_snore_factory2_3 = (pat) => pat
   .modmatrix([{src:10, dst:21}, {src:0, dst:27}])
   .gain(0.6);
 
-export const ms20_synthetic_snore_factory2_4 = (pat) => pat
+export const ms20_clicky_pulse_arp = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1level(0.333).vco1pw(0.196)
   .vco2wave("saw").vco2level(0.5).vco2tune(-4.8)
@@ -1186,7 +1186,7 @@ export const ms20_synthetic_snore_factory2_4 = (pat) => pat
   .modmatrix([{src:19, dst:2}, {src:7, dst:17}, {src:1, dst:4}])
   .gain(0.6);
 
-export const ms20_ring_mod_bell_factory2 = (pat) => pat
+export const ms20_computer_bell = (pat) => pat
   .s("ms20")
   .vco1wave("square").vco1level(1.0)
   .vco2wave("saw").vco2scale(2.0).vco2level(0.5).vco2tune(-12.0)
@@ -1201,7 +1201,7 @@ export const ms20_ring_mod_bell_factory2 = (pat) => pat
   .modmatrix([{src:31, dst:2}, {src:24, dst:7}, {src:4, dst:32}, {src:14, dst:27}, {src:12, dst:1}, {src:0, dst:16}])
   .gain(0.6);
 
-export const ms20_init_program_factory2_6 = (pat) => pat
+export const ms20_cooped_up_king_lead = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1level(0.667)
   .vco2wave("saw").vco2level(0.5).vco2tune(-2.88)
@@ -1217,7 +1217,7 @@ export const ms20_init_program_factory2_6 = (pat) => pat
   .modmatrix([{src:12, dst:1}, {src:14, dst:27}, {src:0, dst:16}])
   .gain(0.6);
 
-export const ms20_init_program_factory2_7 = (pat) => pat
+export const ms20_cruise = (pat) => pat
   .s("ms20")
   .vco1wave("square").vco1level(0.667).vco1pw(0.147)
   .vco2wave("square").vco2level(0.5).vco2tune(-12.0)
@@ -1232,7 +1232,7 @@ export const ms20_init_program_factory2_7 = (pat) => pat
   .modmatrix([{src:14, dst:27}, {src:12, dst:1}, {src:13, dst:16}])
   .gain(0.6);
 
-export const ms20_synthetic_snore_factory2_5 = (pat) => pat
+export const ms20_dee_tuned = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(0.5).vco1level(0.333)
   .vco2wave("tri").vco2level(0.5).vco2tune(-7.92)
@@ -1248,7 +1248,7 @@ export const ms20_synthetic_snore_factory2_5 = (pat) => pat
   .modmatrix([{src:18, dst:33}, {src:5, dst:10}])
   .gain(0.6);
 
-export const ms20_ring_mod_fall_factory2 = (pat) => pat
+export const ms20_disco_pow = (pat) => pat
   .s("ms20")
   .vco1wave("square").vco1scale(0.25).vco1level(0.333).vco1pw(0.137)
   .vco2wave("sine").vco2scale(0.5).vco2level(0.5).vco2tune(-12.0)
@@ -1261,7 +1261,7 @@ export const ms20_ring_mod_fall_factory2 = (pat) => pat
   .portamento(5.0)
   .gain(0.6);
 
-export const ms20_init_program_factory2_8 = (pat) => pat
+export const ms20_distortion_funk = (pat) => pat
   .s("ms20")
   .vco1wave("saw").vco1level(0.0).vco1pw(0.245)
   .vco2wave("tri").vco2level(0.508).vco2tune(-12.0)
@@ -1275,7 +1275,7 @@ export const ms20_init_program_factory2_8 = (pat) => pat
   .modmatrix([{src:9, dst:8}, {src:30, dst:3}])
   .gain(0.6);
 
-export const ms20_synthetic_snore_factory2_6 = (pat) => pat
+export const ms20_doppler = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1level(0.667)
   .vco2wave("saw").vco2scale(2.0).vco2level(0.5).vco2tune(-2.64)
@@ -1291,7 +1291,7 @@ export const ms20_synthetic_snore_factory2_6 = (pat) => pat
   .portamento(0.083)
   .gain(0.6);
 
-export const ms20_synthetic_snore_factory2_7 = (pat) => pat
+export const ms20_dott_pluck = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(0.5).vco1level(0.667)
   .vco2wave("tri").vco2level(0.5).vco2tune(-7.92)
@@ -1306,7 +1306,7 @@ export const ms20_synthetic_snore_factory2_7 = (pat) => pat
   .modmatrix([{src:0, dst:10}, {src:17, dst:1}])
   .gain(0.6);
 
-export const ms20_synthetic_snore_factory2_8 = (pat) => pat
+export const ms20_drone_generator = (pat) => pat
   .s("ms20")
   .vco1wave("square").vco1level(0.333).vco1pw(0.157)
   .vco2wave("saw").vco2level(0.5).vco2tune(-5.76)
@@ -1322,7 +1322,7 @@ export const ms20_synthetic_snore_factory2_8 = (pat) => pat
   .modmatrix([{src:3, dst:30}, {src:2, dst:29}, {src:13, dst:1}, {src:27, dst:5}, {src:17, dst:31}, {src:26, dst:6}, {src:34, dst:4}, {src:0, dst:7}])
   .gain(0.6);
 
-export const ms20_init_program_factory2_9 = (pat) => pat
+export const ms20_drone_looper = (pat) => pat
   .s("ms20")
   .vco1wave("saw").vco1level(0.667).vco1pw(0.667)
   .vco2wave("saw").vco2scale(0.5).vco2level(0.508).vco2tune(-12.0)
@@ -1338,7 +1338,7 @@ export const ms20_init_program_factory2_9 = (pat) => pat
   .modmatrix([{src:12, dst:1}, {src:14, dst:27}, {src:3, dst:16}, {src:18, dst:28}])
   .gain(0.6);
 
-export const ms20_morphing_arpline_factory2 = (pat) => pat
+export const ms20_dub_sub = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(0.25).vco1level(0.333).vco1pw(0.039)
   .vco2wave("tri").vco2scale(0.5).vco2level(0.5).vco2tune(-12.0)
@@ -1350,7 +1350,7 @@ export const ms20_morphing_arpline_factory2 = (pat) => pat
   .eg2attack(0.0437).eg2decay(0.001).eg2sustain(1.0).eg2release(0.001)
   .gain(0.6);
 
-export const ms20_synthetic_snore_factory2_9 = (pat) => pat
+export const ms20_dusk_mite_bass = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(0.25).vco1level(0.333).vco1pw(0.128)
   .vco2wave("tri").vco2scale(0.5).vco2level(0.5).vco2tune(-12.0)
@@ -1364,7 +1364,7 @@ export const ms20_synthetic_snore_factory2_9 = (pat) => pat
   .portamento(0.083)
   .gain(0.6);
 
-export const ms20_init_program_factory2_10 = (pat) => pat
+export const ms20_edm_lead = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(0.5).vco1level(0.667)
   .vco2wave("tri").vco2scale(0.5).vco2level(0.508).vco2tune(-12.0)
@@ -1380,7 +1380,7 @@ export const ms20_init_program_factory2_10 = (pat) => pat
   .modmatrix([{src:14, dst:27}, {src:5, dst:16}, {src:12, dst:1}])
   .gain(0.6);
 
-export const ms20_sample_hold_factory2_2 = (pat) => pat
+export const ms20_ear_muff_pluck = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1level(0.333)
   .vco2wave("tri").vco2scale(0.5).vco2level(0.5).vco2tune(-12.0)
@@ -1393,7 +1393,7 @@ export const ms20_sample_hold_factory2_2 = (pat) => pat
   .mgfreq(0.14).mgwave("saw")
   .gain(0.6);
 
-export const ms20_init_program_factory2_11 = (pat) => pat
+export const ms20_elastic_soul_poly = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1level(0.0).vco1pw(0.265)
   .vco2wave("saw").vco2level(0.5).vco2tune(-12.0)
@@ -1410,7 +1410,7 @@ export const ms20_init_program_factory2_11 = (pat) => pat
   .modmatrix([{src:17, dst:10}, {src:9, dst:16}, {src:14, dst:27}, {src:30, dst:12}])
   .gain(0.6);
 
-export const ms20_synthetic_snore_factory2_10 = (pat) => pat
+export const ms20_env_sign_pad = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(0.25).vco1level(0.667)
   .vco2wave("tri").vco2level(0.5).vco2tune(-12.0)
@@ -1425,7 +1425,7 @@ export const ms20_synthetic_snore_factory2_10 = (pat) => pat
   .modmatrix([{src:10, dst:21}, {src:14, dst:27}, {src:0, dst:16}, {src:1, dst:12}])
   .gain(0.6);
 
-export const ms20_init_program_factory2_12 = (pat) => pat
+export const ms20_eric = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1level(0.333)
   .vco2wave("tri").vco2scale(0.5).vco2level(0.508).vco2tune(-12.0)
@@ -1437,7 +1437,7 @@ export const ms20_init_program_factory2_12 = (pat) => pat
   .eg2attack(0.001).eg2decay(0.001).eg2sustain(1.0).eg2release(0.001)
   .gain(0.6);
 
-export const ms20_init_program_factory2_13 = (pat) => pat
+export const ms20_expressive_lead = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(0.5).vco1level(0.667)
   .vco2wave("tri").vco2level(0.508).vco2tune(-12.0)
@@ -1452,7 +1452,7 @@ export const ms20_init_program_factory2_13 = (pat) => pat
   .modmatrix([{src:14, dst:27}, {src:5, dst:16}, {src:1, dst:12}])
   .gain(0.6);
 
-export const ms20_init_program_factory2_14 = (pat) => pat
+export const ms20_ext_fm = (pat) => pat
   .s("ms20")
   .vco1wave("square").vco1scale(0.5).vco1level(0.667)
   .vco2wave("saw").vco2level(0.5).vco2tune(-12.0)
@@ -1468,7 +1468,7 @@ export const ms20_init_program_factory2_14 = (pat) => pat
   .modmatrix([{src:14, dst:27}, {src:12, dst:1}, {src:3, dst:15}, {src:17, dst:8}, {src:13, dst:16}])
   .gain(0.6);
 
-export const ms20_synthetic_snore_factory2_11 = (pat) => pat
+export const ms20_fake_orchestra = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(0.25).vco1level(0.333)
   .vco2wave("tri").vco2scale(0.5).vco2level(0.5).vco2tune(-7.92)
@@ -1484,7 +1484,7 @@ export const ms20_synthetic_snore_factory2_11 = (pat) => pat
   .modmatrix([{src:18, dst:33}, {src:5, dst:10}])
   .gain(0.6);
 
-export const ms20_synthetic_snore_factory2_12 = (pat) => pat
+export const ms20_faraway_ring = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(0.5).vco1level(0.667).vco1pw(0.294)
   .vco2wave("sine").vco2level(0.5).vco2tune(-7.92)
@@ -1499,7 +1499,7 @@ export const ms20_synthetic_snore_factory2_12 = (pat) => pat
   .modmatrix([{src:3, dst:23}, {src:9, dst:15}])
   .gain(0.6);
 
-export const ms20_init_program_factory2_15 = (pat) => pat
+export const ms20_feedback_bass = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(0.5).vco1level(0.0).vco1pw(0.294)
   .vco2wave("tri").vco2scale(0.5).vco2level(0.506).vco2tune(1.44)
@@ -1513,7 +1513,7 @@ export const ms20_init_program_factory2_15 = (pat) => pat
   .modmatrix([{src:27, dst:13}, {src:3, dst:30}, {src:9, dst:8}, {src:10, dst:21}])
   .gain(0.6);
 
-export const ms20_init_program_factory2_16 = (pat) => pat
+export const ms20_fierce_lead = (pat) => pat
   .s("ms20")
   .vco1wave("square").vco1scale(0.5).vco1level(0.667)
   .vco2wave("saw").vco2scale(2.0).vco2level(0.5).vco2tune(-12.0)
@@ -1529,7 +1529,7 @@ export const ms20_init_program_factory2_16 = (pat) => pat
   .modmatrix([{src:14, dst:27}, {src:12, dst:1}, {src:3, dst:15}, {src:17, dst:8}])
   .gain(0.6);
 
-export const ms20_synthetic_snore_factory2_13 = (pat) => pat
+export const ms20_fierce_winter_fx = (pat) => pat
   .s("ms20")
   .vco1wave("sine").vco1scale(2.0).vco1level(1.0).vco1pw(0.559)
   .vco2wave("sine").vco2scale(2.0).vco2level(0.65).vco2tune(-12.0)
@@ -1544,7 +1544,7 @@ export const ms20_synthetic_snore_factory2_13 = (pat) => pat
   .modmatrix([{src:0, dst:19}])
   .gain(0.6);
 
-export const ms20_synthetic_snore_factory2_14 = (pat) => pat
+export const ms20_filter_bubbles = (pat) => pat
   .s("ms20")
   .vco1wave("saw").vco1scale(0.5).vco1level(0.333).vco1pw(0.137)
   .vco2wave("tri").vco2scale(0.5).vco2level(0.5).vco2tune(-7.68)
@@ -1560,7 +1560,7 @@ export const ms20_synthetic_snore_factory2_14 = (pat) => pat
   .modmatrix([{src:22, dst:17}, {src:5, dst:6}, {src:25, dst:20}, {src:24, dst:28}, {src:21, dst:33}])
   .gain(0.6);
 
-export const ms20_synthetic_snore_factory2_15 = (pat) => pat
+export const ms20_fingers_on_steroid = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1level(0.0)
   .vco2wave("saw").vco2scale(0.5).vco2level(0.5).vco2tune(-8.16)
@@ -1575,7 +1575,7 @@ export const ms20_synthetic_snore_factory2_15 = (pat) => pat
   .modmatrix([{src:10, dst:21}, {src:13, dst:27}])
   .gain(0.6);
 
-export const ms20_init_program_factory2_17 = (pat) => pat
+export const ms20_flat_key_rolls = (pat) => pat
   .s("ms20")
   .vco1wave("saw").vco1scale(0.5).vco1level(0.333).vco1pw(0.137)
   .vco2wave("saw").vco2scale(2.0).vco2level(0.5).vco2tune(-5.28)
@@ -1589,7 +1589,7 @@ export const ms20_init_program_factory2_17 = (pat) => pat
   .modmatrix([{src:16, dst:0}, {src:12, dst:6}, {src:33, dst:18}])
   .gain(0.6);
 
-export const ms20_init_program_factory2_18 = (pat) => pat
+export const ms20_flydye_synth = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(0.5).vco1level(0.333).vco1pw(0.186)
   .vco2wave("tri").vco2scale(0.5).vco2level(0.5).vco2tune(-3.12)
@@ -1604,7 +1604,7 @@ export const ms20_init_program_factory2_18 = (pat) => pat
   .modmatrix([{src:9, dst:8}, {src:27, dst:14}, {src:12, dst:1}, {src:0, dst:16}, {src:23, dst:3}])
   .gain(0.6);
 
-export const ms20_init_program_factory2_19 = (pat) => pat
+export const ms20_fonk_universe_poly = (pat) => pat
   .s("ms20")
   .vco1wave("square").vco1level(0.333)
   .vco2wave("saw").vco2level(0.5).vco2tune(-12.0)
@@ -1620,7 +1620,7 @@ export const ms20_init_program_factory2_19 = (pat) => pat
   .portamento(2.917)
   .gain(0.6);
 
-export const ms20_synthetic_snore_factory2_16 = (pat) => pat
+export const ms20_fungi_keys = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(2.0).vco1level(0.333).vco1pw(0.088)
   .vco2wave("tri").vco2level(0.5).vco2tune(-12.0)
@@ -1634,7 +1634,7 @@ export const ms20_synthetic_snore_factory2_16 = (pat) => pat
   .portamento(0.083)
   .gain(0.6);
 
-export const ms20_pwm_lead_factory2 = (pat) => pat
+export const ms20_funky_saw = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(0.5).vco1level(0.667)
   .vco2wave("tri").vco2level(0.5).vco2tune(-9.36)
@@ -1649,7 +1649,7 @@ export const ms20_pwm_lead_factory2 = (pat) => pat
   .modmatrix([{src:14, dst:27}, {src:12, dst:1}, {src:0, dst:16}])
   .gain(0.6);
 
-export const ms20_init_program_factory2_20 = (pat) => pat
+export const ms20_gainer_bass = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(0.5).vco1level(0.333).vco1pw(0.128)
   .vco2wave("sine").vco2scale(0.5).vco2level(0.5).vco2tune(-3.12)
@@ -1665,7 +1665,7 @@ export const ms20_init_program_factory2_20 = (pat) => pat
   .modmatrix([{src:3, dst:23}, {src:15, dst:9}, {src:21, dst:10}])
   .gain(0.6);
 
-export const ms20_init_program_factory2_21 = (pat) => pat
+export const ms20_hello_bildam_bass = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(2.0).vco1level(0.333)
   .vco2wave("tri").vco2scale(0.5).vco2level(0.57).vco2tune(-12.0)
@@ -1679,7 +1679,7 @@ export const ms20_init_program_factory2_21 = (pat) => pat
   .modmatrix([{src:21, dst:10}, {src:18, dst:33}])
   .gain(0.6);
 
-export const ms20_sample_hold_factory2_3 = (pat) => pat
+export const ms20_hot_box_lead = (pat) => pat
   .s("ms20")
   .vco1wave("saw").vco1scale(0.5).vco1level(1.0)
   .vco2wave("square").vco2scale(0.5).vco2level(0.5).vco2tune(-6.72)
@@ -1692,7 +1692,7 @@ export const ms20_sample_hold_factory2_3 = (pat) => pat
   .modmatrix([{src:17, dst:1}])
   .gain(0.6);
 
-export const ms20_synthetic_snore_factory2_17 = (pat) => pat
+export const ms20_in_motion_bass = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(0.25).vco1level(0.0)
   .vco2wave("tri").vco2scale(0.5).vco2level(0.5).vco2tune(-12.0)
@@ -1708,7 +1708,7 @@ export const ms20_synthetic_snore_factory2_17 = (pat) => pat
   .modmatrix([{src:14, dst:1}, {src:12, dst:23}, {src:9, dst:16}, {src:17, dst:7}, {src:4, dst:10}])
   .gain(0.6);
 
-export const ms20_init_program_factory2_22 = (pat) => pat
+export const ms20_jolly_jumper = (pat) => pat
   .s("ms20")
   .vco1wave("sine").vco1scale(0.25).vco1level(0.667)
   .vco2wave("sine").vco2scale(0.5).vco2level(0.508).vco2tune(-12.0)
@@ -1722,7 +1722,7 @@ export const ms20_init_program_factory2_22 = (pat) => pat
   .modmatrix([{src:5, dst:6}, {src:31, dst:17}, {src:12, dst:8}, {src:3, dst:30}, {src:14, dst:27}, {src:9, dst:16}])
   .gain(0.6);
 
-export const ms20_synthetic_snore_factory2_18 = (pat) => pat
+export const ms20_jump_clav = (pat) => pat
   .s("ms20")
   .vco1wave("square").vco1level(0.333)
   .vco2wave("square").vco2level(0.5).vco2tune(-7.92)
@@ -1736,7 +1736,7 @@ export const ms20_synthetic_snore_factory2_18 = (pat) => pat
   .pitcheg(2.4)
   .gain(0.6);
 
-export const ms20_synthetic_snore_factory2_19 = (pat) => pat
+export const ms20_last_knight_lead = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1level(0.333)
   .vco2wave("tri").vco2scale(2.0).vco2level(0.5).vco2tune(-6.24)
@@ -1750,7 +1750,7 @@ export const ms20_synthetic_snore_factory2_19 = (pat) => pat
   .portamento(0.083)
   .gain(0.6);
 
-export const ms20_synthetic_snore_factory2_20 = (pat) => pat
+export const ms20_lazy_fuzz_lead = (pat) => pat
   .s("ms20")
   .vco1wave("square").vco1scale(2.0).vco1level(0.667).vco1pw(0.343)
   .vco2wave("sine").vco2scale(2.0).vco2level(0.5).vco2tune(8.16)
@@ -1762,7 +1762,7 @@ export const ms20_synthetic_snore_factory2_20 = (pat) => pat
   .eg2attack(0.0025).eg2decay(0.001).eg2sustain(0.93).eg2release(0.1)
   .gain(0.6);
 
-export const ms20_synthetic_snore_factory2_21 = (pat) => pat
+export const ms20_lazy_toad_bass = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(0.5).vco1level(0.333).vco1pw(0.177)
   .vco2wave("tri").vco2scale(0.5).vco2level(0.5).vco2tune(-12.0)
@@ -1776,7 +1776,7 @@ export const ms20_synthetic_snore_factory2_21 = (pat) => pat
   .portamento(0.083)
   .gain(0.6);
 
-export const ms20_init_program_factory2_23 = (pat) => pat
+export const ms20_lemario_bruvas = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(0.25).vco1level(0.667)
   .vco2wave("saw").vco2scale(0.5).vco2level(0.5).vco2tune(-12.0)
@@ -1791,7 +1791,7 @@ export const ms20_init_program_factory2_23 = (pat) => pat
   .modmatrix([{src:27, dst:0}])
   .gain(0.6);
 
-export const ms20_init_program_factory2_24 = (pat) => pat
+export const ms20_leux_fi_axle_poly = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(0.5).vco1level(0.333)
   .vco2wave("tri").vco2level(0.5).vco2tune(-12.0)
@@ -1804,7 +1804,7 @@ export const ms20_init_program_factory2_24 = (pat) => pat
   .mgfreq(0.65).mgwave("saw")
   .gain(0.6);
 
-export const ms20_init_program_factory2_25 = (pat) => pat
+export const ms20_lucky_bass = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1level(0.333)
   .vco2wave("tri").vco2scale(0.5).vco2level(0.5).vco2tune(-6.48)
@@ -1819,7 +1819,7 @@ export const ms20_init_program_factory2_25 = (pat) => pat
   .modmatrix([{src:10, dst:21}, {src:14, dst:22}, {src:3, dst:23}, {src:9, dst:8}])
   .gain(0.6);
 
-export const ms20_synthetic_snore_factory2_22 = (pat) => pat
+export const ms20_lunar_bells = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(0.25).vco1level(0.333).vco1pw(0.069)
   .vco2wave("saw").vco2level(0.5).vco2tune(-9.84)
@@ -1834,7 +1834,7 @@ export const ms20_synthetic_snore_factory2_22 = (pat) => pat
   .modmatrix([{src:3, dst:23}, {src:9, dst:8}, {src:0, dst:11}])
   .gain(0.6);
 
-export const ms20_synthetic_snore_factory2_23 = (pat) => pat
+export const ms20_lunar_brass = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(0.25).vco1level(0.667)
   .vco2wave("tri").vco2level(0.503).vco2tune(-0.24)
@@ -1848,7 +1848,7 @@ export const ms20_synthetic_snore_factory2_23 = (pat) => pat
   .modmatrix([{src:4, dst:6}, {src:2, dst:19}, {src:0, dst:7}])
   .gain(0.6);
 
-export const ms20_init_program_factory2_26 = (pat) => pat
+export const ms20_mw_env_morph = (pat) => pat
   .s("ms20")
   .vco1wave("saw").vco1level(0.667).vco1pw(0.304)
   .vco2wave("square").vco2scale(0.5).vco2level(0.509).vco2tune(-12.0)
@@ -1862,7 +1862,7 @@ export const ms20_init_program_factory2_26 = (pat) => pat
   .modmatrix([{src:14, dst:27}, {src:12, dst:10}, {src:21, dst:16}])
   .gain(0.6);
 
-export const ms20_synthetic_snore_factory2_24 = (pat) => pat
+export const ms20_macho_staccato = (pat) => pat
   .s("ms20")
   .vco1wave("square").vco1scale(0.25).vco1level(0.667)
   .vco2wave("sine").vco2level(0.5).vco2tune(-12.0)
@@ -1877,7 +1877,7 @@ export const ms20_synthetic_snore_factory2_24 = (pat) => pat
   .modmatrix([{src:0, dst:11}])
   .gain(0.6);
 
-export const ms20_synthetic_snore_factory2_25 = (pat) => pat
+export const ms20_merry_go_pad = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(0.5).vco1level(0.333).vco1pw(0.128)
   .vco2wave("sine").vco2level(0.5).vco2tune(-6.0)
@@ -1890,7 +1890,7 @@ export const ms20_synthetic_snore_factory2_25 = (pat) => pat
   .portamento(0.1)
   .gain(0.6);
 
-export const ms20_init_program_factory2_27 = (pat) => pat
+export const ms20_mings_mercy_bass = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(0.5).vco1level(0.667)
   .vco2wave("sine").vco2level(0.5).vco2tune(-12.0)
@@ -1906,7 +1906,7 @@ export const ms20_init_program_factory2_27 = (pat) => pat
   .modmatrix([{src:17, dst:31}, {src:5, dst:16}, {src:1, dst:12}, {src:13, dst:7}])
   .gain(0.6);
 
-export const ms20_init_program_factory2_28 = (pat) => pat
+export const ms20_mixed_waves = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1level(0.0)
   .vco2wave("tri").vco2scale(0.5).vco2level(0.508).vco2tune(-12.0)
@@ -1918,7 +1918,7 @@ export const ms20_init_program_factory2_28 = (pat) => pat
   .eg2attack(0.1318).eg2decay(3.02).eg2sustain(1.0).eg2release(0.001)
   .gain(0.6);
 
-export const ms20_init_program_factory2_29 = (pat) => pat
+export const ms20_modulated_chords = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(0.25).vco1level(0.333).vco1pw(0.382)
   .vco2wave("square").vco2scale(0.5).vco2level(0.508).vco2tune(-12.0)
@@ -1932,7 +1932,7 @@ export const ms20_init_program_factory2_29 = (pat) => pat
   .modmatrix([{src:17, dst:6}])
   .gain(0.6);
 
-export const ms20_init_program_factory2_30 = (pat) => pat
+export const ms20_mow_bass = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(0.25).vco1level(0.333)
   .vco2wave("saw").vco2scale(0.5).vco2level(0.5).vco2tune(-4.08)
@@ -1948,7 +1948,7 @@ export const ms20_init_program_factory2_30 = (pat) => pat
   .modmatrix([{src:12, dst:1}, {src:5, dst:16}, {src:0, dst:11}, {src:14, dst:27}])
   .gain(0.6);
 
-export const ms20_init_program_factory2_31 = (pat) => pat
+export const ms20_mute_flute = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1level(1.0).vco1pw(0.039)
   .vco2wave("square").vco2scale(2.0).vco2level(0.5).vco2tune(-5.28)
@@ -1963,7 +1963,7 @@ export const ms20_init_program_factory2_31 = (pat) => pat
   .modmatrix([{src:16, dst:5}, {src:12, dst:1}, {src:27, dst:14}])
   .gain(0.6);
 
-export const ms20_init_program_factory2_32 = (pat) => pat
+export const ms20_nasty_bp_bass = (pat) => pat
   .s("ms20")
   .vco1wave("saw").vco1scale(0.5).vco1level(0.667)
   .vco2wave("sine").vco2scale(0.5).vco2level(0.508).vco2tune(-4.8)
@@ -1977,7 +1977,7 @@ export const ms20_init_program_factory2_32 = (pat) => pat
   .modmatrix([{src:3, dst:30}, {src:9, dst:16}, {src:14, dst:27}, {src:12, dst:15}, {src:0, dst:10}])
   .gain(0.6);
 
-export const ms20_bpf_air_stab_factory2 = (pat) => pat
+export const ms20_ocean = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(2.0).vco1level(0.0).vco1pw(0.676)
   .vco2wave("tri").vco2scale(0.5).vco2level(0.49).vco2tune(-12.0)
@@ -1994,7 +1994,7 @@ export const ms20_bpf_air_stab_factory2 = (pat) => pat
   .modmatrix([{src:16, dst:17}, {src:14, dst:11}, {src:3, dst:23}, {src:9, dst:8}])
   .gain(0.6);
 
-export const ms20_simple_sq_bass_factory2 = (pat) => pat
+export const ms20_oct_saw_bass = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(0.5).vco1level(0.0)
   .vco2wave("tri").vco2scale(0.25).vco2level(0.5).vco2tune(-12.0)
@@ -2008,7 +2008,7 @@ export const ms20_simple_sq_bass_factory2 = (pat) => pat
   .modmatrix([{src:21, dst:10}])
   .gain(0.6);
 
-export const ms20_init_program_factory2_33 = (pat) => pat
+export const ms20_para_finaylia = (pat) => pat
   .s("ms20")
   .vco1wave("square").vco1scale(0.25).vco1level(0.333)
   .vco2wave("saw").vco2scale(0.5).vco2level(0.5).vco2tune(-12.0)
@@ -2024,7 +2024,7 @@ export const ms20_init_program_factory2_33 = (pat) => pat
   .modmatrix([{src:22, dst:0}, {src:14, dst:13}, {src:15, dst:17}, {src:12, dst:10}, {src:32, dst:4}, {src:31, dst:2}, {src:24, dst:7}, {src:33, dst:18}])
   .gain(0.6);
 
-export const ms20_init_program_factory2_34 = (pat) => pat
+export const ms20_paraphonic_aftertouch = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(0.5).vco1level(0.0).vco1pw(0.196)
   .vco2wave("tri").vco2level(0.508).vco2tune(-12.0)
@@ -2038,7 +2038,7 @@ export const ms20_init_program_factory2_34 = (pat) => pat
   .modmatrix([{src:31, dst:2}, {src:33, dst:4}, {src:24, dst:7}, {src:17, dst:22}])
   .gain(0.6);
 
-export const ms20_synthetic_snore_factory2_26 = (pat) => pat
+export const ms20_pick_brass = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1level(0.667)
   .vco2wave("tri").vco2level(0.5).vco2tune(-12.0)
@@ -2054,7 +2054,7 @@ export const ms20_synthetic_snore_factory2_26 = (pat) => pat
   .modmatrix([{src:0, dst:11}])
   .gain(0.6);
 
-export const ms20_init_program_factory2_35 = (pat) => pat
+export const ms20_plate_pad = (pat) => pat
   .s("ms20")
   .vco1wave("saw").vco1level(0.667).vco1pw(0.667)
   .vco2wave("saw").vco2level(0.508).vco2tune(-12.0)
@@ -2068,7 +2068,7 @@ export const ms20_init_program_factory2_35 = (pat) => pat
   .modmatrix([{src:12, dst:1}, {src:14, dst:27}, {src:3, dst:16}, {src:28, dst:18}])
   .gain(0.6);
 
-export const ms20_synthetic_snore_factory2_27 = (pat) => pat
+export const ms20_poly_sunburst = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(0.5).vco1level(0.333)
   .vco2wave("tri").vco2level(0.5).vco2tune(-7.92)
@@ -2084,7 +2084,7 @@ export const ms20_synthetic_snore_factory2_27 = (pat) => pat
   .modmatrix([{src:18, dst:33}, {src:5, dst:10}])
   .gain(0.6);
 
-export const ms20_elektrash_factory2 = (pat) => pat
+export const ms20_proggy_4ths = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(0.5).vco1level(0.667).vco1pw(0.079)
   .vco2wave("tri").vco2level(0.5).vco2tune(-8.4)
@@ -2099,7 +2099,7 @@ export const ms20_elektrash_factory2 = (pat) => pat
   .modmatrix([{src:14, dst:27}, {src:12, dst:1}, {src:0, dst:16}])
   .gain(0.6);
 
-export const ms20_pwm_lead_factory2_2 = (pat) => pat
+export const ms20_pulse_od_lead = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1level(0.333).vco1pw(0.108)
   .vco2wave("saw").vco2level(0.5).vco2tune(-3.12)
@@ -2115,7 +2115,7 @@ export const ms20_pwm_lead_factory2_2 = (pat) => pat
   .modmatrix([{src:14, dst:27}, {src:12, dst:1}, {src:0, dst:16}, {src:3, dst:30}, {src:9, dst:15}])
   .gain(0.6);
 
-export const ms20_init_program_factory2_36 = (pat) => pat
+export const ms20_rising_tides = (pat) => pat
   .s("ms20")
   .vco1wave("saw").vco1level(0.0).vco1pw(0.794)
   .vco2wave("saw").vco2level(0.508).vco2tune(-12.0)
@@ -2127,7 +2127,7 @@ export const ms20_init_program_factory2_36 = (pat) => pat
   .eg2attack(0.2535).eg2decay(10.0).eg2sustain(1.0).eg2release(0.001)
   .gain(0.6);
 
-export const ms20_synthetic_snore_factory2_28 = (pat) => pat
+export const ms20_robo_clap = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(2.0).vco1level(0.333)
   .vco2wave("tri").vco2level(0.5).vco2tune(-12.0)
@@ -2142,7 +2142,7 @@ export const ms20_synthetic_snore_factory2_28 = (pat) => pat
   .modmatrix([{src:3, dst:23}, {src:17, dst:7}, {src:6, dst:4}, {src:8, dst:2}, {src:9, dst:15}])
   .gain(0.6);
 
-export const ms20_synthetic_snore_factory2_29 = (pat) => pat
+export const ms20_roll_up_bass = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(0.5).vco1level(0.333)
   .vco2wave("sine").vco2scale(0.5).vco2level(0.5).vco2tune(-12.0)
@@ -2157,7 +2157,7 @@ export const ms20_synthetic_snore_factory2_29 = (pat) => pat
   .modmatrix([{src:6, dst:4}, {src:2, dst:1}])
   .gain(0.6);
 
-export const ms20_init_program_factory2_37 = (pat) => pat
+export const ms20_rubber_bass = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(0.5).vco1level(0.333).vco1pw(0.089)
   .vco2wave("tri").vco2scale(0.5).vco2level(0.508).vco2tune(-7.44)
@@ -2171,7 +2171,7 @@ export const ms20_init_program_factory2_37 = (pat) => pat
   .modmatrix([{src:0, dst:11}, {src:9, dst:15}, {src:19, dst:3}])
   .gain(0.6);
 
-export const ms20_analog_bass_factory2 = (pat) => pat
+export const ms20_rubberound = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(0.25).vco1level(0.333)
   .vco2wave("tri").vco2scale(0.5).vco2level(0.5).vco2tune(-12.0)
@@ -2186,7 +2186,7 @@ export const ms20_analog_bass_factory2 = (pat) => pat
   .modmatrix([{src:3, dst:23}, {src:9, dst:15}, {src:14, dst:27}, {src:12, dst:1}, {src:0, dst:16}])
   .gain(0.6);
 
-export const ms20_solid_bass_factory2_2 = (pat) => pat
+export const ms20_saw_sweep_bass = (pat) => pat
   .s("ms20")
   .vco1wave("saw").vco1scale(0.5).vco1level(0.333)
   .vco2wave("tri").vco2scale(0.25).vco2level(0.5).vco2tune(-12.0)
@@ -2201,7 +2201,7 @@ export const ms20_solid_bass_factory2_2 = (pat) => pat
   .modmatrix([{src:14, dst:27}, {src:5, dst:16}, {src:1, dst:12}])
   .gain(0.6);
 
-export const ms20_init_program_factory2_38 = (pat) => pat
+export const ms20_say_gah_rings_poly = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(2.0).vco1level(0.333)
   .vco2wave("saw").vco2level(0.5).vco2tune(-12.0)
@@ -2218,7 +2218,7 @@ export const ms20_init_program_factory2_38 = (pat) => pat
   .modmatrix([{src:14, dst:27}, {src:9, dst:16}, {src:12, dst:23}])
   .gain(0.6);
 
-export const ms20_synthetic_snore_factory2_30 = (pat) => pat
+export const ms20_scrapull_hit = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(2.0).vco1level(0.667)
   .vco2wave("tri").vco2level(0.5).vco2tune(-12.0)
@@ -2233,7 +2233,7 @@ export const ms20_synthetic_snore_factory2_30 = (pat) => pat
   .modmatrix([{src:9, dst:30}])
   .gain(0.6);
 
-export const ms20_init_program_factory2_39 = (pat) => pat
+export const ms20_self_osc_kick = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(0.5).vco1level(0.0)
   .vco2wave("square").vco2scale(0.25).vco2level(0.5).vco2tune(-12.0)
@@ -2247,7 +2247,7 @@ export const ms20_init_program_factory2_39 = (pat) => pat
   .modmatrix([{src:3, dst:29}, {src:14, dst:27}, {src:12, dst:10}, {src:21, dst:16}])
   .gain(0.6);
 
-export const ms20_synthetic_snore_factory2_31 = (pat) => pat
+export const ms20_self_osc_pluck = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(0.5).vco1level(1.0)
   .vco2wave("square").vco2level(0.5).vco2tune(-12.0)
@@ -2260,7 +2260,7 @@ export const ms20_synthetic_snore_factory2_31 = (pat) => pat
   .modmatrix([{src:14, dst:27}, {src:0, dst:16}, {src:1, dst:12}])
   .gain(0.6);
 
-export const ms20_init_program_factory2_40 = (pat) => pat
+export const ms20_shepard_race = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(0.25).vco1level(0.333)
   .vco2wave("tri").vco2scale(0.25).vco2level(0.506).vco2tune(-12.0)
@@ -2276,7 +2276,7 @@ export const ms20_init_program_factory2_40 = (pat) => pat
   .portamento(5.0)
   .gain(0.6);
 
-export const ms20_init_program_factory2_41 = (pat) => pat
+export const ms20_shifting_chords = (pat) => pat
   .s("ms20")
   .vco1wave("saw").vco1level(0.667).vco1pw(0.667)
   .vco2wave("saw").vco2level(0.508).vco2tune(-12.0)
@@ -2290,7 +2290,7 @@ export const ms20_init_program_factory2_41 = (pat) => pat
   .modmatrix([{src:28, dst:18}, {src:12, dst:1}, {src:14, dst:27}, {src:3, dst:16}])
   .gain(0.6);
 
-export const ms20_synthetic_snore_factory2_32 = (pat) => pat
+export const ms20_sicka_more_pad = (pat) => pat
   .s("ms20")
   .vco1wave("saw").vco1scale(0.25).vco1level(0.333).vco1pw(0.128)
   .vco2wave("saw").vco2level(0.5).vco2tune(-6.0)
@@ -2303,7 +2303,7 @@ export const ms20_synthetic_snore_factory2_32 = (pat) => pat
   .portamento(0.1)
   .gain(0.6);
 
-export const ms20_synthetic_snore_factory2_33 = (pat) => pat
+export const ms20_silver_bullet = (pat) => pat
   .s("ms20")
   .vco1wave("square").vco1scale(0.25).vco1level(0.333).vco1pw(0.284)
   .vco2wave("saw").vco2level(0.5).vco2tune(-4.08)
@@ -2317,7 +2317,7 @@ export const ms20_synthetic_snore_factory2_33 = (pat) => pat
   .portamento(2.083)
   .gain(0.6);
 
-export const ms20_init_program_factory2_42 = (pat) => pat
+export const ms20_sir_brutus_bass = (pat) => pat
   .s("ms20")
   .vco1wave("saw").vco1scale(0.25).vco1level(0.333)
   .vco2wave("tri").vco2scale(0.5).vco2level(0.5).vco2tune(-12.0)
@@ -2329,7 +2329,7 @@ export const ms20_init_program_factory2_42 = (pat) => pat
   .eg2attack(0.0209).eg2decay(3.02).eg2sustain(0.0).eg2release(0.001)
   .gain(0.6);
 
-export const ms20_synthetic_snore_factory2_34 = (pat) => pat
+export const ms20_slick_kik = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(2.0).vco1level(0.0)
   .vco2wave("tri").vco2level(0.5).vco2tune(-12.0)
@@ -2342,7 +2342,7 @@ export const ms20_synthetic_snore_factory2_34 = (pat) => pat
   .mgfreq(0.24).mgwave("tri")
   .gain(0.6);
 
-export const ms20_init_program_factory2_43 = (pat) => pat
+export const ms20_slow_hp_distortion = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(0.5).vco1level(0.333).vco1pw(0.69)
   .vco2wave("tri").vco2scale(0.5).vco2level(0.508).vco2tune(-6.72)
@@ -2357,7 +2357,7 @@ export const ms20_init_program_factory2_43 = (pat) => pat
   .modmatrix([{src:0, dst:10}, {src:13, dst:27}, {src:17, dst:31}])
   .gain(0.6);
 
-export const ms20_synthetic_snore_factory2_35 = (pat) => pat
+export const ms20_slow_n_wide_pad = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(0.25).vco1level(0.667).vco1pw(0.49)
   .vco2wave("tri").vco2level(0.5).vco2tune(-8.16)
@@ -2371,7 +2371,7 @@ export const ms20_synthetic_snore_factory2_35 = (pat) => pat
   .portamento(0.042)
   .gain(0.6);
 
-export const ms20_synthetic_snore_factory2_36 = (pat) => pat
+export const ms20_smoove_lead = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(0.25).vco1level(0.333).vco1pw(0.079)
   .vco2wave("saw").vco2level(0.5).vco2tune(-12.0)
@@ -2383,7 +2383,7 @@ export const ms20_synthetic_snore_factory2_36 = (pat) => pat
   .eg2attack(0.0028).eg2decay(0.001).eg2sustain(0.93).eg2release(0.1)
   .gain(0.6);
 
-export const ms20_synthetic_snore_factory2_37 = (pat) => pat
+export const ms20_snappy_synth = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1level(0.667)
   .vco2wave("square").vco2level(0.5).vco2tune(-6.96)
@@ -2398,7 +2398,7 @@ export const ms20_synthetic_snore_factory2_37 = (pat) => pat
   .modmatrix([{src:13, dst:27}])
   .gain(0.6);
 
-export const ms20_synthetic_snore_factory2_38 = (pat) => pat
+export const ms20_sore_throat_pluck = (pat) => pat
   .s("ms20")
   .vco1wave("saw").vco1level(0.0)
   .vco2wave("square").vco2level(0.5).vco2tune(-12.0)
@@ -2412,7 +2412,7 @@ export const ms20_synthetic_snore_factory2_38 = (pat) => pat
   .portamento(1.167)
   .gain(0.6);
 
-export const ms20_init_program_factory2_44 = (pat) => pat
+export const ms20_space_fight_perc = (pat) => pat
   .s("ms20")
   .vco1wave("saw").vco1scale(2.0).vco1level(0.0)
   .vco2wave("tri").vco2scale(0.25).vco2level(0.5).vco2tune(-12.0)
@@ -2426,7 +2426,7 @@ export const ms20_init_program_factory2_44 = (pat) => pat
   .pitchmg(0.48)
   .gain(0.6);
 
-export const ms20_init_program_factory2_45 = (pat) => pat
+export const ms20_space_gunz_fx = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(0.5).vco1level(0.0)
   .vco2wave("tri").vco2scale(0.5).vco2level(0.5).vco2tune(-12.0)
@@ -2440,7 +2440,7 @@ export const ms20_init_program_factory2_45 = (pat) => pat
   .pitcheg(3.6)
   .gain(0.6);
 
-export const ms20_synthetic_snore_factory2_39 = (pat) => pat
+export const ms20_spaceout = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(0.5).vco1level(1.0)
   .vco2wave("square").vco2level(0.5).vco2tune(-12.0)
@@ -2453,7 +2453,7 @@ export const ms20_synthetic_snore_factory2_39 = (pat) => pat
   .modmatrix([{src:14, dst:27}, {src:0, dst:16}, {src:1, dst:12}])
   .gain(0.6);
 
-export const ms20_arpeggio_pad_factory2 = (pat) => pat
+export const ms20_spooky_pulse_arp = (pat) => pat
   .s("ms20")
   .vco1wave("sine").vco1level(0.333)
   .vco2wave("tri").vco2scale(0.5).vco2level(0.49).vco2tune(-12.0)
@@ -2469,7 +2469,7 @@ export const ms20_arpeggio_pad_factory2 = (pat) => pat
   .modmatrix([{src:2, dst:19}, {src:7, dst:3}, {src:4, dst:6}, {src:10, dst:0}, {src:34, dst:18}])
   .gain(0.6);
 
-export const ms20_synthetic_snore_factory2_40 = (pat) => pat
+export const ms20_squelch_bass = (pat) => pat
   .s("ms20")
   .vco1wave("square").vco1level(0.667)
   .vco2wave("square").vco2scale(0.5).vco2level(0.5).vco2tune(-12.0)
@@ -2484,7 +2484,7 @@ export const ms20_synthetic_snore_factory2_40 = (pat) => pat
   .modmatrix([{src:13, dst:10}, {src:9, dst:16}, {src:12, dst:7}, {src:15, dst:2}, {src:3, dst:30}, {src:14, dst:27}, {src:6, dst:4}])
   .gain(0.6);
 
-export const ms20_init_program_factory2_46 = (pat) => pat
+export const ms20_star_crunch_poly = (pat) => pat
   .s("ms20")
   .vco1wave("saw").vco1scale(0.25).vco1level(0.667)
   .vco2wave("tri").vco2scale(0.5).vco2level(0.5).vco2tune(-12.0)
@@ -2497,7 +2497,7 @@ export const ms20_init_program_factory2_46 = (pat) => pat
   .mgfreq(0.65).mgwave("saw")
   .gain(0.6);
 
-export const ms20_init_program_factory2_47 = (pat) => pat
+export const ms20_stockton = (pat) => pat
   .s("ms20")
   .vco1wave("saw").vco1level(0.333)
   .vco2wave("tri").vco2level(0.5).vco2tune(-12.0)
@@ -2511,7 +2511,7 @@ export const ms20_init_program_factory2_47 = (pat) => pat
   .mgfreq(1.06).mgwave("tri")
   .gain(0.6);
 
-export const ms20_init_program_factory2_48 = (pat) => pat
+export const ms20_stranded_on_noise_shore = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(0.25).vco1level(0.0)
   .vco2wave("tri").vco2scale(0.5).vco2level(0.508).vco2tune(-12.0)
@@ -2524,7 +2524,7 @@ export const ms20_init_program_factory2_48 = (pat) => pat
   .modmatrix([{src:3, dst:1}, {src:26, dst:34}, {src:13, dst:19}, {src:9, dst:23}, {src:21, dst:10}])
   .gain(0.6);
 
-export const ms20_retro_strings_factory2 = (pat) => pat
+export const ms20_string_machine = (pat) => pat
   .s("ms20")
   .vco1wave("square").vco1level(1.0).vco1pw(0.49)
   .vco2wave("square").vco2level(0.51).vco2tune(-7.92)
@@ -2539,7 +2539,7 @@ export const ms20_retro_strings_factory2 = (pat) => pat
   .modmatrix([{src:22, dst:13}, {src:10, dst:17}, {src:3, dst:23}, {src:9, dst:15}])
   .gain(0.6);
 
-export const ms20_init_program_factory2_49 = (pat) => pat
+export const ms20_sub_bass = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(0.25).vco1level(1.0)
   .vco2wave("sine").vco2level(0.508).vco2tune(-12.0)
@@ -2553,7 +2553,7 @@ export const ms20_init_program_factory2_49 = (pat) => pat
   .modmatrix([{src:9, dst:16}, {src:29, dst:3}, {src:14, dst:27}, {src:12, dst:8}])
   .gain(0.6);
 
-export const ms20_init_program_factory2_50 = (pat) => pat
+export const ms20_sub_etage = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(0.25).vco1level(0.0)
   .vco2wave("tri").vco2scale(0.5).vco2level(0.506).vco2tune(-12.0)
@@ -2565,7 +2565,7 @@ export const ms20_init_program_factory2_50 = (pat) => pat
   .modmatrix([{src:10, dst:21}, {src:0, dst:31}])
   .gain(0.6);
 
-export const ms20_synthetic_snore_factory2_41 = (pat) => pat
+export const ms20_swimming_pad = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(0.5).vco1level(0.333)
   .vco2wave("square").vco2level(0.5).vco2tune(-7.92)
@@ -2580,7 +2580,7 @@ export const ms20_synthetic_snore_factory2_41 = (pat) => pat
   .modmatrix([{src:1, dst:17}, {src:21, dst:10}, {src:13, dst:27}])
   .gain(0.6);
 
-export const ms20_analog_guitar_factory2 = (pat) => pat
+export const ms20_syn_clav = (pat) => pat
   .s("ms20")
   .vco1wave("square").vco1level(0.333)
   .vco2wave("saw").vco2level(0.5).vco2tune(-12.0)
@@ -2594,7 +2594,7 @@ export const ms20_analog_guitar_factory2 = (pat) => pat
   .modmatrix([{src:11, dst:0}, {src:14, dst:27}, {src:17, dst:16}, {src:1, dst:12}])
   .gain(0.6);
 
-export const ms20_elektrash_factory2_2 = (pat) => pat
+export const ms20_talking_4ths = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(0.5).vco1level(0.667).vco1pw(0.079)
   .vco2wave("tri").vco2level(0.5).vco2tune(-8.4)
@@ -2608,7 +2608,7 @@ export const ms20_elektrash_factory2_2 = (pat) => pat
   .modmatrix([{src:14, dst:27}, {src:12, dst:1}, {src:0, dst:16}])
   .gain(0.6);
 
-export const ms20_sample_hold_factory2_4 = (pat) => pat
+export const ms20_tamper_keys = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1level(0.667).vco1pw(0.196)
   .vco2wave("saw").vco2level(0.5).vco2tune(-12.0)
@@ -2621,7 +2621,7 @@ export const ms20_sample_hold_factory2_4 = (pat) => pat
   .mgfreq(0.65).mgwave("saw")
   .gain(0.6);
 
-export const ms20_init_program_factory2_51 = (pat) => pat
+export const ms20_the_funked_bass = (pat) => pat
   .s("ms20")
   .vco1wave("square").vco1scale(0.5).vco1level(0.0).vco1pw(0.128)
   .vco2wave("tri").vco2scale(0.5).vco2level(0.5).vco2tune(-12.0)
@@ -2636,7 +2636,7 @@ export const ms20_init_program_factory2_51 = (pat) => pat
   .pitcheg(24.0)
   .gain(0.6);
 
-export const ms20_technostress_factory2 = (pat) => pat
+export const ms20_the_melbourne_sound = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1level(0.0)
   .vco2wave("saw").vco2scale(0.5).vco2level(0.5).vco2tune(-12.0)
@@ -2649,7 +2649,7 @@ export const ms20_technostress_factory2 = (pat) => pat
   .modmatrix([{src:10, dst:17}, {src:23, dst:12}, {src:9, dst:16}, {src:13, dst:27}])
   .gain(0.6);
 
-export const ms20_morphing_arpline_factory2_2 = (pat) => pat
+export const ms20_thick_acid_mod = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(0.5).vco1level(0.333)
   .vco2wave("tri").vco2scale(0.5).vco2level(0.5).vco2tune(-12.0)
@@ -2662,7 +2662,7 @@ export const ms20_morphing_arpline_factory2_2 = (pat) => pat
   .mgfreq(0.57).mgwave("tri")
   .gain(0.6);
 
-export const ms20_init_program_factory2_52 = (pat) => pat
+export const ms20_thick_phase = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(0.5).vco1level(0.333).vco1pw(0.039)
   .vco2wave("sine").vco2level(0.5).vco2tune(-6.72)
@@ -2676,7 +2676,7 @@ export const ms20_init_program_factory2_52 = (pat) => pat
   .pitcheg(24.0)
   .gain(0.6);
 
-export const ms20_synthetic_snore_factory2_42 = (pat) => pat
+export const ms20_thick_swell = (pat) => pat
   .s("ms20")
   .vco1wave("saw").vco1level(0.333).vco1pw(0.549)
   .vco2wave("saw").vco2level(0.5).vco2tune(-12.0)
@@ -2690,7 +2690,7 @@ export const ms20_synthetic_snore_factory2_42 = (pat) => pat
   .portamento(0.083)
   .gain(0.6);
 
-export const ms20_init_program_factory2_53 = (pat) => pat
+export const ms20_tight_sweep_pad = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(0.5).vco1level(0.333)
   .vco2wave("tri").vco2level(0.5).vco2tune(-0.24)
@@ -2704,7 +2704,7 @@ export const ms20_init_program_factory2_53 = (pat) => pat
   .pitcheg(12.72)
   .gain(0.6);
 
-export const ms20_init_program_factory2_54 = (pat) => pat
+export const ms20_trap_alarm = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(0.25).vco1level(0.667)
   .vco2wave("tri").vco2scale(0.25).vco2level(0.508).vco2tune(-12.0)
@@ -2719,7 +2719,7 @@ export const ms20_init_program_factory2_54 = (pat) => pat
   .modmatrix([{src:13, dst:10}, {src:3, dst:30}, {src:9, dst:8}])
   .gain(0.6);
 
-export const ms20_synthetic_snore_factory2_43 = (pat) => pat
+export const ms20_vari_lead = (pat) => pat
   .s("ms20")
   .vco1wave("sine").vco1scale(0.5).vco1level(0.333).vco1pw(0.177)
   .vco2wave("saw").vco2level(0.5).vco2tune(-12.0)
@@ -2732,7 +2732,7 @@ export const ms20_synthetic_snore_factory2_43 = (pat) => pat
   .portamento(5.0)
   .gain(0.6);
 
-export const ms20_synthetic_snore_factory2_44 = (pat) => pat
+export const ms20_velocity_percs = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(2.0).vco1level(0.0)
   .vco2wave("tri").vco2level(0.5).vco2tune(-12.0)
@@ -2745,7 +2745,7 @@ export const ms20_synthetic_snore_factory2_44 = (pat) => pat
   .mgfreq(0.24).mgwave("tri")
   .gain(0.6);
 
-export const ms20_init_program_factory2_55 = (pat) => pat
+export const ms20_vibrato_quints = (pat) => pat
   .s("ms20")
   .vco1wave("saw").vco1level(0.333).vco1pw(0.284)
   .vco2wave("square").vco2scale(0.5).vco2level(0.508).vco2tune(-12.0)
@@ -2761,7 +2761,7 @@ export const ms20_init_program_factory2_55 = (pat) => pat
   .modmatrix([{src:12, dst:1}, {src:14, dst:27}, {src:5, dst:16}, {src:17, dst:10}])
   .gain(0.6);
 
-export const ms20_pulse_pad_factory2 = (pat) => pat
+export const ms20_warm_pulse_arp = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1level(0.667)
   .vco2wave("tri").vco2level(0.5).vco2tune(-12.0)
@@ -2776,7 +2776,7 @@ export const ms20_pulse_pad_factory2 = (pat) => pat
   .modmatrix([{src:10, dst:17}, {src:20, dst:0}, {src:16, dst:3}, {src:29, dst:12}])
   .gain(0.6);
 
-export const ms20_init_program_factory2_56 = (pat) => pat
+export const ms20_wave_surfer_lead = (pat) => pat
   .s("ms20")
   .vco1wave("square").vco1scale(0.5).vco1level(0.667)
   .vco2wave("saw").vco2level(0.5).vco2tune(-2.88)
@@ -2790,7 +2790,7 @@ export const ms20_init_program_factory2_56 = (pat) => pat
   .mgfreq(0.65).mgwave("tri")
   .gain(0.6);
 
-export const ms20_synthetic_snore_factory2_45 = (pat) => pat
+export const ms20_weowww = (pat) => pat
   .s("ms20")
   .vco1wave("square").vco1scale(0.5).vco1level(0.667)
   .vco2wave("tri").vco2scale(2.0).vco2level(0.5).vco2tune(-2.88)
@@ -2805,7 +2805,7 @@ export const ms20_synthetic_snore_factory2_45 = (pat) => pat
   .modmatrix([{src:3, dst:23}, {src:10, dst:13}, {src:31, dst:17}, {src:9, dst:15}])
   .gain(0.6);
 
-export const ms20_init_program_factory2_57 = (pat) => pat
+export const ms20_wet_saw_lead = (pat) => pat
   .s("ms20")
   .vco1wave("square").vco1scale(0.5).vco1level(0.333).vco1pw(0.147)
   .vco2wave("saw").vco2scale(2.0).vco2level(0.5).vco2tune(-5.28)
@@ -2820,7 +2820,7 @@ export const ms20_init_program_factory2_57 = (pat) => pat
   .modmatrix([{src:14, dst:27}, {src:12, dst:1}, {src:0, dst:16}, {src:21, dst:10}, {src:5, dst:6}])
   .gain(0.6);
 
-export const ms20_elektrash_factory2_3 = (pat) => pat
+export const ms20_wheels_up_seq = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1level(0.667).vco1pw(0.079)
   .vco2wave("sine").vco2level(0.5).vco2tune(-8.4)
@@ -2836,7 +2836,7 @@ export const ms20_elektrash_factory2_3 = (pat) => pat
   .modmatrix([{src:6, dst:26}])
   .gain(0.6);
 
-export const ms20_synthetic_snore_factory2_46 = (pat) => pat
+export const ms20_whistler = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(0.25).vco1level(1.0)
   .vco2wave("tri").vco2level(0.5).vco2tune(-5.28)
@@ -2849,7 +2849,7 @@ export const ms20_synthetic_snore_factory2_46 = (pat) => pat
   .modmatrix([{src:14, dst:27}, {src:12, dst:23}, {src:3, dst:16}, {src:9, dst:15}])
   .gain(0.6);
 
-export const ms20_init_program_factory2_58 = (pat) => pat
+export const ms20_whiteout = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(0.5).vco1level(0.0).vco1pw(0.03)
   .vco2wave("sine").vco2level(0.5).vco2tune(-3.12)
@@ -2864,7 +2864,7 @@ export const ms20_init_program_factory2_58 = (pat) => pat
   .portamento(2.933)
   .gain(0.6);
 
-export const ms20_init_program_factory2_59 = (pat) => pat
+export const ms20_wobbly_bells = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(0.25).vco1level(1.0)
   .vco2wave("saw").vco2level(0.5).vco2tune(-12.0)
@@ -2877,7 +2877,7 @@ export const ms20_init_program_factory2_59 = (pat) => pat
   .mgfreq(0.54).mgwave("saw")
   .gain(0.6);
 
-export const ms20_synthetic_snore_factory2_47 = (pat) => pat
+export const ms20_wobbly_s_h_pad = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(0.5).vco1level(0.333).vco1pw(0.314)
   .vco2wave("tri").vco2level(0.5).vco2tune(-12.0)
@@ -2894,7 +2894,7 @@ export const ms20_synthetic_snore_factory2_47 = (pat) => pat
   .modmatrix([{src:5, dst:7}, {src:2, dst:6}, {src:4, dst:27}])
   .gain(0.6);
 
-export const ms20_init_program_factory2_60 = (pat) => pat
+export const ms20_wowzer_fx = (pat) => pat
   .s("ms20")
   .vco1wave("square").vco1scale(0.5).vco1level(0.667).vco1pw(0.373)
   .vco2wave("saw").vco2scale(0.5).vco2level(0.5).vco2tune(-12.0)
@@ -2922,7 +2922,7 @@ export const ms20_n5th_level = (pat) => pat
   .portamento(2.917)
   .gain(0.6);
 
-export const ms20_n70schords = (pat) => pat
+export const ms20_n70s_chords = (pat) => pat
   .s("ms20")
   .vco1wave("square").vco1level(0.667)
   .vco2wave("tri").vco2level(0.508).vco2tune(-2.86)
@@ -2967,7 +2967,7 @@ export const ms20_n9ths = (pat) => pat
   .modmatrix([{src:6, dst:0}])
   .gain(0.6);
 
-export const ms20_absolutekaoss = (pat) => pat
+export const ms20_absolute_kaoss = (pat) => pat
   .s("ms20")
   .vco1wave("saw").vco1scale(0.5).vco1level(0.333).vco1pw(0.902)
   .vco2wave("saw").vco2scale(0.5).vco2level(0.5).vco2tune(-4.8)
@@ -2998,7 +2998,7 @@ export const ms20_accordian = (pat) => pat
   .portamento(0.079)
   .gain(0.6);
 
-export const ms20_adiratobass = (pat) => pat
+export const ms20_adirato_bass = (pat) => pat
   .s("ms20")
   .vco1wave("saw").vco1level(0.0)
   .vco2wave("saw").vco2scale(0.25).vco2level(0.5).vco2tune(-12.0)
@@ -3028,7 +3028,7 @@ export const ms20_analogalead = (pat) => pat
   .portamento(5.0)
   .gain(0.6);
 
-export const ms20_baddreams = (pat) => pat
+export const ms20_bad_dreams = (pat) => pat
   .s("ms20")
   .vco1wave("saw").vco1level(0.667).vco1pw(0.412)
   .vco2wave("square").vco2scale(0.5).vco2level(0.5).vco2tune(-12.0)
@@ -3044,7 +3044,7 @@ export const ms20_baddreams = (pat) => pat
   .modmatrix([{src:29, dst:3}, {src:13, dst:28}])
   .gain(0.6);
 
-export const ms20_bassguitar = (pat) => pat
+export const ms20_bass_guitar = (pat) => pat
   .s("ms20")
   .vco1wave("sine").vco1scale(0.25).vco1level(0.0)
   .vco2wave("square").vco2scale(0.25).vco2level(0.5).vco2tune(-12.0)
@@ -3057,7 +3057,7 @@ export const ms20_bassguitar = (pat) => pat
   .pitcheg(2.67)
   .gain(0.6);
 
-export const ms20_bassinyourface = (pat) => pat
+export const ms20_bass_in_your_face = (pat) => pat
   .s("ms20")
   .vco1wave("saw").vco1scale(0.25).vco1level(0.333).vco1pw(0.314)
   .vco2wave("square").vco2scale(0.5).vco2level(0.5).vco2tune(-12.0)
@@ -3072,7 +3072,7 @@ export const ms20_bassinyourface = (pat) => pat
   .modmatrix([{src:17, dst:31}])
   .gain(0.6);
 
-export const ms20_beatmaker = (pat) => pat
+export const ms20_beat_maker = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(2.0).vco1level(0.333)
   .vco2wave("saw").vco2scale(0.25).vco2level(0.5).vco2tune(-12.0)
@@ -3180,7 +3180,7 @@ export const ms20_bubbles = (pat) => pat
   .modmatrix([{src:5, dst:0}])
   .gain(0.6);
 
-export const ms20_bugsatnight = (pat) => pat
+export const ms20_bugs_at_night = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1level(0.0).vco1pw(0.461)
   .vco2wave("square").vco2level(0.5).vco2tune(-12.0)
@@ -3280,7 +3280,7 @@ export const ms20_death_organ = (pat) => pat
   .modmatrix([{src:29, dst:3}, {src:9, dst:8}])
   .gain(0.6);
 
-export const ms20_don_tgointhere = (pat) => pat
+export const ms20_don_t_go_in_there = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(2.0).vco1level(0.333).vco1pw(0.177)
   .vco2wave("sine").vco2scale(0.5).vco2level(0.5).vco2tune(-12.0)
@@ -3294,7 +3294,7 @@ export const ms20_don_tgointhere = (pat) => pat
   .pitcheg(8.16)
   .gain(0.6);
 
-export const ms20_fouronthefloor = (pat) => pat
+export const ms20_four_on_the_floor = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1level(0.333)
   .vco2wave("saw").vco2level(0.5).vco2tune(-12.0)
@@ -3310,7 +3310,7 @@ export const ms20_fouronthefloor = (pat) => pat
   .modmatrix([{src:2, dst:19}, {src:9, dst:7}, {src:1, dst:4}])
   .gain(0.6);
 
-export const ms20_funwithmgs = (pat) => pat
+export const ms20_fun_with_mgs = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1level(0.667).vco1pw(0.098)
   .vco2wave("square").vco2level(0.5).vco2tune(-12.0)
@@ -3325,7 +3325,7 @@ export const ms20_funwithmgs = (pat) => pat
   .pitchmg(2.76)
   .gain(0.6);
 
-export const ms20_gnometime = (pat) => pat
+export const ms20_gnome_time = (pat) => pat
   .s("ms20")
   .vco1wave("sine").vco1scale(0.25).vco1level(0.0)
   .vco2wave("tri").vco2scale(2.0).vco2level(0.5).vco2tune(-12.0)
@@ -3338,7 +3338,7 @@ export const ms20_gnometime = (pat) => pat
   .pitchmg(7.52)
   .gain(0.6);
 
-export const ms20_goforthegold = (pat) => pat
+export const ms20_go_for_the_gold = (pat) => pat
   .s("ms20")
   .vco1wave("saw").vco1scale(0.25).vco1level(1.0).vco1pw(0.173)
   .vco2wave("saw").vco2level(0.5).vco2tune(-12.0)
@@ -3351,7 +3351,7 @@ export const ms20_goforthegold = (pat) => pat
   .mgfreq(0.65).mgwave("tri")
   .gain(0.6);
 
-export const ms20_holdthesamples = (pat) => pat
+export const ms20_hold_the_samples = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(0.25).vco1level(0.333)
   .vco2wave("square").vco2level(0.5).vco2tune(-12.0)
@@ -3378,7 +3378,7 @@ export const ms20_hopscotch = (pat) => pat
   .modmatrix([{src:10, dst:17}, {src:13, dst:27}, {src:23, dst:12}, {src:1, dst:3}, {src:9, dst:16}, {src:32, dst:18}])
   .gain(0.6);
 
-export const ms20_lankylead = (pat) => pat
+export const ms20_lanky_lead = (pat) => pat
   .s("ms20")
   .vco1wave("square").vco1scale(0.25).vco1level(0.0).vco1pw(0.064)
   .vco2wave("square").vco2scale(0.5).vco2level(0.5).vco2tune(-12.0)
@@ -3392,7 +3392,7 @@ export const ms20_lankylead = (pat) => pat
   .pitchmg(2.48)
   .gain(0.6);
 
-export const ms20_laspuertas = (pat) => pat
+export const ms20_las_puertas = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(0.5).vco1level(0.0)
   .vco2wave("tri").vco2scale(0.5).vco2level(0.5).vco2tune(-12.0)
@@ -3405,7 +3405,7 @@ export const ms20_laspuertas = (pat) => pat
   .mgfreq(0.65).mgwave("saw")
   .gain(0.6);
 
-export const ms20_miracleoflife = (pat) => pat
+export const ms20_miracle_of_life = (pat) => pat
   .s("ms20")
   .vco1wave("square").vco1scale(0.25).vco1level(1.0).vco1pw(0.598)
   .vco2wave("square").vco2level(0.5).vco2tune(-5.14)
@@ -3567,7 +3567,7 @@ export const ms20_psychedelicorg = (pat) => pat
   .portamento(0.079)
   .gain(0.6);
 
-export const ms20_pumpthepedal = (pat) => pat
+export const ms20_pump_the_pedal = (pat) => pat
   .s("ms20")
   .vco1wave("saw").vco1level(0.667).vco1pw(0.166)
   .vco2wave("sine").vco2scale(0.5).vco2level(0.524).vco2tune(-12.0)
@@ -3597,7 +3597,7 @@ export const ms20_push_the_limit = (pat) => pat
   .modmatrix([{src:19, dst:2}, {src:3, dst:29}, {src:9, dst:8}, {src:13, dst:20}, {src:0, dst:28}, {src:17, dst:15}, {src:5, dst:7}, {src:34, dst:4}])
   .gain(0.6);
 
-export const ms20_razorbass = (pat) => pat
+export const ms20_razor_bass = (pat) => pat
   .s("ms20")
   .vco1wave("saw").vco1scale(0.25).vco1level(0.0)
   .vco2wave("tri").vco2scale(0.25).vco2level(0.5).vco2tune(-2.29)
@@ -3611,7 +3611,7 @@ export const ms20_razorbass = (pat) => pat
   .pitcheg(2.67)
   .gain(0.6);
 
-export const ms20_rewindtheflute = (pat) => pat
+export const ms20_rewind_the_flute = (pat) => pat
   .s("ms20")
   .vco1wave("square").vco1level(0.667).vco1pw(0.363)
   .vco2wave("saw").vco2level(0.5).vco2tune(-12.0)
@@ -3626,7 +3626,7 @@ export const ms20_rewindtheflute = (pat) => pat
   .pitchmg(1.71)
   .gain(0.6);
 
-export const ms20_robotentropy = (pat) => pat
+export const ms20_robot_entropy = (pat) => pat
   .s("ms20")
   .vco1wave("saw").vco1level(0.0)
   .vco2wave("saw").vco2scale(0.25).vco2level(0.5).vco2tune(-12.0)
@@ -3640,7 +3640,7 @@ export const ms20_robotentropy = (pat) => pat
   .modmatrix([{src:1, dst:4}, {src:2, dst:19}, {src:13, dst:7}])
   .gain(0.6);
 
-export const ms20_screamingsoul = (pat) => pat
+export const ms20_screaming_soul = (pat) => pat
   .s("ms20")
   .vco1wave("sine").vco1scale(2.0).vco1level(0.0)
   .vco2wave("sine").vco2scale(2.0).vco2level(0.81).vco2tune(-12.0)
@@ -3671,7 +3671,7 @@ export const ms20_slow_down = (pat) => pat
   .modmatrix([{src:29, dst:3}, {src:24, dst:15}])
   .gain(0.6);
 
-export const ms20_smakthakat = (pat) => pat
+export const ms20_smak_tha_kat = (pat) => pat
   .s("ms20")
   .vco1wave("square").vco1scale(0.5).vco1level(1.0).vco1pw(0.088)
   .vco2wave("sine").vco2level(0.5).vco2tune(12.0)
@@ -3687,7 +3687,7 @@ export const ms20_smakthakat = (pat) => pat
   .modmatrix([{src:0, dst:23}])
   .gain(0.6);
 
-export const ms20_squaresquared = (pat) => pat
+export const ms20_square_squared = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1level(0.333).vco1pw(0.189)
   .vco2wave("saw").vco2level(0.5).vco2tune(-1.92)
@@ -3701,7 +3701,7 @@ export const ms20_squaresquared = (pat) => pat
   .pitchmg(0.96)
   .gain(0.6);
 
-export const ms20_stormapproaching = (pat) => pat
+export const ms20_storm_approaching = (pat) => pat
   .s("ms20")
   .vco1wave("square").vco1scale(0.25).vco1level(0.0).vco1pw(0.134)
   .vco2wave("saw").vco2scale(0.5).vco2level(0.5).vco2tune(-12.0)
@@ -3731,7 +3731,7 @@ export const ms20_strings = (pat) => pat
   .modmatrix([{src:33, dst:0}])
   .gain(0.6);
 
-export const ms20_surfacebubbles = (pat) => pat
+export const ms20_surface_bubbles = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1level(0.667)
   .vco2wave("tri").vco2level(0.5).vco2tune(-12.0)
@@ -3748,7 +3748,7 @@ export const ms20_surfacebubbles = (pat) => pat
   .modmatrix([{src:6, dst:12}, {src:10, dst:14}, {src:13, dst:16}, {src:3, dst:23}, {src:9, dst:15}, {src:17, dst:28}])
   .gain(0.6);
 
-export const ms20_synthpad = (pat) => pat
+export const ms20_synth_pad = (pat) => pat
   .s("ms20")
   .vco1wave("square").vco1scale(0.5).vco1level(0.333).vco1pw(0.414)
   .vco2wave("sine").vco2scale(0.5).vco2level(0.43).vco2tune(-12.0)
@@ -3823,7 +3823,7 @@ export const ms20_wait_for_it = (pat) => pat
   .modmatrix([{src:29, dst:3}, {src:25, dst:28}])
   .gain(0.6);
 
-export const ms20_woodchipper = (pat) => pat
+export const ms20_wood_chipper = (pat) => pat
   .s("ms20")
   .vco1wave("square").vco1scale(0.25).vco1level(0.0).vco1pw(0.018)
   .vco2wave("saw").vco2scale(0.25).vco2level(0.5).vco2tune(-12.0)
@@ -3851,7 +3851,7 @@ export const ms20_wow_synth = (pat) => pat
   .modmatrix([{src:17, dst:11}])
   .gain(0.6);
 
-export const ms20_n808_state = (pat) => pat
+export const ms20_n80_states = (pat) => pat
   .s("ms20")
   .vco1wave("tri").vco1scale(0.25).vco1level(0.333).vco1pw(0.054)
   .vco2wave("tri").vco2scale(0.5).vco2level(0.5).vco2tune(-12.0)
@@ -4066,7 +4066,7 @@ export const ms20_mystery_synth = (pat) => pat
   .modmatrix([{src:5, dst:16}, {src:0, dst:11}, {src:27, dst:14}, {src:1, dst:12}, {src:2, dst:13}, {src:33, dst:7}])
   .gain(0.6);
 
-export const ms20_oberhiem_bass = (pat) => pat
+export const ms20_ob_bass = (pat) => pat
   .s("ms20")
   .vco1wave("saw").vco1level(0.333)
   .vco2wave("square").vco2level(0.532).vco2tune(-12.0)
@@ -4350,11 +4350,11 @@ export const ms20_wild_leads = (pat) => pat
   .gain(0.6);
 
 // Bank collections
-export const ms20_factory1 = { ms20_n5th_vocoder_pad, ms20_a_little_flutter, ms20_acid_bass, ms20_analog_bass, ms20_analog_guitar, ms20_arpeggio_pad, ms20_ayyayy, ms20_bpf_air_stab, ms20_baff_base, ms20_band_pass_pad, ms20_bend_pwm_lead, ms20_boost_bass, ms20_broken_sync_lead, ms20_chill_detune, ms20_cyber_rev_bass, ms20_darkside_x_bass, ms20_deep_synth_bass, ms20_disco_bass, ms20_drive_squ_bass, ms20_elektrash, ms20_euphoric_stab, ms20_fb_dist_lead, ms20_hard_unison_lead, ms20_heaven_motion, ms20_hoover_uni_bass, ms20_howling_dog, ms20_human_choir, ms20_inner_cmt, ms20_klash_pwm_bass, ms20_ms_motion_pad, ms20_ms_percussion, ms20_ms_poly_stab, ms20_masterblastermw, ms20_morphing_arpline, ms20_noise_snap, ms20_nu_skool_bass, ms20_organ_bass, ms20_pwm_lead, ms20_pwm_sweep_pad, ms20_plink_chord, ms20_pulse_pad, ms20_resonance_piano, ms20_retro_strings, ms20_ring_mod_bell, ms20_ring_mod_fall, ms20_s_h_poly_comp, ms20_sample_hold, ms20_simple_sq_bass, ms20_snake_lead_bass, ms20_solid_bass, ms20_solo_trumpet, ms20_steganography, ms20_surfin_lead, ms20_synthetic_snore, ms20_technostress, ms20_terrible_intro, ms20_tine_piano, ms20_turnback_pizz, ms20_velocity_kick, ms20_vintage_mw_lead, ms20_voco_motion, ms20_whirlwind_pad, ms20_wobble_synth, ms20_yoi_choir };
-export const ms20_factory2 = { ms20_sample_hold_factory2, ms20_init_program, ms20_a_little_flutter_factory2, ms20_init_program_factory2, ms20_synthetic_snore_factory2, ms20_init_program_factory2_2, ms20_init_program_factory2_3, ms20_synthetic_snore_factory2_2, ms20_init_program_factory2_4, ms20_solid_bass_factory2, ms20_init_program_factory2_5, ms20_synthetic_snore_factory2_3, ms20_synthetic_snore_factory2_4, ms20_ring_mod_bell_factory2, ms20_init_program_factory2_6, ms20_init_program_factory2_7, ms20_synthetic_snore_factory2_5, ms20_ring_mod_fall_factory2, ms20_init_program_factory2_8, ms20_synthetic_snore_factory2_6, ms20_synthetic_snore_factory2_7, ms20_synthetic_snore_factory2_8, ms20_init_program_factory2_9, ms20_morphing_arpline_factory2, ms20_synthetic_snore_factory2_9, ms20_init_program_factory2_10, ms20_sample_hold_factory2_2, ms20_init_program_factory2_11, ms20_synthetic_snore_factory2_10, ms20_init_program_factory2_12, ms20_init_program_factory2_13, ms20_init_program_factory2_14, ms20_synthetic_snore_factory2_11, ms20_synthetic_snore_factory2_12, ms20_init_program_factory2_15, ms20_init_program_factory2_16, ms20_synthetic_snore_factory2_13, ms20_synthetic_snore_factory2_14, ms20_synthetic_snore_factory2_15, ms20_init_program_factory2_17, ms20_init_program_factory2_18, ms20_init_program_factory2_19, ms20_synthetic_snore_factory2_16, ms20_pwm_lead_factory2, ms20_init_program_factory2_20, ms20_init_program_factory2_21, ms20_sample_hold_factory2_3, ms20_synthetic_snore_factory2_17, ms20_init_program_factory2_22, ms20_synthetic_snore_factory2_18, ms20_synthetic_snore_factory2_19, ms20_synthetic_snore_factory2_20, ms20_synthetic_snore_factory2_21, ms20_init_program_factory2_23, ms20_init_program_factory2_24, ms20_init_program_factory2_25, ms20_synthetic_snore_factory2_22, ms20_synthetic_snore_factory2_23, ms20_init_program_factory2_26, ms20_synthetic_snore_factory2_24, ms20_synthetic_snore_factory2_25, ms20_init_program_factory2_27, ms20_init_program_factory2_28, ms20_init_program_factory2_29, ms20_init_program_factory2_30, ms20_init_program_factory2_31, ms20_init_program_factory2_32, ms20_bpf_air_stab_factory2, ms20_simple_sq_bass_factory2, ms20_init_program_factory2_33, ms20_init_program_factory2_34, ms20_synthetic_snore_factory2_26, ms20_init_program_factory2_35, ms20_synthetic_snore_factory2_27, ms20_elektrash_factory2, ms20_pwm_lead_factory2_2, ms20_init_program_factory2_36, ms20_synthetic_snore_factory2_28, ms20_synthetic_snore_factory2_29, ms20_init_program_factory2_37, ms20_analog_bass_factory2, ms20_solid_bass_factory2_2, ms20_init_program_factory2_38, ms20_synthetic_snore_factory2_30, ms20_init_program_factory2_39, ms20_synthetic_snore_factory2_31, ms20_init_program_factory2_40, ms20_init_program_factory2_41, ms20_synthetic_snore_factory2_32, ms20_synthetic_snore_factory2_33, ms20_init_program_factory2_42, ms20_synthetic_snore_factory2_34, ms20_init_program_factory2_43, ms20_synthetic_snore_factory2_35, ms20_synthetic_snore_factory2_36, ms20_synthetic_snore_factory2_37, ms20_synthetic_snore_factory2_38, ms20_init_program_factory2_44, ms20_init_program_factory2_45, ms20_synthetic_snore_factory2_39, ms20_arpeggio_pad_factory2, ms20_synthetic_snore_factory2_40, ms20_init_program_factory2_46, ms20_init_program_factory2_47, ms20_init_program_factory2_48, ms20_retro_strings_factory2, ms20_init_program_factory2_49, ms20_init_program_factory2_50, ms20_synthetic_snore_factory2_41, ms20_analog_guitar_factory2, ms20_elektrash_factory2_2, ms20_sample_hold_factory2_4, ms20_init_program_factory2_51, ms20_technostress_factory2, ms20_morphing_arpline_factory2_2, ms20_init_program_factory2_52, ms20_synthetic_snore_factory2_42, ms20_init_program_factory2_53, ms20_init_program_factory2_54, ms20_synthetic_snore_factory2_43, ms20_synthetic_snore_factory2_44, ms20_init_program_factory2_55, ms20_pulse_pad_factory2, ms20_init_program_factory2_56, ms20_synthetic_snore_factory2_45, ms20_init_program_factory2_57, ms20_elektrash_factory2_3, ms20_synthetic_snore_factory2_46, ms20_init_program_factory2_58, ms20_init_program_factory2_59, ms20_synthetic_snore_factory2_47, ms20_init_program_factory2_60 };
-export const ms20_korg_usa = { ms20_n5th_level, ms20_n70schords, ms20_n70s_lead, ms20_n9ths, ms20_absolutekaoss, ms20_accordian, ms20_adiratobass, ms20_analogalead, ms20_baddreams, ms20_bassguitar, ms20_bassinyourface, ms20_beatmaker, ms20_beeo, ms20_bitty, ms20_blast_off, ms20_braininvasion, ms20_brokenmtrcycle, ms20_bubbles, ms20_bugsatnight, ms20_bumpy, ms20_chopitup, ms20_classic_synth, ms20_combo_organ, ms20_crun_j, ms20_death_organ, ms20_don_tgointhere, ms20_fouronthefloor, ms20_funwithmgs, ms20_gnometime, ms20_goforthegold, ms20_holdthesamples, ms20_hopscotch, ms20_lankylead, ms20_laspuertas, ms20_miracleoflife, ms20_noise_net, ms20_noisey, ms20_o2_tank, ms20_orchisection, ms20_organ_fall, ms20_pke_overload, ms20_padsies, ms20_pluckit, ms20_pow, ms20_psychedelicorg, ms20_pumpthepedal, ms20_push_the_limit, ms20_razorbass, ms20_rewindtheflute, ms20_robotentropy, ms20_screamingsoul, ms20_slow_down, ms20_smakthakat, ms20_squaresquared, ms20_stormapproaching, ms20_strings, ms20_surfacebubbles, ms20_synthpad, ms20_tremsper, ms20_vacancy, ms20_vocasynth, ms20_wait_for_it, ms20_woodchipper, ms20_wow_synth };
-export const ms20_devine = { ms20_n808_state, ms20_blue_lead_line, ms20_classic_sweeps, ms20_dopolar_dots, ms20_drop_bassline, ms20_elecrix_piano, ms20_high_pass_bass, ms20_mario_land, ms20_mean_bass_grit, ms20_micro_synth, ms20_mild_bliss, ms20_modular_snapshot, ms20_modulate_leads, ms20_mystery_synth, ms20_oberhiem_bass, ms20_old_modular_kit, ms20_old_organ, ms20_old_synth, ms20_plaid_sounds, ms20_play_a_chord, ms20_pulsing_bass_lin, ms20_rainy_dayz, ms20_random_highpass, ms20_repeat_harmony, ms20_rich_cloud, ms20_simple_sines, ms20_spy_synth, ms20_sweep_buzz, ms20_underworld, ms20_watermarks, ms20_whispy_squares, ms20_wild_leads };
+export const ms20_factory1 = { ms20_n5th_vocoder_pad, ms20_a_little_flutter, ms20_acid_bass, ms20_analog_bass, ms20_analog_guitar, ms20_arpeggio_pad, ms20_ayyayy, ms20_bpf_air_stab, ms20_baff_base, ms20_band_pass_pad, ms20_bend_pwm_lead, ms20_boost_bass, ms20_broken_sync_lead, ms20_chill_detune, ms20_cyber_rev_bass, ms20_darkside_x_bass, ms20_deep_synth_bass, ms20_disco_bass, ms20_drive_squ_bass, ms20_elektrash, ms20_euphoric_stab, ms20_fb_dist_lead, ms20_hard_unison_lead, ms20_heaven_motion, ms20_hoover_uni_bass, ms20_howling_dog, ms20_human_choir, ms20_inner_cmt, ms20_klash_pwm_bass, ms20_ms_motion_pad, ms20_ms_percussion, ms20_ms_poly_stab, ms20_masterblastermw, ms20_morphing_arpline, ms20_noise_snap, ms20_nu_skool_bass, ms20_organ_bass, ms20_pwm_lead, ms20_pwm_sweep_pad, ms20_plink_chord, ms20_pulse_pad, ms20_resonance_piano, ms20_retro_strings, ms20_ring_mod_bell, ms20_ring_mod_fall, ms20_s_h_poly_comp, ms20_sample_hold, ms20_simple_sq_bass, ms20_snake_leadbass, ms20_solid_bass, ms20_solo_trumpet, ms20_steganography, ms20_surfin_lead, ms20_synthetic_snore, ms20_technostress, ms20_terrible_intro, ms20_tine_piano, ms20_turnback_pizz, ms20_velocity_kick, ms20_vintage_mw_lead, ms20_voco_motion, ms20_whirlwind_pad, ms20_wobble_synth, ms20_yoi_choir };
+export const ms20_factory2 = { ms20_n42thefloor, ms20_n5th_kiwi_juice, ms20_n8_bit_evolver, ms20_ai_opera, ms20_aftertaste_keys, ms20_aggro_salsa_lead, ms20_angry_guitar, ms20_bendy_pad, ms20_blurred_memories, ms20_butter_saw, ms20_buzz_kill_bass, ms20_chill_flange_pad, ms20_clicky_pulse_arp, ms20_computer_bell, ms20_cooped_up_king_lead, ms20_cruise, ms20_dee_tuned, ms20_disco_pow, ms20_distortion_funk, ms20_doppler, ms20_dott_pluck, ms20_drone_generator, ms20_drone_looper, ms20_dub_sub, ms20_dusk_mite_bass, ms20_edm_lead, ms20_ear_muff_pluck, ms20_elastic_soul_poly, ms20_env_sign_pad, ms20_eric, ms20_expressive_lead, ms20_ext_fm, ms20_fake_orchestra, ms20_faraway_ring, ms20_feedback_bass, ms20_fierce_lead, ms20_fierce_winter_fx, ms20_filter_bubbles, ms20_fingers_on_steroid, ms20_flat_key_rolls, ms20_flydye_synth, ms20_fonk_universe_poly, ms20_fungi_keys, ms20_funky_saw, ms20_gainer_bass, ms20_hello_bildam_bass, ms20_hot_box_lead, ms20_in_motion_bass, ms20_jolly_jumper, ms20_jump_clav, ms20_last_knight_lead, ms20_lazy_fuzz_lead, ms20_lazy_toad_bass, ms20_lemario_bruvas, ms20_leux_fi_axle_poly, ms20_lucky_bass, ms20_lunar_bells, ms20_lunar_brass, ms20_mw_env_morph, ms20_macho_staccato, ms20_merry_go_pad, ms20_mings_mercy_bass, ms20_mixed_waves, ms20_modulated_chords, ms20_mow_bass, ms20_mute_flute, ms20_nasty_bp_bass, ms20_ocean, ms20_oct_saw_bass, ms20_para_finaylia, ms20_paraphonic_aftertouch, ms20_pick_brass, ms20_plate_pad, ms20_poly_sunburst, ms20_proggy_4ths, ms20_pulse_od_lead, ms20_rising_tides, ms20_robo_clap, ms20_roll_up_bass, ms20_rubber_bass, ms20_rubberound, ms20_saw_sweep_bass, ms20_say_gah_rings_poly, ms20_scrapull_hit, ms20_self_osc_kick, ms20_self_osc_pluck, ms20_shepard_race, ms20_shifting_chords, ms20_sicka_more_pad, ms20_silver_bullet, ms20_sir_brutus_bass, ms20_slick_kik, ms20_slow_hp_distortion, ms20_slow_n_wide_pad, ms20_smoove_lead, ms20_snappy_synth, ms20_sore_throat_pluck, ms20_space_fight_perc, ms20_space_gunz_fx, ms20_spaceout, ms20_spooky_pulse_arp, ms20_squelch_bass, ms20_star_crunch_poly, ms20_stockton, ms20_stranded_on_noise_shore, ms20_string_machine, ms20_sub_bass, ms20_sub_etage, ms20_swimming_pad, ms20_syn_clav, ms20_talking_4ths, ms20_tamper_keys, ms20_the_funked_bass, ms20_the_melbourne_sound, ms20_thick_acid_mod, ms20_thick_phase, ms20_thick_swell, ms20_tight_sweep_pad, ms20_trap_alarm, ms20_vari_lead, ms20_velocity_percs, ms20_vibrato_quints, ms20_warm_pulse_arp, ms20_wave_surfer_lead, ms20_weowww, ms20_wet_saw_lead, ms20_wheels_up_seq, ms20_whistler, ms20_whiteout, ms20_wobbly_bells, ms20_wobbly_s_h_pad, ms20_wowzer_fx };
+export const ms20_korg_usa = { ms20_n5th_level, ms20_n70s_chords, ms20_n70s_lead, ms20_n9ths, ms20_absolute_kaoss, ms20_accordian, ms20_adirato_bass, ms20_analogalead, ms20_bad_dreams, ms20_bass_guitar, ms20_bass_in_your_face, ms20_beat_maker, ms20_beeo, ms20_bitty, ms20_blast_off, ms20_braininvasion, ms20_brokenmtrcycle, ms20_bubbles, ms20_bugs_at_night, ms20_bumpy, ms20_chopitup, ms20_classic_synth, ms20_combo_organ, ms20_crun_j, ms20_death_organ, ms20_don_t_go_in_there, ms20_four_on_the_floor, ms20_fun_with_mgs, ms20_gnome_time, ms20_go_for_the_gold, ms20_hold_the_samples, ms20_hopscotch, ms20_lanky_lead, ms20_las_puertas, ms20_miracle_of_life, ms20_noise_net, ms20_noisey, ms20_o2_tank, ms20_orchisection, ms20_organ_fall, ms20_pke_overload, ms20_padsies, ms20_pluckit, ms20_pow, ms20_psychedelicorg, ms20_pump_the_pedal, ms20_push_the_limit, ms20_razor_bass, ms20_rewind_the_flute, ms20_robot_entropy, ms20_screaming_soul, ms20_slow_down, ms20_smak_tha_kat, ms20_square_squared, ms20_storm_approaching, ms20_strings, ms20_surface_bubbles, ms20_synth_pad, ms20_tremsper, ms20_vacancy, ms20_vocasynth, ms20_wait_for_it, ms20_wood_chipper, ms20_wow_synth };
+export const ms20_devine = { ms20_n80_states, ms20_blue_lead_line, ms20_classic_sweeps, ms20_dopolar_dots, ms20_drop_bassline, ms20_elecrix_piano, ms20_high_pass_bass, ms20_mario_land, ms20_mean_bass_grit, ms20_micro_synth, ms20_mild_bliss, ms20_modular_snapshot, ms20_modulate_leads, ms20_mystery_synth, ms20_ob_bass, ms20_old_modular_kit, ms20_old_organ, ms20_old_synth, ms20_plaid_sounds, ms20_play_a_chord, ms20_pulsing_bass_lin, ms20_rainy_dayz, ms20_random_highpass, ms20_repeat_harmony, ms20_rich_cloud, ms20_simple_sines, ms20_spy_synth, ms20_sweep_buzz, ms20_underworld, ms20_watermarks, ms20_whispy_squares, ms20_wild_leads };
 
-export const ms20_all = { ms20_n5th_vocoder_pad, ms20_a_little_flutter, ms20_acid_bass, ms20_analog_bass, ms20_analog_guitar, ms20_arpeggio_pad, ms20_ayyayy, ms20_bpf_air_stab, ms20_baff_base, ms20_band_pass_pad, ms20_bend_pwm_lead, ms20_boost_bass, ms20_broken_sync_lead, ms20_chill_detune, ms20_cyber_rev_bass, ms20_darkside_x_bass, ms20_deep_synth_bass, ms20_disco_bass, ms20_drive_squ_bass, ms20_elektrash, ms20_euphoric_stab, ms20_fb_dist_lead, ms20_hard_unison_lead, ms20_heaven_motion, ms20_hoover_uni_bass, ms20_howling_dog, ms20_human_choir, ms20_inner_cmt, ms20_klash_pwm_bass, ms20_ms_motion_pad, ms20_ms_percussion, ms20_ms_poly_stab, ms20_masterblastermw, ms20_morphing_arpline, ms20_noise_snap, ms20_nu_skool_bass, ms20_organ_bass, ms20_pwm_lead, ms20_pwm_sweep_pad, ms20_plink_chord, ms20_pulse_pad, ms20_resonance_piano, ms20_retro_strings, ms20_ring_mod_bell, ms20_ring_mod_fall, ms20_s_h_poly_comp, ms20_sample_hold, ms20_simple_sq_bass, ms20_snake_lead_bass, ms20_solid_bass, ms20_solo_trumpet, ms20_steganography, ms20_surfin_lead, ms20_synthetic_snore, ms20_technostress, ms20_terrible_intro, ms20_tine_piano, ms20_turnback_pizz, ms20_velocity_kick, ms20_vintage_mw_lead, ms20_voco_motion, ms20_whirlwind_pad, ms20_wobble_synth, ms20_yoi_choir, ms20_sample_hold_factory2, ms20_init_program, ms20_a_little_flutter_factory2, ms20_init_program_factory2, ms20_synthetic_snore_factory2, ms20_init_program_factory2_2, ms20_init_program_factory2_3, ms20_synthetic_snore_factory2_2, ms20_init_program_factory2_4, ms20_solid_bass_factory2, ms20_init_program_factory2_5, ms20_synthetic_snore_factory2_3, ms20_synthetic_snore_factory2_4, ms20_ring_mod_bell_factory2, ms20_init_program_factory2_6, ms20_init_program_factory2_7, ms20_synthetic_snore_factory2_5, ms20_ring_mod_fall_factory2, ms20_init_program_factory2_8, ms20_synthetic_snore_factory2_6, ms20_synthetic_snore_factory2_7, ms20_synthetic_snore_factory2_8, ms20_init_program_factory2_9, ms20_morphing_arpline_factory2, ms20_synthetic_snore_factory2_9, ms20_init_program_factory2_10, ms20_sample_hold_factory2_2, ms20_init_program_factory2_11, ms20_synthetic_snore_factory2_10, ms20_init_program_factory2_12, ms20_init_program_factory2_13, ms20_init_program_factory2_14, ms20_synthetic_snore_factory2_11, ms20_synthetic_snore_factory2_12, ms20_init_program_factory2_15, ms20_init_program_factory2_16, ms20_synthetic_snore_factory2_13, ms20_synthetic_snore_factory2_14, ms20_synthetic_snore_factory2_15, ms20_init_program_factory2_17, ms20_init_program_factory2_18, ms20_init_program_factory2_19, ms20_synthetic_snore_factory2_16, ms20_pwm_lead_factory2, ms20_init_program_factory2_20, ms20_init_program_factory2_21, ms20_sample_hold_factory2_3, ms20_synthetic_snore_factory2_17, ms20_init_program_factory2_22, ms20_synthetic_snore_factory2_18, ms20_synthetic_snore_factory2_19, ms20_synthetic_snore_factory2_20, ms20_synthetic_snore_factory2_21, ms20_init_program_factory2_23, ms20_init_program_factory2_24, ms20_init_program_factory2_25, ms20_synthetic_snore_factory2_22, ms20_synthetic_snore_factory2_23, ms20_init_program_factory2_26, ms20_synthetic_snore_factory2_24, ms20_synthetic_snore_factory2_25, ms20_init_program_factory2_27, ms20_init_program_factory2_28, ms20_init_program_factory2_29, ms20_init_program_factory2_30, ms20_init_program_factory2_31, ms20_init_program_factory2_32, ms20_bpf_air_stab_factory2, ms20_simple_sq_bass_factory2, ms20_init_program_factory2_33, ms20_init_program_factory2_34, ms20_synthetic_snore_factory2_26, ms20_init_program_factory2_35, ms20_synthetic_snore_factory2_27, ms20_elektrash_factory2, ms20_pwm_lead_factory2_2, ms20_init_program_factory2_36, ms20_synthetic_snore_factory2_28, ms20_synthetic_snore_factory2_29, ms20_init_program_factory2_37, ms20_analog_bass_factory2, ms20_solid_bass_factory2_2, ms20_init_program_factory2_38, ms20_synthetic_snore_factory2_30, ms20_init_program_factory2_39, ms20_synthetic_snore_factory2_31, ms20_init_program_factory2_40, ms20_init_program_factory2_41, ms20_synthetic_snore_factory2_32, ms20_synthetic_snore_factory2_33, ms20_init_program_factory2_42, ms20_synthetic_snore_factory2_34, ms20_init_program_factory2_43, ms20_synthetic_snore_factory2_35, ms20_synthetic_snore_factory2_36, ms20_synthetic_snore_factory2_37, ms20_synthetic_snore_factory2_38, ms20_init_program_factory2_44, ms20_init_program_factory2_45, ms20_synthetic_snore_factory2_39, ms20_arpeggio_pad_factory2, ms20_synthetic_snore_factory2_40, ms20_init_program_factory2_46, ms20_init_program_factory2_47, ms20_init_program_factory2_48, ms20_retro_strings_factory2, ms20_init_program_factory2_49, ms20_init_program_factory2_50, ms20_synthetic_snore_factory2_41, ms20_analog_guitar_factory2, ms20_elektrash_factory2_2, ms20_sample_hold_factory2_4, ms20_init_program_factory2_51, ms20_technostress_factory2, ms20_morphing_arpline_factory2_2, ms20_init_program_factory2_52, ms20_synthetic_snore_factory2_42, ms20_init_program_factory2_53, ms20_init_program_factory2_54, ms20_synthetic_snore_factory2_43, ms20_synthetic_snore_factory2_44, ms20_init_program_factory2_55, ms20_pulse_pad_factory2, ms20_init_program_factory2_56, ms20_synthetic_snore_factory2_45, ms20_init_program_factory2_57, ms20_elektrash_factory2_3, ms20_synthetic_snore_factory2_46, ms20_init_program_factory2_58, ms20_init_program_factory2_59, ms20_synthetic_snore_factory2_47, ms20_init_program_factory2_60, ms20_n5th_level, ms20_n70schords, ms20_n70s_lead, ms20_n9ths, ms20_absolutekaoss, ms20_accordian, ms20_adiratobass, ms20_analogalead, ms20_baddreams, ms20_bassguitar, ms20_bassinyourface, ms20_beatmaker, ms20_beeo, ms20_bitty, ms20_blast_off, ms20_braininvasion, ms20_brokenmtrcycle, ms20_bubbles, ms20_bugsatnight, ms20_bumpy, ms20_chopitup, ms20_classic_synth, ms20_combo_organ, ms20_crun_j, ms20_death_organ, ms20_don_tgointhere, ms20_fouronthefloor, ms20_funwithmgs, ms20_gnometime, ms20_goforthegold, ms20_holdthesamples, ms20_hopscotch, ms20_lankylead, ms20_laspuertas, ms20_miracleoflife, ms20_noise_net, ms20_noisey, ms20_o2_tank, ms20_orchisection, ms20_organ_fall, ms20_pke_overload, ms20_padsies, ms20_pluckit, ms20_pow, ms20_psychedelicorg, ms20_pumpthepedal, ms20_push_the_limit, ms20_razorbass, ms20_rewindtheflute, ms20_robotentropy, ms20_screamingsoul, ms20_slow_down, ms20_smakthakat, ms20_squaresquared, ms20_stormapproaching, ms20_strings, ms20_surfacebubbles, ms20_synthpad, ms20_tremsper, ms20_vacancy, ms20_vocasynth, ms20_wait_for_it, ms20_woodchipper, ms20_wow_synth, ms20_n808_state, ms20_blue_lead_line, ms20_classic_sweeps, ms20_dopolar_dots, ms20_drop_bassline, ms20_elecrix_piano, ms20_high_pass_bass, ms20_mario_land, ms20_mean_bass_grit, ms20_micro_synth, ms20_mild_bliss, ms20_modular_snapshot, ms20_modulate_leads, ms20_mystery_synth, ms20_oberhiem_bass, ms20_old_modular_kit, ms20_old_organ, ms20_old_synth, ms20_plaid_sounds, ms20_play_a_chord, ms20_pulsing_bass_lin, ms20_rainy_dayz, ms20_random_highpass, ms20_repeat_harmony, ms20_rich_cloud, ms20_simple_sines, ms20_spy_synth, ms20_sweep_buzz, ms20_underworld, ms20_watermarks, ms20_whispy_squares, ms20_wild_leads };
+export const ms20_all = { ms20_n5th_vocoder_pad, ms20_a_little_flutter, ms20_acid_bass, ms20_analog_bass, ms20_analog_guitar, ms20_arpeggio_pad, ms20_ayyayy, ms20_bpf_air_stab, ms20_baff_base, ms20_band_pass_pad, ms20_bend_pwm_lead, ms20_boost_bass, ms20_broken_sync_lead, ms20_chill_detune, ms20_cyber_rev_bass, ms20_darkside_x_bass, ms20_deep_synth_bass, ms20_disco_bass, ms20_drive_squ_bass, ms20_elektrash, ms20_euphoric_stab, ms20_fb_dist_lead, ms20_hard_unison_lead, ms20_heaven_motion, ms20_hoover_uni_bass, ms20_howling_dog, ms20_human_choir, ms20_inner_cmt, ms20_klash_pwm_bass, ms20_ms_motion_pad, ms20_ms_percussion, ms20_ms_poly_stab, ms20_masterblastermw, ms20_morphing_arpline, ms20_noise_snap, ms20_nu_skool_bass, ms20_organ_bass, ms20_pwm_lead, ms20_pwm_sweep_pad, ms20_plink_chord, ms20_pulse_pad, ms20_resonance_piano, ms20_retro_strings, ms20_ring_mod_bell, ms20_ring_mod_fall, ms20_s_h_poly_comp, ms20_sample_hold, ms20_simple_sq_bass, ms20_snake_leadbass, ms20_solid_bass, ms20_solo_trumpet, ms20_steganography, ms20_surfin_lead, ms20_synthetic_snore, ms20_technostress, ms20_terrible_intro, ms20_tine_piano, ms20_turnback_pizz, ms20_velocity_kick, ms20_vintage_mw_lead, ms20_voco_motion, ms20_whirlwind_pad, ms20_wobble_synth, ms20_yoi_choir, ms20_n42thefloor, ms20_n5th_kiwi_juice, ms20_n8_bit_evolver, ms20_ai_opera, ms20_aftertaste_keys, ms20_aggro_salsa_lead, ms20_angry_guitar, ms20_bendy_pad, ms20_blurred_memories, ms20_butter_saw, ms20_buzz_kill_bass, ms20_chill_flange_pad, ms20_clicky_pulse_arp, ms20_computer_bell, ms20_cooped_up_king_lead, ms20_cruise, ms20_dee_tuned, ms20_disco_pow, ms20_distortion_funk, ms20_doppler, ms20_dott_pluck, ms20_drone_generator, ms20_drone_looper, ms20_dub_sub, ms20_dusk_mite_bass, ms20_edm_lead, ms20_ear_muff_pluck, ms20_elastic_soul_poly, ms20_env_sign_pad, ms20_eric, ms20_expressive_lead, ms20_ext_fm, ms20_fake_orchestra, ms20_faraway_ring, ms20_feedback_bass, ms20_fierce_lead, ms20_fierce_winter_fx, ms20_filter_bubbles, ms20_fingers_on_steroid, ms20_flat_key_rolls, ms20_flydye_synth, ms20_fonk_universe_poly, ms20_fungi_keys, ms20_funky_saw, ms20_gainer_bass, ms20_hello_bildam_bass, ms20_hot_box_lead, ms20_in_motion_bass, ms20_jolly_jumper, ms20_jump_clav, ms20_last_knight_lead, ms20_lazy_fuzz_lead, ms20_lazy_toad_bass, ms20_lemario_bruvas, ms20_leux_fi_axle_poly, ms20_lucky_bass, ms20_lunar_bells, ms20_lunar_brass, ms20_mw_env_morph, ms20_macho_staccato, ms20_merry_go_pad, ms20_mings_mercy_bass, ms20_mixed_waves, ms20_modulated_chords, ms20_mow_bass, ms20_mute_flute, ms20_nasty_bp_bass, ms20_ocean, ms20_oct_saw_bass, ms20_para_finaylia, ms20_paraphonic_aftertouch, ms20_pick_brass, ms20_plate_pad, ms20_poly_sunburst, ms20_proggy_4ths, ms20_pulse_od_lead, ms20_rising_tides, ms20_robo_clap, ms20_roll_up_bass, ms20_rubber_bass, ms20_rubberound, ms20_saw_sweep_bass, ms20_say_gah_rings_poly, ms20_scrapull_hit, ms20_self_osc_kick, ms20_self_osc_pluck, ms20_shepard_race, ms20_shifting_chords, ms20_sicka_more_pad, ms20_silver_bullet, ms20_sir_brutus_bass, ms20_slick_kik, ms20_slow_hp_distortion, ms20_slow_n_wide_pad, ms20_smoove_lead, ms20_snappy_synth, ms20_sore_throat_pluck, ms20_space_fight_perc, ms20_space_gunz_fx, ms20_spaceout, ms20_spooky_pulse_arp, ms20_squelch_bass, ms20_star_crunch_poly, ms20_stockton, ms20_stranded_on_noise_shore, ms20_string_machine, ms20_sub_bass, ms20_sub_etage, ms20_swimming_pad, ms20_syn_clav, ms20_talking_4ths, ms20_tamper_keys, ms20_the_funked_bass, ms20_the_melbourne_sound, ms20_thick_acid_mod, ms20_thick_phase, ms20_thick_swell, ms20_tight_sweep_pad, ms20_trap_alarm, ms20_vari_lead, ms20_velocity_percs, ms20_vibrato_quints, ms20_warm_pulse_arp, ms20_wave_surfer_lead, ms20_weowww, ms20_wet_saw_lead, ms20_wheels_up_seq, ms20_whistler, ms20_whiteout, ms20_wobbly_bells, ms20_wobbly_s_h_pad, ms20_wowzer_fx, ms20_n5th_level, ms20_n70s_chords, ms20_n70s_lead, ms20_n9ths, ms20_absolute_kaoss, ms20_accordian, ms20_adirato_bass, ms20_analogalead, ms20_bad_dreams, ms20_bass_guitar, ms20_bass_in_your_face, ms20_beat_maker, ms20_beeo, ms20_bitty, ms20_blast_off, ms20_braininvasion, ms20_brokenmtrcycle, ms20_bubbles, ms20_bugs_at_night, ms20_bumpy, ms20_chopitup, ms20_classic_synth, ms20_combo_organ, ms20_crun_j, ms20_death_organ, ms20_don_t_go_in_there, ms20_four_on_the_floor, ms20_fun_with_mgs, ms20_gnome_time, ms20_go_for_the_gold, ms20_hold_the_samples, ms20_hopscotch, ms20_lanky_lead, ms20_las_puertas, ms20_miracle_of_life, ms20_noise_net, ms20_noisey, ms20_o2_tank, ms20_orchisection, ms20_organ_fall, ms20_pke_overload, ms20_padsies, ms20_pluckit, ms20_pow, ms20_psychedelicorg, ms20_pump_the_pedal, ms20_push_the_limit, ms20_razor_bass, ms20_rewind_the_flute, ms20_robot_entropy, ms20_screaming_soul, ms20_slow_down, ms20_smak_tha_kat, ms20_square_squared, ms20_storm_approaching, ms20_strings, ms20_surface_bubbles, ms20_synth_pad, ms20_tremsper, ms20_vacancy, ms20_vocasynth, ms20_wait_for_it, ms20_wood_chipper, ms20_wow_synth, ms20_n80_states, ms20_blue_lead_line, ms20_classic_sweeps, ms20_dopolar_dots, ms20_drop_bassline, ms20_elecrix_piano, ms20_high_pass_bass, ms20_mario_land, ms20_mean_bass_grit, ms20_micro_synth, ms20_mild_bliss, ms20_modular_snapshot, ms20_modulate_leads, ms20_mystery_synth, ms20_ob_bass, ms20_old_modular_kit, ms20_old_organ, ms20_old_synth, ms20_plaid_sounds, ms20_play_a_chord, ms20_pulsing_bass_lin, ms20_rainy_dayz, ms20_random_highpass, ms20_repeat_harmony, ms20_rich_cloud, ms20_simple_sines, ms20_spy_synth, ms20_sweep_buzz, ms20_underworld, ms20_watermarks, ms20_whispy_squares, ms20_wild_leads };
 
 export const listMS20FactoryPresets = () => Object.keys(ms20_all);

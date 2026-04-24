@@ -15,3 +15,4 @@ export * from './audioContext.mjs';
 export * from './wavetable.mjs';
 export * from './ms20-patches.mjs';
 export * from './ms20-examples.mjs';
+export * from './ms20-factory-presets.mjs';

@@ -14,6 +14,7 @@ export const soundFilterType = {
   SAMPLES: 'samples',
   SYNTHS: 'synths',
   WAVETABLES: 'wavetables',
+  MS20: 'ms20',
   ALL: 'all',
 };
 

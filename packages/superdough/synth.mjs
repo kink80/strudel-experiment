@@ -533,6 +533,45 @@ export function registerSynthSounds() {
   );
 }
 
+export function registerMS20FactoryPresets() {
+  // Dynamically import to avoid circular deps — this runs after registerSynthSounds
+  const ms20Sound = soundMap.get()?.['ms20'];
+  if (!ms20Sound) {
+    console.warn('MS-20 synth not registered yet, skipping factory presets');
+    return;
+  }
+
+  // Import all factory presets
+  import('./ms20-factory-presets.mjs').then((module) => {
+    const allPresets = module.ms20_all;
+    if (!allPresets) return;
+
+    for (const [name, patchFn] of Object.entries(allPresets)) {
+      // Extract default values by running the patch function against a collector proxy
+      const defaults = {};
+      const collector = new Proxy({}, {
+        get(_, prop) {
+          return (val) => {
+            if (prop !== 's') defaults[prop] = val;
+            return collector;
+          };
+        }
+      });
+      patchFn(collector);
+
+      // Register as a sound that triggers ms20 with preset defaults
+      registerSound(
+        name,
+        (t, value, onended) => {
+          const merged = { ...defaults, ...value };
+          return ms20Sound.onTrigger(t, merged, onended);
+        },
+        { type: 'synth', tag: 'ms20', prebake: true },
+      );
+    }
+  });
+}
+
 export function waveformN(partials, type) {
   const real = new Float32Array(partials + 1);
   const imag = new Float32Array(partials + 1);
