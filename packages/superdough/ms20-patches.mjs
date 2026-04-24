@@ -1,322 +1,360 @@
 /**
  * MS-20 Patch Library for Strudel
  *
- * Recreates famous Korg MS-20 patches using Strudel's synthesis capabilities.
- * The MS-20 is known for its aggressive filters, raw oscillators, and powerful modulation.
+ * Uses the dedicated MS-20 AudioWorklet synthesizer, modelled from
+ * reverse-engineering the Korg MS-20 VST binary DSP engine.
+ *
+ * The MS-20 worklet implements:
+ *   - 2x bandlimited VCOs (saw/square/tri/sine) with polyBLEP
+ *   - Cascaded nonlinear Sallen-Key HPF & LPF with tanh saturation
+ *   - 2x exponential envelope generators (amplitude + filter)
+ *   - Modulation generator (LFO) for pitch and filter
+ *   - White/pink noise, ring modulator, portamento
  *
  * Usage:
- * import { ms20bass, ms20lead, ms20sync } from './ms20-patches.mjs';
- *
- * note("c2").apply(ms20bass)
- * note("c4 eb4 g4").apply(ms20lead)
+ *   note("c2").s("ms20")                           // Basic sound
+ *   note("c2").s("ms20").lpfcutoff(800).lpfpeak(0.6)  // With filter
+ *   note("c2").apply(ms20bass)                      // Use a preset patch
  */
 
 /**
  * Classic MS-20 Bass Patch
- * Characteristics: Deep, punchy bass with aggressive filter sweep
- * Uses: Basslines, sub bass, techno bass
+ * Deep, punchy bass with aggressive filter sweep from the nonlinear LPF
  */
 export const ms20bass = (pat) => pat
-  .s("sawtooth")
-  .lpf(400)           // Start with closed filter
-  .resonance(8)       // High resonance for MS-20 character
-  .ftype("ladder")    // Use ladder filter for analog character
-  .lpenv(2)           // Moderate filter envelope depth
-  .lpa(0.01)          // Fast attack
-  .lpd(0.15)          // Quick decay
-  .lps(0.1)           // Low sustain
-  .lpr(0.05)          // Short release
-  .attack(0.001)      // Immediate attack
-  .decay(0.2)         // Punchy decay
-  .sustain(0.3)       // Moderate sustain
-  .release(0.05)      // Quick release
+  .s("ms20")
+  .vco1wave("saw")
+  .vco1level(0.8)
+  .lpfcutoff(400)
+  .lpfpeak(0.5)
+  .lpfenv(3)          // EG2 → LPF: 3 octaves
+  .drive(2.0)         // Push the filters into saturation
+  .eg1attack(0.001)
+  .eg1decay(0.2)
+  .eg1sustain(0.3)
+  .eg1release(0.05)
+  .eg2attack(0.005)
+  .eg2decay(0.15)
+  .eg2sustain(0.05)
+  .eg2release(0.05)
   .gain(0.7);
 
 /**
- * MS-20 Bass with Pulse Wave
- * Characteristics: Thicker, more aggressive bass using pulse oscillator
- * Uses: Acid bass, resonant bass, aggressive basslines
+ * MS-20 Pulse Bass
+ * Thicker bass using pulse wave with PWM-like character
  */
 export const ms20pulsebass = (pat) => pat
-  .s("pulse")
-  .pw(0.5)            // Square wave
-  .lpf(500)
-  .resonance(10)      // Very high resonance
-  .ftype("ladder")
-  .lpenv(3)           // Deeper filter modulation
-  .lpa(0.005)
-  .lpd(0.18)
-  .lps(0.05)
-  .lpr(0.08)
-  .attack(0.001)
-  .decay(0.25)
-  .sustain(0.2)
-  .release(0.08)
+  .s("ms20")
+  .vco1wave("square")
+  .vco1pw(0.4)
+  .vco1level(0.8)
+  .lpfcutoff(500)
+  .lpfpeak(0.6)
+  .lpfenv(3.5)
+  .drive(2.5)
+  .eg1attack(0.001)
+  .eg1decay(0.25)
+  .eg1sustain(0.2)
+  .eg1release(0.08)
+  .eg2attack(0.005)
+  .eg2decay(0.18)
+  .eg2sustain(0.0)
+  .eg2release(0.08)
   .gain(0.65);
 
 /**
  * MS-20 Classic Lead
- * Characteristics: Cutting lead sound with vibrato and filter modulation
- * Uses: Melodic leads, solos, hooky lines
+ * Cutting lead with vibrato and filter modulation
  */
 export const ms20lead = (pat) => pat
-  .s("sawtooth")
-  .lpf(1200)
-  .resonance(6)
-  .ftype("ladder")
-  .lpenv(4)           // Strong filter sweep
-  .lpa(0.02)
-  .lpd(0.3)
-  .lps(0.4)
-  .lpr(0.2)
-  .attack(0.01)
-  .decay(0.1)
-  .sustain(0.7)
-  .release(0.15)
-  .vib(5)             // Add vibrato
-  .vibmod(0.15)       // Moderate vibrato depth
+  .s("ms20")
+  .vco1wave("saw")
+  .vco1level(0.7)
+  .vco2wave("saw")
+  .vco2level(0.4)
+  .vco2tune(0.08)     // Slight detune for thickness
+  .lpfcutoff(1200)
+  .lpfpeak(0.35)
+  .lpfenv(4)
+  .drive(1.8)
+  .eg1attack(0.01)
+  .eg1decay(0.1)
+  .eg1sustain(0.7)
+  .eg1release(0.15)
+  .eg2attack(0.02)
+  .eg2decay(0.3)
+  .eg2sustain(0.4)
+  .eg2release(0.2)
+  .mgfreq(5)          // MG at 5Hz
+  .mgwave("tri")
+  .mgpitch(0.15)      // Subtle vibrato
   .gain(0.6);
 
 /**
- * MS-20 Sync Lead
- * Characteristics: Aggressive sync-style lead using supersaw
- * Uses: Aggressive leads, trance sounds, powerful melodies
+ * MS-20 Sync-style Lead
+ * Aggressive lead using dual detuned oscillators
  */
 export const ms20sync = (pat) => pat
-  .s("supersaw")
-  .detune(0.25)       // Slight detuning for width
-  .lpf(2000)
-  .resonance(7)
-  .ftype("ladder")
-  .lpenv(5)
-  .lpa(0.01)
-  .lpd(0.25)
-  .lps(0.3)
-  .lpr(0.15)
-  .attack(0.005)
-  .decay(0.15)
-  .sustain(0.6)
-  .release(0.2)
+  .s("ms20")
+  .vco1wave("saw")
+  .vco1level(0.6)
+  .vco2wave("saw")
+  .vco2level(0.6)
+  .vco2tune(7)        // Perfect fifth detune
+  .lpfcutoff(2000)
+  .lpfpeak(0.4)
+  .lpfenv(5)
+  .drive(2.0)
+  .eg1attack(0.005)
+  .eg1decay(0.15)
+  .eg1sustain(0.6)
+  .eg1release(0.2)
+  .eg2attack(0.01)
+  .eg2decay(0.25)
+  .eg2sustain(0.3)
+  .eg2release(0.15)
   .gain(0.55);
 
 /**
  * MS-20 Pad/String
- * Characteristics: Lush, evolving pad using slow attack
- * Uses: Atmospheric pads, strings, ambient textures
+ * Lush, evolving pad with slow attack and filter movement
  */
 export const ms20pad = (pat) => pat
-  .s("sawtooth")
-  .lpf(800)
-  .resonance(4)
-  .ftype("ladder")
-  .lpenv(2)
-  .lpa(0.5)           // Slow attack
-  .lpd(0.8)
-  .lps(0.6)
-  .lpr(1.0)           // Long release
-  .attack(0.4)        // Slow volume attack
-  .decay(0.6)
-  .sustain(0.8)
-  .release(1.5)
-  .gain(0.5)
-  .room(0.4);         // Add reverb for space
+  .s("ms20")
+  .vco1wave("saw")
+  .vco1level(0.5)
+  .vco2wave("saw")
+  .vco2level(0.5)
+  .vco2tune(0.05)     // Very slight detune for chorus effect
+  .lpfcutoff(800)
+  .lpfpeak(0.2)
+  .lpfenv(2)
+  .drive(1.2)
+  .eg1attack(0.4)
+  .eg1decay(0.6)
+  .eg1sustain(0.8)
+  .eg1release(1.5)
+  .eg2attack(0.5)
+  .eg2decay(0.8)
+  .eg2sustain(0.6)
+  .eg2release(1.0)
+  .gain(0.5);
 
 /**
- * MS-20 Pluck/Bell
- * Characteristics: Percussive pluck with pitch envelope
- * Uses: Plucked sounds, bells, melodic percussion
+ * MS-20 Pluck
+ * Percussive pluck sound with fast filter and pitch envelopes
  */
 export const ms20pluck = (pat) => pat
-  .s("triangle")
-  .lpf(2500)
-  .resonance(8)
-  .ftype("12db")      // Use 12db filter for brighter sound
-  .lpenv(6)
-  .lpa(0.001)
-  .lpd(0.08)
-  .lps(0)             // No sustain - percussive
-  .lpr(0.05)
-  .attack(0.001)
-  .decay(0.15)
-  .sustain(0)
-  .release(0.05)
-  .penv(12)           // Add pitch envelope
-  .pattack(0.001)
-  .pdecay(0.06)       // Quick pitch drop
+  .s("ms20")
+  .vco1wave("tri")
+  .vco1level(0.9)
+  .lpfcutoff(2500)
+  .lpfpeak(0.5)
+  .lpfenv(6)
+  .drive(1.5)
+  .eg1attack(0.001)
+  .eg1decay(0.15)
+  .eg1sustain(0.0)
+  .eg1release(0.05)
+  .eg2attack(0.001)
+  .eg2decay(0.08)
+  .eg2sustain(0.0)
+  .eg2release(0.05)
   .gain(0.7);
 
 /**
  * MS-20 Self-Oscillating Filter
- * Characteristics: Pure sine-like tone from resonant filter
- * Uses: FM-style tones, whistles, sine bass
+ * Pure tones from pushing filter resonance to self-oscillation
  */
 export const ms20sine = (pat) => pat
-  .s("sine")
-  .lpf(800)
-  .resonance(15)      // Maximum resonance for self-oscillation
-  .ftype("ladder")
-  .lpenv(8)           // Use filter as oscillator
-  .lpa(0.01)
-  .lpd(0.2)
-  .lps(0.5)
-  .lpr(0.1)
-  .attack(0.01)
-  .decay(0.1)
-  .sustain(0.7)
-  .release(0.1)
+  .s("ms20")
+  .vco1wave("sine")
+  .vco1level(0.3)
+  .lpfcutoff(800)
+  .lpfpeak(0.95)
+  .lpfenv(8)
+  .drive(3.0)
+  .modmatrix([{src:14, dst:22}])  // MG → LPF CUTOFF IN
+  .eg1attack(0.01)
+  .eg1decay(0.1)
+  .eg1sustain(0.7)
+  .eg1release(0.1)
+  .eg2attack(0.01)
+  .eg2decay(0.2)
+  .eg2sustain(0.5)
+  .eg2release(0.1)
   .gain(0.5);
 
 /**
- * MS-20 Noise Sweep (Hi-hat/FX)
- * Characteristics: Filtered white noise for percussion and effects
- * Uses: Hi-hats, cymbals, risers, swooshes
+ * MS-20 Hi-Hat
+ * Filtered noise for percussion
  */
 export const ms20hihat = (pat) => pat
-  .s("white")
-  .hpf(4000)          // High-pass to thin it out
-  .hresonance(2)
-  .lpf(8000)
-  .resonance(3)
-  .lpenv(2)
-  .lpa(0.001)
-  .lpd(0.05)
-  .lps(0)
-  .attack(0.001)
-  .decay(0.04)
-  .sustain(0)
-  .release(0.02)
+  .s("ms20")
+  .vco1wave("saw")
+  .vco1level(0.0)
+  .noiselevel(1.0)
+  .hpfcutoff(4000)
+  .hpfpeak(0.2)
+  .lpfcutoff(12000)
+  .lpfpeak(0.15)
+  .lpfenv(2)
+  .drive(1.0)
+  .eg1attack(0.001)
+  .eg1decay(0.04)
+  .eg1sustain(0.0)
+  .eg1release(0.02)
+  .eg2attack(0.001)
+  .eg2decay(0.05)
+  .eg2sustain(0.0)
   .gain(0.4);
 
 /**
- * MS-20 Noise Sweep (Rising Effect)
- * Characteristics: Filtered noise with upward sweep
- * Uses: Risers, build-ups, transitions
+ * MS-20 Riser
+ * Filtered noise with upward sweep for transitions
  */
 export const ms20riser = (pat) => pat
-  .s("pink")
-  .hpf(200)
-  .lpf(400)
-  .resonance(10)
-  .ftype("ladder")
-  .lpenv(-8)          // Negative envelope for upward sweep
-  .lpa(0.5)           // Slow attack creates the rise
-  .lpd(0.3)
-  .lps(1)
-  .attack(0.3)
-  .decay(0.2)
-  .sustain(1)
+  .s("ms20")
+  .vco1level(0.0)
+  .noiselevel(0.8)
+  .hpfcutoff(200)
+  .lpfcutoff(400)
+  .lpfpeak(0.6)
+  .lpfenv(-8)         // Negative = sweep upward
+  .drive(2.0)
+  .eg1attack(0.3)
+  .eg1decay(0.2)
+  .eg1sustain(1.0)
+  .eg1release(0.5)
+  .eg2attack(0.5)
+  .eg2decay(0.3)
+  .eg2sustain(1.0)
+  .eg2release(0.2)
   .gain(0.5);
 
 /**
  * MS-20 PWM Bass
- * Characteristics: Modulating pulse width for movement
- * Uses: Evolving bass, rhythmic bass, animated basslines
+ * Animated bass using square wave with pulse width modulation via MG
  */
 export const ms20pwmbass = (pat) => pat
-  .s("pulse")
-  .pw(0.3)
-  .pwrate(4)          // Modulate pulse width
-  .pwsweep(0.4)
-  .lpf(600)
-  .resonance(9)
-  .ftype("ladder")
-  .lpenv(2.5)
-  .lpa(0.01)
-  .lpd(0.2)
-  .lps(0.15)
-  .attack(0.001)
-  .decay(0.25)
-  .sustain(0.25)
-  .release(0.1)
+  .s("ms20")
+  .vco1wave("square")
+  .vco1pw(0.3)
+  .vco1level(0.8)
+  .mgfreq(4)          // MG modulates at 4Hz
+  .mgwave("tri")
+  .mgfilter(0.5)      // Subtle filter movement from MG
+  .lpfcutoff(600)
+  .lpfpeak(0.55)
+  .lpfenv(2.5)
+  .drive(2.0)
+  .eg1attack(0.001)
+  .eg1decay(0.25)
+  .eg1sustain(0.25)
+  .eg1release(0.1)
+  .eg2attack(0.01)
+  .eg2decay(0.2)
+  .eg2sustain(0.15)
+  .eg2release(0.1)
   .gain(0.65);
 
 /**
  * MS-20 FM Bass
- * Characteristics: FM-modulated bass for metallic character
- * Uses: Digital-style bass, bell bass, complex bass
+ * Uses ring modulator for metallic character
  */
 export const ms20fmbass = (pat) => pat
-  .s("triangle")
-  .fm(2)              // Add FM modulation
-  .fmh(2)             // Harmonic FM
-  .fmenv(4)           // Modulate FM amount
-  .fmattack(0.01)
-  .fmdecay(0.15)
-  .lpf(800)
-  .resonance(8)
-  .ftype("ladder")
-  .attack(0.001)
-  .decay(0.2)
-  .sustain(0.3)
-  .release(0.08)
+  .s("ms20")
+  .vco1wave("tri")
+  .vco1level(0.5)
+  .vco2wave("tri")
+  .vco2level(0.3)
+  .vco2tune(12)       // Octave up
+  .ringmod(0.4)       // Ring mod for metallic harmonics
+  .lpfcutoff(800)
+  .lpfpeak(0.4)
+  .lpfenv(3)
+  .drive(1.5)
+  .eg1attack(0.001)
+  .eg1decay(0.2)
+  .eg1sustain(0.3)
+  .eg1release(0.08)
+  .eg2attack(0.01)
+  .eg2decay(0.15)
+  .eg2sustain(0.0)
+  .eg2release(0.08)
   .gain(0.6);
 
 /**
- * MS-20 Acid Bassline Template
- * Characteristics: Classic TB-303-style sequenced bass with MS-20 filters
- * Uses: Acid house, techno, electronic dance music
+ * MS-20 Acid Bassline
+ * Classic squelchy acid line with high resonance and short envelope
  */
 export const ms20acid = (pat) => pat
-  .s("sawtooth")
-  .lpf(300)
-  .resonance(12)      // Very high resonance
-  .ftype("ladder")
-  .lpenv(6)
-  .lpa(0.005)
-  .lpd(0.12)
-  .lps(0)             // No sustain for staccato
-  .attack(0.001)
-  .decay(0.15)
-  .sustain(0)
-  .release(0.05)
-  .gain(0.7)
-  .distort(0.2);      // Add slight distortion
+  .s("ms20")
+  .vco1wave("saw")
+  .vco1level(0.9)
+  .lpfcutoff(300)
+  .lpfpeak(0.75)
+  .lpfenv(6)
+  .drive(3.0)
+  .modmatrix([{src:5, dst:22}])  // EG1 REV → LPF CUTOFF IN
+  .eg1attack(0.001)
+  .eg1decay(0.15)
+  .eg1sustain(0.0)
+  .eg1release(0.05)
+  .eg2attack(0.005)
+  .eg2decay(0.12)
+  .eg2sustain(0.0)
+  .eg2release(0.05)
+  .gain(0.7);
 
 /**
- * MS-20 Aggressive Lead with Distortion
- * Characteristics: Overdriven lead with filter distortion
- * Uses: Rock/industrial leads, aggressive melodies
+ * MS-20 Distorted Lead
+ * Aggressive overdriven lead
  */
 export const ms20distlead = (pat) => pat
-  .s("sawtooth")
-  .lpf(1500)
-  .resonance(12)
-  .ftype("ladder")
-  .lpenv(5)
-  .lpa(0.01)
-  .lpd(0.2)
-  .lps(0.5)
-  .attack(0.01)
-  .decay(0.15)
-  .sustain(0.7)
-  .release(0.2)
-  .distort(0.4)       // Add distortion
-  .vib(6)
-  .vibmod(0.2)
+  .s("ms20")
+  .vco1wave("saw")
+  .vco1level(0.8)
+  .lpfcutoff(1500)
+  .lpfpeak(0.6)
+  .lpfenv(5)
+  .drive(5.0)          // Heavy drive for distortion
+  .eg1attack(0.01)
+  .eg1decay(0.15)
+  .eg1sustain(0.7)
+  .eg1release(0.2)
+  .eg2attack(0.01)
+  .eg2decay(0.2)
+  .eg2sustain(0.5)
+  .eg2release(0.2)
+  .mgfreq(6)
+  .mgpitch(0.2)
   .gain(0.5);
 
 /**
- * Combined patch for fat, detuned unison sound
- * Characteristics: Multiple oscillators for thickness
- * Uses: Fat leads, super saws, rich textures
+ * MS-20 Unison
+ * Fat detuned dual-oscillator lead
  */
 export const ms20unison = (pat) => pat
-  .s("supersaw")
-  .unison(7)          // Multiple voices
-  .spread(0.8)        // Wide stereo spread
-  .detune(0.3)        // Detune for width
-  .lpf(1800)
-  .resonance(6)
-  .ftype("ladder")
-  .lpenv(4)
-  .lpa(0.02)
-  .lpd(0.25)
-  .lps(0.5)
-  .attack(0.02)
-  .decay(0.2)
-  .sustain(0.6)
-  .release(0.25)
-  .gain(0.45);        // Lower gain for multiple voices
+  .s("ms20")
+  .vco1wave("saw")
+  .vco1level(0.6)
+  .vco2wave("saw")
+  .vco2level(0.6)
+  .vco2tune(0.12)     // Detune for width
+  .lpfcutoff(1800)
+  .lpfpeak(0.3)
+  .lpfenv(4)
+  .drive(1.8)
+  .eg1attack(0.02)
+  .eg1decay(0.2)
+  .eg1sustain(0.6)
+  .eg1release(0.25)
+  .eg2attack(0.02)
+  .eg2decay(0.25)
+  .eg2sustain(0.5)
+  .eg2release(0.2)
+  .gain(0.45);
 
 // Export all patches as a collection
 export const ms20patches = {
