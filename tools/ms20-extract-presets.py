@@ -255,12 +255,18 @@ def main():
             name, params, cables = parse_fxp(path)
             slug, code = preset_to_strudel(name, params, cables)
 
-            # Check for duplicate slugs
-            existing_slugs = [s for s, _, _ in all_presets]
+            # Deduplicate slugs
+            existing_slugs = {s for s, _, _ in all_presets}
+            original_slug = slug
             if slug in existing_slugs:
                 slug = slug + '_' + bank_key
-                code = code.replace(f'export const {slug.rsplit("_" + bank_key, 1)[0]}',
-                                    f'export const {slug}', 1)
+            counter = 2
+            while slug in existing_slugs:
+                slug = original_slug + '_' + bank_key + '_' + str(counter)
+                counter += 1
+            if slug != original_slug:
+                code = code.replace(f'export const {original_slug} ',
+                                    f'export const {slug} ', 1)
 
             all_presets.append((slug, code, bank_key))
             bank_presets[bank_key].append(slug)
