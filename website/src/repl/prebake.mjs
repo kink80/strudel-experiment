@@ -1,5 +1,5 @@
 import { Pattern, noteToMidi, valueToMidi } from '@strudel/core';
-import { aliasBank, registerSynthSounds, registerMS20FactoryPresets, registerZZFXSounds, samples } from '@strudel/webaudio';
+import { aliasBank, registerSynthSounds, registerZZFXSounds, samples } from '@strudel/webaudio';
 import { registerSamplesFromDB } from './idbutils.mjs';
 import './piano.mjs';
 import './files.mjs';
@@ -12,14 +12,9 @@ export async function prebake() {
   // https://archive.org/details/SalamanderGrandPianoV3
   // License: CC-by http://creativecommons.org/licenses/by/3.0/ Author: Alexander Holm
   await Promise.all([
-    Promise.resolve(registerSynthSounds()).then(() => registerMS20FactoryPresets()),
+    registerSynthSounds(),
     registerZZFXSounds(),
     registerSamplesFromDB(),
-    //registerSoundfonts(),
-    // need dynamic import here, because importing @strudel/soundfonts fails on server:
-    // => getting "window is not defined", as soon as "@strudel/soundfonts" is imported statically
-    // seems to be a problem with soundfont2
-    import('@strudel/soundfonts').then(({ registerSoundfonts }) => registerSoundfonts()),
     samples(`${baseCDN}/piano.json`, `${baseCDN}/piano/`, { prebake: true }),
     // https://github.com/sgossner/VCSL/
     // https://api.github.com/repositories/126427031/contents/

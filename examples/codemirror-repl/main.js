@@ -6,7 +6,7 @@ import './style.css';
 import { initAudioOnFirstClick } from '@strudel/webaudio';
 import { transpiler } from '@strudel/transpiler';
 import { getAudioContext, webaudioOutput, registerSynthSounds } from '@strudel/webaudio';
-import { registerSoundfonts } from '@strudel/soundfonts';
+
 
 // init canvas
 const canvas = document.getElementById('roll');
@@ -32,7 +32,7 @@ const editor = new StrudelMirror({
       import('@strudel/tonal'),
       import('@strudel/webaudio'),
     );
-    await Promise.all([loadModules, registerSynthSounds(), registerSoundfonts()]);
+    await Promise.all([loadModules, registerSynthSounds()]);
   },
 });
 

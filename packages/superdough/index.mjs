@@ -13,6 +13,4 @@ export * from './logger.mjs';
 export * from './dspworklet.mjs';
 export * from './audioContext.mjs';
 export * from './wavetable.mjs';
-export * from './ms20-patches.mjs';
-export * from './ms20-examples.mjs';
-export * from './ms20-factory-presets.mjs';
+export * from './vst.mjs';

@@ -12,7 +12,7 @@ export async function prebake() {
     import('@strudel/webaudio'),
     import('@strudel/codemirror'),
     import('@strudel/hydra'),
-    import('@strudel/soundfonts'),
+    // import('@strudel/soundfonts'),
     import('@strudel/midi'),
     // import('@strudel/xen'),
     // import('@strudel/serial'),
@@ -31,11 +31,6 @@ export async function prebake() {
     modulesLoading,
     registerSynthSounds(),
     registerZZFXSounds(),
-    //registerSoundfonts(),
-    // need dynamic import here, because importing @strudel/soundfonts fails on server:
-    // => getting "window is not defined", as soon as "@strudel/soundfonts" is imported statically
-    // seems to be a problem with soundfont2
-    import('@strudel/soundfonts').then(({ registerSoundfonts }) => registerSoundfonts()),
     samples(`${ds}/tidal-drum-machines.json`),
     samples(`${ds}/piano.json`),
     samples(`${ds}/Dirt-Samples.json`),

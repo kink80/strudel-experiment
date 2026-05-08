@@ -2585,83 +2585,12 @@ export const scrub = register(
   false,
 );
 
+
 // =============================================================================
-// MS-20 Synthesizer Controls
-// Parameters for the Korg MS-20 AudioWorklet synth engine
+// VST Bridge controls
 // =============================================================================
 
-/** VCO1 waveform: "saw", "square", "tri", "sine" */
-export const { vco1wave } = registerControl('vco1wave');
-/** VCO1 output level (0-1) */
-export const { vco1level } = registerControl('vco1level');
-/** VCO1 pulse width (0.01-0.99, only affects square wave) */
-export const { vco1pw } = registerControl('vco1pw');
-/** VCO2 waveform: "saw", "square", "tri", "sine" */
-export const { vco2wave } = registerControl('vco2wave');
-/** VCO2 output level (0-1) */
-export const { vco2level } = registerControl('vco2level');
-/** VCO2 tuning offset in semitones */
-export const { vco2tune } = registerControl('vco2tune');
-/** VCO2 pulse width (0.01-0.99) */
-export const { vco2pw } = registerControl('vco2pw');
-/** Noise generator level (0-1) */
-export const { noiselevel } = registerControl('noiselevel');
-/** Ring modulator amount (0-1, VCO1 * VCO2) */
-export const { ringmod } = registerControl('ringmod');
-/** HPF cutoff frequency in Hz */
-export const { hpfcutoff } = registerControl('hpfcutoff');
-/** HPF resonance/peak (0-1) */
-export const { hpfpeak } = registerControl('hpfpeak');
-/** HPF envelope modulation depth in octaves (signed) */
-export const { hpfenv } = registerControl('hpfenv');
-/** LPF cutoff frequency in Hz */
-export const { lpfcutoff } = registerControl('lpfcutoff');
-/** LPF resonance/peak (0-1) */
-export const { lpfpeak } = registerControl('lpfpeak');
-/** LPF envelope modulation depth in octaves (signed, negative = sweep up) */
-export const { lpfenv } = registerControl('lpfenv');
-// drive: reuses existing registerControl('drive') from line 791
-/** EG1 (amplitude) attack time in seconds */
-export const { eg1attack } = registerControl('eg1attack');
-/** EG1 (amplitude) decay time in seconds */
-export const { eg1decay } = registerControl('eg1decay');
-/** EG1 (amplitude) sustain level (0-1) */
-export const { eg1sustain } = registerControl('eg1sustain');
-/** EG1 (amplitude) release time in seconds */
-export const { eg1release } = registerControl('eg1release');
-/** EG2 (filter) attack time in seconds */
-export const { eg2attack } = registerControl('eg2attack');
-/** EG2 (filter) decay time in seconds */
-export const { eg2decay } = registerControl('eg2decay');
-/** EG2 (filter) sustain level (0-1) */
-export const { eg2sustain } = registerControl('eg2sustain');
-/** EG2 (filter) release time in seconds */
-export const { eg2release } = registerControl('eg2release');
-/** MG (modulation generator / LFO) frequency in Hz */
-export const { mgfreq } = registerControl('mgfreq');
-/** MG waveform: "saw", "square", "tri", "sine" */
-export const { mgwave } = registerControl('mgwave');
-/** MG pitch modulation depth in semitones */
-export const { mgpitch } = registerControl('mgpitch');
-/** MG filter modulation depth in octaves */
-export const { mgfilter } = registerControl('mgfilter');
-/** Portamento/glide time in seconds */
-export const { portamento } = registerControl('portamento');
-/** VCO1 octave scale multiplier (0.25=32', 0.5=16', 1=8', 2=4') */
-export const { vco1scale } = registerControl('vco1scale');
-/** VCO2 octave scale multiplier */
-export const { vco2scale } = registerControl('vco2scale');
-/** HPF modulation by MG (0-1) */
-export const { hpfmg } = registerControl('hpfmg');
-/** LPF modulation by MG (0-1) */
-export const { lpfmg } = registerControl('lpfmg');
-/** Pitch modulation by EG1 (semitones) */
-export const { pitcheg } = registerControl('pitcheg');
-/** Pitch modulation by MG (semitones) */
-export const { pitchmg } = registerControl('pitchmg');
-/** EG1 polarity inversion (0=normal, 1=inverted) */
-export const { eg1rev } = registerControl('eg1rev');
-/** EG2 polarity inversion (0=normal, 1=inverted) */
-export const { eg2rev } = registerControl('eg2rev');
-/** Modulation matrix for MS-20 patch bay (array of {src, dst} objects) */
-export const { modmatrix } = registerControl('modmatrix');
+/** VST plugin identifier (path or name) — set by vst() pattern function */
+export const { vstplugin } = registerControl('vstplugin');
+/** VST plugin parameters as key-value object */
+export const { vstparams } = registerControl('vstparams');

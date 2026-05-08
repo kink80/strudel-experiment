@@ -9,3 +9,4 @@ export * from './scope.mjs';
 export * from './spectrum.mjs';
 export * from './supradough.mjs';
 export * from 'superdough';
+export * from './vst.mjs';

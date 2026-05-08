@@ -16,7 +16,6 @@
     "@strudel/core": "workspace:*",
     "@strudel/draw": "workspace:*",
     "@strudel/mini": "workspace:*",
-    "@strudel/soundfonts": "workspace:*",
     "@strudel/tonal": "workspace:*",
     "@strudel/transpiler": "workspace:*",
     "@strudel/webaudio": "workspace:*"

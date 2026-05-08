@@ -36,7 +36,6 @@
     "@strudel/mqtt": "workspace:*",
     "@strudel/osc": "workspace:*",
     "@strudel/serial": "workspace:*",
-    "@strudel/soundfonts": "workspace:*",
     "@strudel/tidal": "workspace:*",
     "@strudel/tonal": "workspace:*",
     "@strudel/transpiler": "workspace:*",

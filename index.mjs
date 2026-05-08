@@ -11,7 +11,7 @@ export * from './packages/mini/index.mjs';
 export * from './packages/osc/index.mjs';
 export * from './packages/repl/index.mjs';
 export * from './packages/serial/index.mjs';
-export * from './packages/soundfonts/index.mjs';
+// export * from './packages/soundfonts/index.mjs';
 export * from './packages/superdough/index.mjs';
 export * from './packages/tonal/index.mjs';
 export * from './packages/transpiler/index.mjs';
