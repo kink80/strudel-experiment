@@ -7,13 +7,14 @@ of the License, or (at your option) any later version.
 */
 
 import { Pattern, reify } from '@strudel/core';
-import { connectVstBridge, ensureVstSoundRegistered, loadVstPlugin, isVstBridgeInitialized } from 'superdough';
+import { connectVstBridge, ensureVstSoundRegistered, loadVstPlugin, isVstBridgeInitialized, parseVstId } from 'superdough';
 
 function initBridgeAndRegister(id) {
   if (!isVstBridgeInitialized()) {
     connectVstBridge();
   }
   if (typeof id === 'string') {
+    parseVstId(id); // throws if no tag
     ensureVstSoundRegistered(id);
     loadVstPlugin(id).catch(() => {});
   }
@@ -21,16 +22,16 @@ function initBridgeAndRegister(id) {
 
 /**
  * Select a VST3/CLAP plugin as a sound source via the strudel-vst-bridge.
- * Requires running the bridge server: `npx strudel-vst-bridge`
+ * Requires running the bridge server: `cd ~/work2/strudel-vst-bridge && cargo run`
  *
- * Use with .note() to set the note pattern — the note pattern provides the rhythmic structure:
+ * Each instance tag creates an independent plugin instance with its own parameters.
  *
  * @name vst
- * @param {string | Pattern} pluginId Plugin path or name
+ * @param {string | Pattern} pluginId Plugin name with instance tag (format: "name:tag")
  * @example
- * note("[c3 e3 g3 c4]*2").vst("Odin2")
+ * note("[c3 e3 g3 c4]*2").vst("Odin2:pad")
  * @example
- * note("a2 e3").vst("~/Library/Audio/Plug-Ins/VST3/Surge XT.vst3")
+ * note("a2 e3").vst("Surge XT:bass")
  */
 export function vst(pluginId) {
   const pat = reify(pluginId).withValue((id) => {
@@ -40,12 +41,39 @@ export function vst(pluginId) {
   return pat;
 }
 
-// Available as a Pattern method: note("c3 e3").vst("Diva")
-// The receiver pattern (this) provides the structure.
+/**
+ * Select a VST3 plugin explicitly via the strudel-vst-bridge.
+ *
+ * @name vst3
+ * @param {string | Pattern} pluginId Plugin name with instance tag (format: "name:tag")
+ * @example
+ * note("[c3 e3 g3 c4]*2").vst3("Odin2:pad")
+ */
+export function vst3(pluginId) {
+  const pat = reify(pluginId).withValue((id) => {
+    const { pluginName } = parseVstId(id);
+    const vst3InstanceId = `${pluginName} (VST3):${id.slice(pluginName.length + 1)}`;
+    initBridgeAndRegister(vst3InstanceId);
+    return { s: vst3InstanceId, vstplugin: vst3InstanceId };
+  });
+  return pat;
+}
+
+// Available as Pattern methods: note("c3 e3").vst("Diva"), note("c3 e3").vst3("Diva")
 Pattern.prototype.vst = function (pluginId) {
   const vstPat = reify(pluginId).withValue((id) => {
     initBridgeAndRegister(id);
     return { s: id, vstplugin: id };
+  });
+  return this.set(vstPat);
+};
+
+Pattern.prototype.vst3 = function (pluginId) {
+  const vstPat = reify(pluginId).withValue((id) => {
+    const { pluginName } = parseVstId(id);
+    const vst3InstanceId = `${pluginName} (VST3):${id.slice(pluginName.length + 1)}`;
+    initBridgeAndRegister(vst3InstanceId);
+    return { s: vst3InstanceId, vstplugin: vst3InstanceId };
   });
   return this.set(vstPat);
 };
