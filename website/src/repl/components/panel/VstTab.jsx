@@ -67,19 +67,9 @@ export function VstTab() {
     return () => clearTimeout(timer);
   }, []);
 
-  const loadPlugin = useCallback((name) => {
-    if (!isVstBridgeInitialized()) {
-      connectVstBridge();
-    }
-    // Import dynamically to avoid circular deps
-    import('@strudel/webaudio').then((mod) => {
-      if (mod.ensureVstSoundRegistered) {
-        mod.ensureVstSoundRegistered(name);
-      }
-      if (mod.loadVstPlugin) {
-        mod.loadVstPlugin(name).catch(() => {});
-      }
-    });
+  const copySnippet = useCallback((name) => {
+    const snippet = `note("c4 e4 g4").vst("${name}:lead")`;
+    navigator.clipboard.writeText(snippet).catch(() => {});
   }, []);
 
   const showGui = useCallback((name) => {
@@ -160,7 +150,7 @@ export function VstTab() {
           </h3>
           <div className="space-y-1">
             {instruments.map((p) => (
-              <PluginRow key={p.name} plugin={p} onLoad={loadPlugin} onGui={showGui} loaded={loadedPlugins.includes(p.name)} />
+              <PluginRow key={p.name} plugin={p} onCopy={copySnippet} onGui={showGui} loaded={loadedPlugins.includes(pluginLoadId(p))} />
             ))}
           </div>
         </div>
@@ -173,7 +163,7 @@ export function VstTab() {
           </h3>
           <div className="space-y-1">
             {effects.map((p) => (
-              <PluginRow key={p.name} plugin={p} onLoad={loadPlugin} onGui={showGui} loaded={loadedPlugins.includes(p.name)} />
+              <PluginRow key={p.name} plugin={p} onCopy={copySnippet} onGui={showGui} loaded={loadedPlugins.includes(pluginLoadId(p))} />
             ))}
           </div>
         </div>
@@ -199,7 +189,13 @@ export function VstTab() {
   );
 }
 
-function PluginRow({ plugin, onLoad, onGui, loaded }) {
+function pluginLoadId(plugin) {
+  // The bridge already includes the format suffix in the name (e.g. "Odin2 (VST3)", "Odin2 (AU)")
+  return plugin.name;
+}
+
+function PluginRow({ plugin, onCopy, onGui, loaded }) {
+  const id = pluginLoadId(plugin);
   return (
     <div className="flex items-center justify-between py-1 px-2 rounded bg-background/50 hover:bg-background">
       <div className="flex-1 min-w-0">
@@ -210,16 +206,17 @@ function PluginRow({ plugin, onLoad, onGui, loaded }) {
         {loaded ? (
           <button
             className="text-xs px-2 py-0.5 rounded bg-green-900/50 hover:bg-green-800/50 cursor-pointer"
-            onClick={() => onGui(plugin.name)}
+            onClick={() => onGui(id)}
           >
             GUI
           </button>
         ) : (
           <button
             className="text-xs px-2 py-0.5 rounded bg-foreground/10 hover:bg-foreground/20 cursor-pointer"
-            onClick={() => onLoad(plugin.name)}
+            onClick={() => onCopy(id)}
+            title='Copy vst() snippet to clipboard'
           >
-            load
+            copy
           </button>
         )}
       </div>
