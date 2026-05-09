@@ -25,8 +25,9 @@ export function VstTab() {
     return () => clearInterval(interval);
   }, []);
 
-  // Subscribe to instance registry changes
+  // Subscribe to instance registry changes + read initial state
   useEffect(() => {
+    setInstances(getVstInstances());
     const unsubscribe = onInstancesChanged(() => {
       setInstances(getVstInstances());
     });
