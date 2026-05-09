@@ -6,8 +6,14 @@ GNU Affero General Public License as published by the Free Software Foundation, 
 of the License, or (at your option) any later version.
 */
 
-import { Pattern, reify } from '@strudel/core';
+import { Pattern, pure, isPattern } from '@strudel/core';
 import { connectVstBridge, ensureVstSoundRegistered, loadVstPlugin, isVstBridgeInitialized, parseVstId } from 'superdough';
+
+// Use pure() instead of reify() to avoid mini-notation parsing
+// (`:` in "Odin2:pad" would be interpreted as the slice operator)
+function vstReify(thing) {
+  return isPattern(thing) ? thing : pure(thing);
+}
 
 function initBridgeAndRegister(id) {
   if (!isVstBridgeInitialized()) {
@@ -34,7 +40,7 @@ function initBridgeAndRegister(id) {
  * note("a2 e3").vst("Surge XT:bass")
  */
 export function vst(pluginId) {
-  const pat = reify(pluginId).withValue((id) => {
+  const pat = vstReify(pluginId).withValue((id) => {
     initBridgeAndRegister(id);
     return { s: id, vstplugin: id };
   });
@@ -50,7 +56,7 @@ export function vst(pluginId) {
  * note("[c3 e3 g3 c4]*2").vst3("Odin2:pad")
  */
 export function vst3(pluginId) {
-  const pat = reify(pluginId).withValue((id) => {
+  const pat = vstReify(pluginId).withValue((id) => {
     const { pluginName } = parseVstId(id);
     const vst3InstanceId = `${pluginName} (VST3):${id.slice(pluginName.length + 1)}`;
     initBridgeAndRegister(vst3InstanceId);
@@ -61,7 +67,7 @@ export function vst3(pluginId) {
 
 // Available as Pattern methods: note("c3 e3").vst("Diva"), note("c3 e3").vst3("Diva")
 Pattern.prototype.vst = function (pluginId) {
-  const vstPat = reify(pluginId).withValue((id) => {
+  const vstPat = vstReify(pluginId).withValue((id) => {
     initBridgeAndRegister(id);
     return { s: id, vstplugin: id };
   });
@@ -69,7 +75,7 @@ Pattern.prototype.vst = function (pluginId) {
 };
 
 Pattern.prototype.vst3 = function (pluginId) {
-  const vstPat = reify(pluginId).withValue((id) => {
+  const vstPat = vstReify(pluginId).withValue((id) => {
     const { pluginName } = parseVstId(id);
     const vst3InstanceId = `${pluginName} (VST3):${id.slice(pluginName.length + 1)}`;
     initBridgeAndRegister(vst3InstanceId);
