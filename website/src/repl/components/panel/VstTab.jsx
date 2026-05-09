@@ -89,6 +89,12 @@ export function VstTab() {
   const instruments = filteredPlugins.filter((p) => p.pluginType === 'Instrument');
   const effects = filteredPlugins.filter((p) => p.pluginType !== 'Instrument');
 
+  // Group loaded instances by plugin name
+  const instancesFor = (plugin) => {
+    const prefix = pluginLoadId(plugin) + ':';
+    return loadedPlugins.filter((id) => id.startsWith(prefix));
+  };
+
   return (
     <div className="text-foreground p-4 space-y-4 text-sm max-h-full overflow-y-auto">
       <div className="flex items-center justify-between">
@@ -115,23 +121,7 @@ export function VstTab() {
         </div>
       </div>
 
-      {loadedPlugins.length > 0 && (
-        <div>
-          <h3 className="text-xs font-bold opacity-50 uppercase mb-1">Loaded</h3>
-          <div className="flex flex-wrap gap-1">
-            {loadedPlugins.map((name) => (
-              <button
-                key={name}
-                className="text-xs px-2 py-1 bg-background rounded hover:opacity-70 cursor-pointer border border-green-800"
-                onClick={() => showGui(name)}
-                title="Open GUI"
-              >
-                {name}
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
+      {/* Loaded instances are shown inline under each plugin row */}
 
       <div>
         <input
@@ -150,7 +140,7 @@ export function VstTab() {
           </h3>
           <div className="space-y-1">
             {instruments.map((p) => (
-              <PluginRow key={p.name} plugin={p} onCopy={copySnippet} onGui={showGui} loaded={loadedPlugins.includes(pluginLoadId(p))} />
+              <PluginRow key={p.name} plugin={p} onCopy={copySnippet} onGui={showGui} instances={instancesFor(p)} />
             ))}
           </div>
         </div>
@@ -163,7 +153,7 @@ export function VstTab() {
           </h3>
           <div className="space-y-1">
             {effects.map((p) => (
-              <PluginRow key={p.name} plugin={p} onCopy={copySnippet} onGui={showGui} loaded={loadedPlugins.includes(pluginLoadId(p))} />
+              <PluginRow key={p.name} plugin={p} onCopy={copySnippet} onGui={showGui} instances={instancesFor(p)} />
             ))}
           </div>
         </div>
@@ -194,23 +184,16 @@ function pluginLoadId(plugin) {
   return plugin.name;
 }
 
-function PluginRow({ plugin, onCopy, onGui, loaded }) {
+function PluginRow({ plugin, onCopy, onGui, instances }) {
   const id = pluginLoadId(plugin);
   return (
-    <div className="flex items-center justify-between py-1 px-2 rounded bg-background/50 hover:bg-background">
-      <div className="flex-1 min-w-0">
-        <span className="text-xs font-medium truncate block">{plugin.name}</span>
-        <span className="text-xs opacity-50">{plugin.manufacturer}</span>
-      </div>
-      <div className="flex gap-1 ml-2">
-        {loaded ? (
-          <button
-            className="text-xs px-2 py-0.5 rounded bg-green-900/50 hover:bg-green-800/50 cursor-pointer"
-            onClick={() => onGui(id)}
-          >
-            GUI
-          </button>
-        ) : (
+    <div>
+      <div className="flex items-center justify-between py-1 px-2 rounded bg-background/50 hover:bg-background">
+        <div className="flex-1 min-w-0">
+          <span className="text-xs font-medium truncate block">{plugin.name}</span>
+          <span className="text-xs opacity-50">{plugin.manufacturer}</span>
+        </div>
+        <div className="flex gap-1 ml-2">
           <button
             className="text-xs px-2 py-0.5 rounded bg-foreground/10 hover:bg-foreground/20 cursor-pointer"
             onClick={() => onCopy(id)}
@@ -218,8 +201,26 @@ function PluginRow({ plugin, onCopy, onGui, loaded }) {
           >
             copy
           </button>
-        )}
+        </div>
       </div>
+      {instances.length > 0 && (
+        <div className="ml-4 mt-0.5 space-y-0.5">
+          {instances.map((instanceId) => {
+            const tag = instanceId.slice(id.length + 1);
+            return (
+              <div key={instanceId} className="flex items-center justify-between py-0.5 px-2 rounded bg-background/30">
+                <span className="text-xs opacity-70">{tag}</span>
+                <button
+                  className="text-xs px-2 py-0.5 rounded bg-green-900/50 hover:bg-green-800/50 cursor-pointer"
+                  onClick={() => onGui(instanceId)}
+                >
+                  GUI
+                </button>
+              </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }
