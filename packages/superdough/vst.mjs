@@ -232,6 +232,11 @@ export function ensureVstSoundRegistered(label) {
   registerSound(
     label,
     async (t, value, onended) => {
+      // Skip render if instance was deleted
+      if (!instanceRegistry.has(label)) {
+        onended();
+        return null;
+      }
       const ac = getAudioContext();
       const { note, freq, velocity = 0.8, duration = 1, vstparams = {} } = value;
 
