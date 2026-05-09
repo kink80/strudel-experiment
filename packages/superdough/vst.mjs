@@ -14,6 +14,21 @@ import { getAudioContext } from './audioContext.mjs';
 import { gainNode } from './helpers.mjs';
 import { logger } from './logger.mjs';
 
+/**
+ * Parse a VST instance ID in the format "pluginName:tag".
+ * Returns { pluginName, instanceId } or throws if no tag is present.
+ */
+export function parseVstId(raw) {
+  const idx = raw.indexOf(':');
+  if (idx === -1 || idx === 0 || idx === raw.length - 1) {
+    throw new Error(`vst() requires an instance tag, e.g. vst("${raw}:lead"). Got: "${raw}"`);
+  }
+  return {
+    pluginName: raw.slice(0, idx),
+    instanceId: raw,
+  };
+}
+
 const DEFAULT_BRIDGE_URL = 'ws://localhost:8765';
 
 let ws = null;
@@ -150,32 +165,39 @@ function requestRender(pluginId, note, velocity, duration, params) {
   });
 }
 
-export function loadVstPlugin(pluginPath) {
+export function loadVstPlugin(instanceId) {
   if (!wsReady) {
     return Promise.reject(new Error('[vst] bridge not connected'));
   }
-  if (loadedPlugins.has(pluginPath)) {
-    return Promise.resolve(pluginPath);
+  if (loadedPlugins.has(instanceId)) {
+    return Promise.resolve(instanceId);
   }
+
+  const { pluginName } = parseVstId(instanceId);
 
   return new Promise((resolve, reject) => {
     const handler = (event) => {
       if (typeof event.data !== 'string') return;
       const msg = JSON.parse(event.data);
-      if (msg.type === 'plugin_loaded' && msg.pluginId === pluginPath) {
+      if (msg.type === 'plugin_loaded' && msg.pluginId === instanceId) {
         ws.removeEventListener('message', handler);
-        resolve(pluginPath);
-      } else if (msg.type === 'error' && msg.pluginId === pluginPath) {
+        resolve(instanceId);
+      } else if (msg.type === 'error' && msg.pluginId === instanceId) {
         ws.removeEventListener('message', handler);
         reject(new Error(msg.message));
       }
     };
     ws.addEventListener('message', handler);
-    ws.send(JSON.stringify({ type: 'load_plugin', pluginId: pluginPath, path: pluginPath }));
+    ws.send(JSON.stringify({
+      type: 'load_plugin',
+      pluginId: instanceId,
+      pluginName,
+      path: pluginName,
+    }));
 
     setTimeout(() => {
       ws.removeEventListener('message', handler);
-      reject(new Error(`[vst] timeout loading: ${pluginPath}`));
+      reject(new Error(`[vst] timeout loading: ${instanceId}`));
     }, 10000);
   });
 }
@@ -195,14 +217,14 @@ function simpleNoteToMidi(note) {
 
 /**
  * Ensures a VST plugin is registered as a strudel sound source.
- * Called lazily when vst("pluginId") is first evaluated.
+ * Called lazily when vst("instanceId") is first evaluated.
  */
-export function ensureVstSoundRegistered(pluginId) {
-  if (registeredSounds.has(pluginId)) return;
-  registeredSounds.add(pluginId);
+export function ensureVstSoundRegistered(instanceId) {
+  if (registeredSounds.has(instanceId)) return;
+  registeredSounds.add(instanceId);
 
   registerSound(
-    pluginId,
+    instanceId,
     async (t, value, onended) => {
       const ac = getAudioContext();
       const { note, freq, velocity = 0.8, duration = 1, vstparams = {} } = value;
@@ -219,7 +241,7 @@ export function ensureVstSoundRegistered(pluginId) {
 
       let audioData;
       try {
-        audioData = await requestRender(pluginId, midiNote, velocity, duration, vstparams);
+        audioData = await requestRender(instanceId, midiNote, velocity, duration, vstparams);
       } catch (err) {
         logger(err.message);
         onended();
@@ -330,6 +352,14 @@ export function vstGui(pluginId) {
   }
   if (typeof id !== 'string') {
     logger(`[vst] vstGui expects a plugin name string`);
+    return;
+  }
+
+  // Validate instance tag
+  try {
+    parseVstId(id);
+  } catch (e) {
+    logger(e.message);
     return;
   }
 
