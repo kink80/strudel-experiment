@@ -181,7 +181,7 @@ export function VstTab() {
           </code>
           <p>Then use in strudel:</p>
           <code className="block bg-background p-2 rounded">
-            note("c3 e3 g3").vst("Odin2")
+            note("c3 e3 g3").vst("Odin2:lead")
           </code>
         </div>
       )}
