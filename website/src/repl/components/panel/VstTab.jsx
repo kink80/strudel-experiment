@@ -3,29 +3,38 @@ import {
   connectVstBridge,
   isVstBridgeConnected,
   isVstBridgeInitialized,
-  getLoadedVstPlugins,
+  getVstInstances,
+  createVstInstance,
+  deleteVstInstance,
+  onInstancesChanged,
+  vstGui,
 } from '@strudel/webaudio';
 
 export function VstTab() {
   const [connected, setConnected] = useState(false);
   const [plugins, setPlugins] = useState([]);
-  const [loadedPlugins, setLoadedPlugins] = useState([]);
+  const [instances, setInstances] = useState(new Map());
   const [filter, setFilter] = useState('');
-  const [ws, setWs] = useState(null);
+  const [labelInput, setLabelInput] = useState({});
 
   // Check connection status periodically
   useEffect(() => {
     const interval = setInterval(() => {
       setConnected(isVstBridgeConnected());
-      const loaded = getLoadedVstPlugins();
-      setLoadedPlugins([...loaded.keys()]);
     }, 1000);
     return () => clearInterval(interval);
   }, []);
 
+  // Subscribe to instance registry changes
+  useEffect(() => {
+    const unsubscribe = onInstancesChanged(() => {
+      setInstances(getVstInstances());
+    });
+    return unsubscribe;
+  }, []);
+
   const connect = useCallback(() => {
     connectVstBridge();
-    // Give it a moment then request plugin list
     setTimeout(() => {
       setConnected(isVstBridgeConnected());
       requestPluginList();
@@ -34,7 +43,6 @@ export function VstTab() {
 
   const requestPluginList = useCallback(() => {
     if (!isVstBridgeInitialized()) return;
-    // Access the websocket directly via a message
     try {
       const wsUrl = 'ws://localhost:8765';
       const tempWs = new WebSocket(wsUrl);
@@ -67,17 +75,24 @@ export function VstTab() {
     return () => clearTimeout(timer);
   }, []);
 
-  const copySnippet = useCallback((name) => {
-    const snippet = `note("c4 e4 g4").vst("${name}:lead")`;
-    navigator.clipboard.writeText(snippet).catch(() => {});
+  const handleCreateInstance = useCallback((pluginName) => {
+    const label = labelInput[pluginName];
+    if (!label || !label.trim()) return;
+    createVstInstance(label.trim(), pluginName);
+    setLabelInput((prev) => ({ ...prev, [pluginName]: '' }));
+  }, [labelInput]);
+
+  const handleDelete = useCallback((label) => {
+    deleteVstInstance(label);
   }, []);
 
-  const showGui = useCallback((name) => {
-    import('@strudel/webaudio').then((mod) => {
-      if (mod.vstGui) {
-        mod.vstGui(name);
-      }
-    });
+  const handleShowGui = useCallback((label) => {
+    vstGui(label);
+  }, []);
+
+  const copySnippet = useCallback((label) => {
+    const snippet = `note("c4 e4 g4").vst("${label}")`;
+    navigator.clipboard.writeText(snippet).catch(() => {});
   }, []);
 
   const filteredPlugins = plugins.filter((p) => {
@@ -89,11 +104,13 @@ export function VstTab() {
   const instruments = filteredPlugins.filter((p) => p.pluginType === 'Instrument');
   const effects = filteredPlugins.filter((p) => p.pluginType !== 'Instrument');
 
-  // Group loaded instances by plugin name (internal IDs use "__" separator)
-  const instancesFor = (plugin) => {
-    const prefix = pluginLoadId(plugin) + '__';
-    return loadedPlugins.filter((id) => id.startsWith(prefix));
-  };
+  // Group instances by plugin name
+  const instancesByPlugin = new Map();
+  for (const [label, info] of instances) {
+    const list = instancesByPlugin.get(info.pluginName) || [];
+    list.push(label);
+    instancesByPlugin.set(info.pluginName, list);
+  }
 
   return (
     <div className="text-foreground p-4 space-y-4 text-sm max-h-full overflow-y-auto">
@@ -121,8 +138,6 @@ export function VstTab() {
         </div>
       </div>
 
-      {/* Loaded instances are shown inline under each plugin row */}
-
       <div>
         <input
           type="text"
@@ -140,7 +155,17 @@ export function VstTab() {
           </h3>
           <div className="space-y-1">
             {instruments.map((p) => (
-              <PluginRow key={p.name} plugin={p} onCopy={copySnippet} onGui={showGui} instances={instancesFor(p)} />
+              <PluginRow
+                key={p.name}
+                plugin={p}
+                instances={instancesByPlugin.get(p.name) || []}
+                labelInput={labelInput[p.name] || ''}
+                onLabelChange={(val) => setLabelInput((prev) => ({ ...prev, [p.name]: val }))}
+                onCreate={() => handleCreateInstance(p.name)}
+                onDelete={handleDelete}
+                onGui={handleShowGui}
+                onCopy={copySnippet}
+              />
             ))}
           </div>
         </div>
@@ -153,7 +178,17 @@ export function VstTab() {
           </h3>
           <div className="space-y-1">
             {effects.map((p) => (
-              <PluginRow key={p.name} plugin={p} onCopy={copySnippet} onGui={showGui} instances={instancesFor(p)} />
+              <PluginRow
+                key={p.name}
+                plugin={p}
+                instances={instancesByPlugin.get(p.name) || []}
+                labelInput={labelInput[p.name] || ''}
+                onLabelChange={(val) => setLabelInput((prev) => ({ ...prev, [p.name]: val }))}
+                onCreate={() => handleCreateInstance(p.name)}
+                onDelete={handleDelete}
+                onGui={handleShowGui}
+                onCopy={copySnippet}
+              />
             ))}
           </div>
         </div>
@@ -169,9 +204,9 @@ export function VstTab() {
           <code className="block bg-background p-2 rounded">
             cd ~/work2/strudel-vst-bridge && cargo run
           </code>
-          <p>Then use in strudel:</p>
+          <p>Then create instances in this panel and use in code:</p>
           <code className="block bg-background p-2 rounded">
-            note("c3 e3 g3").vst("Odin2:lead")
+            note("c3 e3 g3").vst("bass")
           </code>
         </div>
       )}
@@ -179,13 +214,7 @@ export function VstTab() {
   );
 }
 
-function pluginLoadId(plugin) {
-  // The bridge already includes the format suffix in the name (e.g. "Odin2 (VST3)", "Odin2 (AU)")
-  return plugin.name;
-}
-
-function PluginRow({ plugin, onCopy, onGui, instances }) {
-  const id = pluginLoadId(plugin);
+function PluginRow({ plugin, instances, labelInput, onLabelChange, onCreate, onDelete, onGui, onCopy }) {
   return (
     <div>
       <div className="flex items-center justify-between py-1 px-2 rounded bg-background/50 hover:bg-background">
@@ -193,32 +222,54 @@ function PluginRow({ plugin, onCopy, onGui, instances }) {
           <span className="text-xs font-medium truncate block">{plugin.name}</span>
           <span className="text-xs opacity-50">{plugin.manufacturer}</span>
         </div>
-        <div className="flex gap-1 ml-2">
-          <button
-            className="text-xs px-2 py-0.5 rounded bg-foreground/10 hover:bg-foreground/20 cursor-pointer"
-            onClick={() => onCopy(id)}
-            title='Copy vst() snippet to clipboard'
-          >
-            copy
-          </button>
-        </div>
       </div>
+      {/* Create instance input */}
+      <div className="ml-4 mt-0.5 flex gap-1">
+        <input
+          type="text"
+          placeholder="label..."
+          value={labelInput}
+          onChange={(e) => onLabelChange(e.target.value)}
+          onKeyDown={(e) => e.key === 'Enter' && onCreate()}
+          className="flex-1 px-2 py-0.5 text-xs bg-background rounded border border-foreground/20 text-foreground"
+        />
+        <button
+          className="text-xs px-2 py-0.5 rounded bg-foreground/10 hover:bg-foreground/20 cursor-pointer"
+          onClick={onCreate}
+        >
+          +
+        </button>
+      </div>
+      {/* Instances */}
       {instances.length > 0 && (
         <div className="ml-4 mt-0.5 space-y-0.5">
-          {instances.map((instanceId) => {
-            const tag = instanceId.slice(id.length + 2); // skip "__" separator
-            return (
-              <div key={instanceId} className="flex items-center justify-between py-0.5 px-2 rounded bg-background/30">
-                <span className="text-xs opacity-70">{tag}</span>
+          {instances.map((label) => (
+            <div key={label} className="flex items-center justify-between py-0.5 px-2 rounded bg-background/30">
+              <span className="text-xs font-medium">{label}</span>
+              <div className="flex gap-1">
+                <button
+                  className="text-xs px-2 py-0.5 rounded bg-foreground/10 hover:bg-foreground/20 cursor-pointer"
+                  onClick={() => onCopy(label)}
+                  title="Copy vst() snippet"
+                >
+                  copy
+                </button>
                 <button
                   className="text-xs px-2 py-0.5 rounded bg-green-900/50 hover:bg-green-800/50 cursor-pointer"
-                  onClick={() => onGui(instanceId)}
+                  onClick={() => onGui(label)}
                 >
                   GUI
                 </button>
+                <button
+                  className="text-xs px-2 py-0.5 rounded bg-red-900/50 hover:bg-red-800/50 cursor-pointer"
+                  onClick={() => onDelete(label)}
+                  title="Delete instance"
+                >
+                  x
+                </button>
               </div>
-            );
-          })}
+            </div>
+          ))}
         </div>
       )}
     </div>
