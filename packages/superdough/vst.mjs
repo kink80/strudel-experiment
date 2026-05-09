@@ -14,25 +14,6 @@ import { getAudioContext } from './audioContext.mjs';
 import { gainNode } from './helpers.mjs';
 import { logger } from './logger.mjs';
 
-/**
- * Parse a VST instance ID in the format "pluginName:tag".
- * Returns { pluginName, instanceId } or throws if no tag is present.
- * The instanceId uses "__" internally (not ":") because strudel's `s` control
- * interprets ":" as a separator for the `n` field.
- */
-export function parseVstId(raw) {
-  const idx = raw.indexOf(':');
-  if (idx === -1 || idx === 0 || idx === raw.length - 1) {
-    throw new Error(`vst() requires an instance tag, e.g. vst("${raw}:lead"). Got: "${raw}"`);
-  }
-  const pluginName = raw.slice(0, idx);
-  const tag = raw.slice(idx + 1);
-  return {
-    pluginName,
-    instanceId: `${pluginName}__${tag}`,
-  };
-}
-
 const DEFAULT_BRIDGE_URL = 'ws://localhost:8765';
 
 let ws = null;
@@ -43,6 +24,11 @@ let reconnectTimer = null;
 const pendingRequests = new Map();
 const loadedPlugins = new Map();
 const registeredSounds = new Set();
+
+// Instance registry: label -> { pluginName, pluginId (bridge-side) }
+// Mirrored from the bridge via list_instances
+const instanceRegistry = new Map();
+let instanceListeners = [];
 
 let nextRequestId = 1;
 
@@ -74,10 +60,8 @@ export function connectVstBridge(url) {
       clearTimeout(reconnectTimer);
       reconnectTimer = null;
     }
-    // Re-register any previously loaded plugins
-    for (const id of registeredSounds) {
-      loadVstPlugin(id).catch(() => {});
-    }
+    // Fetch instance registry from bridge
+    refreshInstances();
   };
 
   ws.onclose = () => {
@@ -106,13 +90,29 @@ let lastPluginList = [];
 function handleJsonResponse(msg) {
   if (msg.type === 'plugin_loaded') {
     loadedPlugins.set(msg.pluginId, { name: msg.name, params: msg.params });
-    logger(`[vst] plugin loaded: ${msg.name}`);
+    logger(`[vst] plugin loaded: ${msg.name} as "${msg.pluginId}"`);
   } else if (msg.type === 'plugin_list') {
     lastPluginList = msg.plugins || [];
-    for (const p of lastPluginList) {
-      logger(`[vst] ${p.pluginType}: ${p.name} (${p.manufacturer})`);
-    }
     logger(`[vst] ${lastPluginList.length} plugins available`);
+  } else if (msg.type === 'instance_list') {
+    instanceRegistry.clear();
+    for (const inst of (msg.instances || [])) {
+      instanceRegistry.set(inst.label, { pluginName: inst.pluginName });
+      // Auto-register sound for each known instance
+      ensureVstSoundRegistered(inst.label);
+    }
+    notifyInstanceListeners();
+  } else if (msg.type === 'instance_created') {
+    instanceRegistry.set(msg.label, { pluginName: msg.pluginName });
+    loadedPlugins.set(msg.label, { name: msg.pluginName, params: msg.params || [] });
+    ensureVstSoundRegistered(msg.label);
+    notifyInstanceListeners();
+    logger(`[vst] instance created: "${msg.label}" (${msg.pluginName})`);
+  } else if (msg.type === 'instance_deleted') {
+    instanceRegistry.delete(msg.label);
+    loadedPlugins.delete(msg.label);
+    notifyInstanceListeners();
+    logger(`[vst] instance deleted: "${msg.label}"`);
   } else if (msg.type === 'error') {
     logger(`[vst] error: ${msg.message}`);
     const pending = pendingRequests.get(msg.requestId);
@@ -138,11 +138,51 @@ function handleAudioResponse(buffer) {
   }
 }
 
+// ─── Instance registry ─────────────────────────────────────────────────────
+
+export function createVstInstance(label, pluginName) {
+  if (!wsReady) {
+    logger('[vst] bridge not connected');
+    return;
+  }
+  ws.send(JSON.stringify({ type: 'create_instance', label, pluginName }));
+}
+
+export function deleteVstInstance(label) {
+  if (!wsReady) {
+    logger('[vst] bridge not connected');
+    return;
+  }
+  ws.send(JSON.stringify({ type: 'delete_instance', label }));
+}
+
+export function refreshInstances() {
+  if (!wsReady) return;
+  ws.send(JSON.stringify({ type: 'list_instances' }));
+}
+
+export function getVstInstances() {
+  return new Map(instanceRegistry);
+}
+
+export function onInstancesChanged(callback) {
+  instanceListeners.push(callback);
+  return () => {
+    instanceListeners = instanceListeners.filter((cb) => cb !== callback);
+  };
+}
+
+function notifyInstanceListeners() {
+  for (const cb of instanceListeners) {
+    try { cb(); } catch (e) { /* ignore */ }
+  }
+}
+
 // ─── Bridge requests ────────────────────────────────────────────────────────
 
-function requestRender(pluginId, note, velocity, duration, params) {
+function requestRender(label, note, velocity, duration, params) {
   if (!wsReady) {
-    return Promise.reject(new Error('[vst] bridge not connected. Start with: npx strudel-vst-bridge'));
+    return Promise.reject(new Error('[vst] bridge not connected. Start with: cd ~/work2/strudel-vst-bridge && cargo run'));
   }
 
   const requestId = nextRequestId++;
@@ -150,7 +190,7 @@ function requestRender(pluginId, note, velocity, duration, params) {
     JSON.stringify({
       type: 'render',
       requestId,
-      pluginId,
+      pluginId: label,
       note,
       velocity,
       duration,
@@ -169,45 +209,6 @@ function requestRender(pluginId, note, velocity, duration, params) {
   });
 }
 
-export function loadVstPlugin(instanceId) {
-  if (!wsReady) {
-    return Promise.reject(new Error('[vst] bridge not connected'));
-  }
-  if (loadedPlugins.has(instanceId)) {
-    return Promise.resolve(instanceId);
-  }
-
-  // instanceId uses "__" separator (e.g. "Odin2__pad"), extract plugin name
-  const sepIdx = instanceId.indexOf('__');
-  const pluginName = sepIdx !== -1 ? instanceId.slice(0, sepIdx) : instanceId;
-
-  return new Promise((resolve, reject) => {
-    const handler = (event) => {
-      if (typeof event.data !== 'string') return;
-      const msg = JSON.parse(event.data);
-      if (msg.type === 'plugin_loaded' && msg.pluginId === instanceId) {
-        ws.removeEventListener('message', handler);
-        resolve(instanceId);
-      } else if (msg.type === 'error' && msg.pluginId === instanceId) {
-        ws.removeEventListener('message', handler);
-        reject(new Error(msg.message));
-      }
-    };
-    ws.addEventListener('message', handler);
-    ws.send(JSON.stringify({
-      type: 'load_plugin',
-      pluginId: instanceId,
-      pluginName,
-      path: pluginName,
-    }));
-
-    setTimeout(() => {
-      ws.removeEventListener('message', handler);
-      reject(new Error(`[vst] timeout loading: ${instanceId}`));
-    }, 10000);
-  });
-}
-
 // ─── Sound registration ─────────────────────────────────────────────────────
 
 function simpleNoteToMidi(note) {
@@ -222,20 +223,18 @@ function simpleNoteToMidi(note) {
 }
 
 /**
- * Ensures a VST plugin is registered as a strudel sound source.
- * Called lazily when vst("instanceId") is first evaluated.
+ * Ensures a VST instance label is registered as a strudel sound source.
  */
-export function ensureVstSoundRegistered(instanceId) {
-  if (registeredSounds.has(instanceId)) return;
-  registeredSounds.add(instanceId);
+export function ensureVstSoundRegistered(label) {
+  if (registeredSounds.has(label)) return;
+  registeredSounds.add(label);
 
   registerSound(
-    instanceId,
+    label,
     async (t, value, onended) => {
       const ac = getAudioContext();
       const { note, freq, velocity = 0.8, duration = 1, vstparams = {} } = value;
 
-      // Convert to MIDI note number
       let midiNote = 60;
       if (note !== undefined) {
         midiNote = typeof note === 'number' ? note : simpleNoteToMidi(note);
@@ -243,11 +242,9 @@ export function ensureVstSoundRegistered(instanceId) {
         midiNote = Math.round(12 * Math.log2(freq / 440) + 69);
       }
 
-      // logger(`[vst] render: note=${note}, freq=${freq}, midiNote=${midiNote}, vel=${velocity}, dur=${duration}`);
-
       let audioData;
       try {
-        audioData = await requestRender(instanceId, midiNote, velocity, duration, vstparams);
+        audioData = await requestRender(label, midiNote, velocity, duration, vstparams);
       } catch (err) {
         logger(err.message);
         onended();
@@ -257,7 +254,6 @@ export function ensureVstSoundRegistered(instanceId) {
       const { left, right, numSamples } = audioData;
       const sampleRate = ac.sampleRate;
 
-      // Create AudioBuffer from received PCM
       const audioBuffer = ac.createBuffer(2, numSamples, sampleRate);
       audioBuffer.getChannelData(0).set(left);
       audioBuffer.getChannelData(1).set(right);
@@ -301,7 +297,6 @@ export function isVstBridgeInitialized() {
 
 /**
  * List all available AudioUnit plugins on the system.
- * Results are logged to the console.
  * @param {string} [filter] - Optional filter by name substring
  */
 export function vstList(filter) {
@@ -321,7 +316,6 @@ export function vstList(filter) {
   }
   ws.send(JSON.stringify({ type: 'list_plugins' }));
 
-  // If filter provided, log filtered results after a short delay
   if (filter) {
     setTimeout(() => {
       const f = filter.toLowerCase();
@@ -336,17 +330,16 @@ export function vstList(filter) {
 }
 
 /**
- * Open the native GUI window for a loaded plugin.
- * Call from the browser console or strudel REPL: vstGui("Odin2")
+ * Open the native GUI window for a loaded plugin instance.
+ * @param {string} label - The instance label
  */
-export function vstGui(pluginId) {
-  // Auto-connect if needed
+export function vstGui(label) {
   if (!ws) {
     connectVstBridge();
   }
 
-  // Extract plugin ID — the REPL wraps strings as Pattern objects via reify()
-  let id = pluginId;
+  // Extract string from Pattern objects
+  let id = label;
   if (typeof id === 'object' && id !== null && typeof id.query === 'function') {
     const haps = id.queryArc(0, 1);
     if (haps.length > 0) {
@@ -357,49 +350,36 @@ export function vstGui(pluginId) {
     id = id.s || id.vstplugin || id.value;
   }
   if (typeof id !== 'string') {
-    logger(`[vst] vstGui expects a plugin name string`);
+    logger(`[vst] vstGui expects a label string`);
     return;
   }
 
-  // Auto-load the plugin if not loaded, then show GUI
   const sendShowGui = () => {
     ws.send(JSON.stringify({ type: 'show_gui', pluginId: id }));
     logger(`[vst] requested GUI for: ${id}`);
   };
 
   if (!wsReady) {
-    // Wait for connection then send
     const waitForReady = () => {
-      if (wsReady) {
-        // Ensure plugin is loaded first
-        ensureVstSoundRegistered(id);
-        loadVstPlugin(id).then(() => sendShowGui()).catch(() => sendShowGui());
-      } else {
-        setTimeout(waitForReady, 200);
-      }
+      if (wsReady) sendShowGui();
+      else setTimeout(waitForReady, 200);
     };
     waitForReady();
     return;
   }
 
-  // If plugin not yet loaded, load it first
-  if (!loadedPlugins.has(id)) {
-    ensureVstSoundRegistered(id);
-    loadVstPlugin(id).then(() => sendShowGui()).catch(() => sendShowGui());
-  } else {
-    sendShowGui();
-  }
+  sendShowGui();
 }
 
 /**
- * List available parameters for a loaded VST plugin.
- * Call from the browser console: vstListParams("Odin2")
- * Optionally filter by name substring: vstListParams("Odin2", "filter")
+ * List available parameters for a loaded VST plugin instance.
+ * @param {string} label - The instance label
+ * @param {string} [filter] - Optional filter by name substring
  */
-export function vstListParams(pluginId, filter) {
-  const plugin = loadedPlugins.get(pluginId);
+export function vstListParams(label, filter) {
+  const plugin = loadedPlugins.get(label);
   if (!plugin) {
-    logger(`[vst] plugin "${pluginId}" not loaded. Loaded: ${[...loadedPlugins.keys()].join(', ')}`);
+    logger(`[vst] instance "${label}" not loaded. Loaded: ${[...loadedPlugins.keys()].join(', ')}`);
     return [];
   }
   let params = plugin.params || [];

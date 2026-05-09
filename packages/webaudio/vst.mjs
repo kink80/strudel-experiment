@@ -7,82 +7,46 @@ of the License, or (at your option) any later version.
 */
 
 import { Pattern, pure, isPattern } from '@strudel/core';
-import { connectVstBridge, ensureVstSoundRegistered, loadVstPlugin, isVstBridgeInitialized, parseVstId } from 'superdough';
+import { connectVstBridge, ensureVstSoundRegistered, isVstBridgeInitialized } from 'superdough';
 
-// Use pure() instead of reify() to avoid mini-notation parsing
-// (`:` in "Odin2:pad" would be interpreted as the slice operator)
+// Use pure() instead of reify() so labels aren't parsed as mini-notation
 function vstReify(thing) {
   return isPattern(thing) ? thing : pure(thing);
 }
 
-function initBridgeAndRegister(instanceId) {
+function initBridgeAndRegister(label) {
   if (!isVstBridgeInitialized()) {
     connectVstBridge();
   }
-  if (typeof instanceId === 'string') {
-    ensureVstSoundRegistered(instanceId);
-    loadVstPlugin(instanceId).catch(() => {});
+  if (typeof label === 'string') {
+    ensureVstSoundRegistered(label);
   }
 }
 
 /**
- * Select a VST3/CLAP plugin as a sound source via the strudel-vst-bridge.
- * Requires running the bridge server: `cd ~/work2/strudel-vst-bridge && cargo run`
- *
- * Each instance tag creates an independent plugin instance with its own parameters.
+ * Use a named VST plugin instance as a sound source.
+ * Instances are created in the VST panel — each has a label you reference here.
  *
  * @name vst
- * @param {string | Pattern} pluginId Plugin name with instance tag (format: "name:tag")
+ * @param {string | Pattern} label Instance label (created in VST panel)
  * @example
- * note("[c3 e3 g3 c4]*2").vst("Odin2:pad")
+ * note("[c3 e3 g3 c4]*2").vst("pad")
  * @example
- * note("a2 e3").vst("Surge XT:bass")
+ * note("a2 e3").vst("bass")
  */
-export function vst(pluginId) {
-  const pat = vstReify(pluginId).withValue((id) => {
-    const { instanceId } = parseVstId(id);
-    initBridgeAndRegister(instanceId);
-    return { s: instanceId, vstplugin: instanceId };
+export function vst(label) {
+  const pat = vstReify(label).withValue((id) => {
+    initBridgeAndRegister(id);
+    return { s: id, vstplugin: id };
   });
   return pat;
 }
 
-/**
- * Select a VST3 plugin explicitly via the strudel-vst-bridge.
- *
- * @name vst3
- * @param {string | Pattern} pluginId Plugin name with instance tag (format: "name:tag")
- * @example
- * note("[c3 e3 g3 c4]*2").vst3("Odin2:pad")
- */
-export function vst3(pluginId) {
-  const pat = vstReify(pluginId).withValue((id) => {
-    const { pluginName } = parseVstId(id);
-    const tag = id.slice(pluginName.length + 1);
-    const vst3InstanceId = `${pluginName} (VST3)__${tag}`;
-    initBridgeAndRegister(vst3InstanceId);
-    return { s: vst3InstanceId, vstplugin: vst3InstanceId };
-  });
-  return pat;
-}
-
-// Available as Pattern methods: note("c3 e3").vst("Diva:pad"), note("c3 e3").vst3("Diva:pad")
-Pattern.prototype.vst = function (pluginId) {
-  const vstPat = vstReify(pluginId).withValue((id) => {
-    const { instanceId } = parseVstId(id);
-    initBridgeAndRegister(instanceId);
-    return { s: instanceId, vstplugin: instanceId };
-  });
-  return this.set(vstPat);
-};
-
-Pattern.prototype.vst3 = function (pluginId) {
-  const vstPat = vstReify(pluginId).withValue((id) => {
-    const { pluginName } = parseVstId(id);
-    const tag = id.slice(pluginName.length + 1);
-    const vst3InstanceId = `${pluginName} (VST3)__${tag}`;
-    initBridgeAndRegister(vst3InstanceId);
-    return { s: vst3InstanceId, vstplugin: vst3InstanceId };
+// Available as Pattern method: note("c3 e3").vst("pad")
+Pattern.prototype.vst = function (label) {
+  const vstPat = vstReify(label).withValue((id) => {
+    initBridgeAndRegister(id);
+    return { s: id, vstplugin: id };
   });
   return this.set(vstPat);
 };
