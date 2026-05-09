@@ -89,9 +89,9 @@ export function VstTab() {
   const instruments = filteredPlugins.filter((p) => p.pluginType === 'Instrument');
   const effects = filteredPlugins.filter((p) => p.pluginType !== 'Instrument');
 
-  // Group loaded instances by plugin name
+  // Group loaded instances by plugin name (internal IDs use "__" separator)
   const instancesFor = (plugin) => {
-    const prefix = pluginLoadId(plugin) + ':';
+    const prefix = pluginLoadId(plugin) + '__';
     return loadedPlugins.filter((id) => id.startsWith(prefix));
   };
 
@@ -206,7 +206,7 @@ function PluginRow({ plugin, onCopy, onGui, instances }) {
       {instances.length > 0 && (
         <div className="ml-4 mt-0.5 space-y-0.5">
           {instances.map((instanceId) => {
-            const tag = instanceId.slice(id.length + 1);
+            const tag = instanceId.slice(id.length + 2); // skip "__" separator
             return (
               <div key={instanceId} className="flex items-center justify-between py-0.5 px-2 rounded bg-background/30">
                 <span className="text-xs opacity-70">{tag}</span>

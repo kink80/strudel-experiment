@@ -17,15 +17,19 @@ import { logger } from './logger.mjs';
 /**
  * Parse a VST instance ID in the format "pluginName:tag".
  * Returns { pluginName, instanceId } or throws if no tag is present.
+ * The instanceId uses "__" internally (not ":") because strudel's `s` control
+ * interprets ":" as a separator for the `n` field.
  */
 export function parseVstId(raw) {
   const idx = raw.indexOf(':');
   if (idx === -1 || idx === 0 || idx === raw.length - 1) {
     throw new Error(`vst() requires an instance tag, e.g. vst("${raw}:lead"). Got: "${raw}"`);
   }
+  const pluginName = raw.slice(0, idx);
+  const tag = raw.slice(idx + 1);
   return {
-    pluginName: raw.slice(0, idx),
-    instanceId: raw,
+    pluginName,
+    instanceId: `${pluginName}__${tag}`,
   };
 }
 
@@ -173,7 +177,9 @@ export function loadVstPlugin(instanceId) {
     return Promise.resolve(instanceId);
   }
 
-  const { pluginName } = parseVstId(instanceId);
+  // instanceId uses "__" separator (e.g. "Odin2__pad"), extract plugin name
+  const sepIdx = instanceId.indexOf('__');
+  const pluginName = sepIdx !== -1 ? instanceId.slice(0, sepIdx) : instanceId;
 
   return new Promise((resolve, reject) => {
     const handler = (event) => {
@@ -352,14 +358,6 @@ export function vstGui(pluginId) {
   }
   if (typeof id !== 'string') {
     logger(`[vst] vstGui expects a plugin name string`);
-    return;
-  }
-
-  // Validate instance tag
-  try {
-    parseVstId(id);
-  } catch (e) {
-    logger(e.message);
     return;
   }
 

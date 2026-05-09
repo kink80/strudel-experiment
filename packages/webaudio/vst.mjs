@@ -15,14 +15,13 @@ function vstReify(thing) {
   return isPattern(thing) ? thing : pure(thing);
 }
 
-function initBridgeAndRegister(id) {
+function initBridgeAndRegister(instanceId) {
   if (!isVstBridgeInitialized()) {
     connectVstBridge();
   }
-  if (typeof id === 'string') {
-    parseVstId(id); // throws if no tag
-    ensureVstSoundRegistered(id);
-    loadVstPlugin(id).catch(() => {});
+  if (typeof instanceId === 'string') {
+    ensureVstSoundRegistered(instanceId);
+    loadVstPlugin(instanceId).catch(() => {});
   }
 }
 
@@ -41,8 +40,9 @@ function initBridgeAndRegister(id) {
  */
 export function vst(pluginId) {
   const pat = vstReify(pluginId).withValue((id) => {
-    initBridgeAndRegister(id);
-    return { s: id, vstplugin: id };
+    const { instanceId } = parseVstId(id);
+    initBridgeAndRegister(instanceId);
+    return { s: instanceId, vstplugin: instanceId };
   });
   return pat;
 }
@@ -58,18 +58,20 @@ export function vst(pluginId) {
 export function vst3(pluginId) {
   const pat = vstReify(pluginId).withValue((id) => {
     const { pluginName } = parseVstId(id);
-    const vst3InstanceId = `${pluginName} (VST3):${id.slice(pluginName.length + 1)}`;
+    const tag = id.slice(pluginName.length + 1);
+    const vst3InstanceId = `${pluginName} (VST3)__${tag}`;
     initBridgeAndRegister(vst3InstanceId);
     return { s: vst3InstanceId, vstplugin: vst3InstanceId };
   });
   return pat;
 }
 
-// Available as Pattern methods: note("c3 e3").vst("Diva"), note("c3 e3").vst3("Diva")
+// Available as Pattern methods: note("c3 e3").vst("Diva:pad"), note("c3 e3").vst3("Diva:pad")
 Pattern.prototype.vst = function (pluginId) {
   const vstPat = vstReify(pluginId).withValue((id) => {
-    initBridgeAndRegister(id);
-    return { s: id, vstplugin: id };
+    const { instanceId } = parseVstId(id);
+    initBridgeAndRegister(instanceId);
+    return { s: instanceId, vstplugin: instanceId };
   });
   return this.set(vstPat);
 };
@@ -77,7 +79,8 @@ Pattern.prototype.vst = function (pluginId) {
 Pattern.prototype.vst3 = function (pluginId) {
   const vstPat = vstReify(pluginId).withValue((id) => {
     const { pluginName } = parseVstId(id);
-    const vst3InstanceId = `${pluginName} (VST3):${id.slice(pluginName.length + 1)}`;
+    const tag = id.slice(pluginName.length + 1);
+    const vst3InstanceId = `${pluginName} (VST3)__${tag}`;
     initBridgeAndRegister(vst3InstanceId);
     return { s: vst3InstanceId, vstplugin: vst3InstanceId };
   });
