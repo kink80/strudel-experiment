@@ -67,6 +67,11 @@ export function connectVstBridge(url) {
   ws.onclose = () => {
     wsReady = false;
     ws = null;
+    // Immediately reject all pending render requests instead of waiting for 5s timeout
+    for (const [id, pending] of pendingRequests) {
+      pending.reject(new Error('[vst] bridge disconnected'));
+    }
+    pendingRequests.clear();
     logger('[vst] disconnected, reconnecting in 2s...');
     if (reconnectTimer) clearTimeout(reconnectTimer);
     reconnectTimer = setTimeout(() => connectVstBridge(), 2000);
@@ -128,8 +133,10 @@ function handleAudioResponse(buffer) {
   const view = new DataView(buffer);
   const requestId = view.getUint32(0, true);
   const numSamples = view.getUint32(4, true);
-  const left = new Float32Array(buffer, 8, numSamples);
-  const right = new Float32Array(buffer, 8 + numSamples * 4, numSamples);
+  // Copy data — Float32Array views into the WebSocket buffer can be invalidated
+  // after the onmessage handler returns.
+  const left = new Float32Array(buffer.slice(8, 8 + numSamples * 4));
+  const right = new Float32Array(buffer.slice(8 + numSamples * 4, 8 + numSamples * 8));
 
   const pending = pendingRequests.get(requestId);
   if (pending) {
