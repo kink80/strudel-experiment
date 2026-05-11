@@ -133,10 +133,11 @@ function handleAudioResponse(buffer) {
   const view = new DataView(buffer);
   const requestId = view.getUint32(0, true);
   const numSamples = view.getUint32(4, true);
-  // Copy data — Float32Array views into the WebSocket buffer can be invalidated
-  // after the onmessage handler returns.
-  const left = new Float32Array(buffer.slice(8, 8 + numSamples * 4));
-  const right = new Float32Array(buffer.slice(8 + numSamples * 4, 8 + numSamples * 8));
+  // Copy data out of WebSocket buffer (can be invalidated after onmessage returns).
+  // Single ArrayBuffer copy, then create two views into our owned copy.
+  const audioCopy = buffer.slice(8);
+  const left = new Float32Array(audioCopy, 0, numSamples);
+  const right = new Float32Array(audioCopy, numSamples * 4, numSamples);
 
   const pending = pendingRequests.get(requestId);
   if (pending) {
