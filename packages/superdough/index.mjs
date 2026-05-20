@@ -14,3 +14,4 @@ export * from './dspworklet.mjs';
 export * from './audioContext.mjs';
 export * from './wavetable.mjs';
 export * from './vst.mjs';
+export * from './mic.mjs';

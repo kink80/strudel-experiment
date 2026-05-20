@@ -16,6 +16,7 @@ import {
   webAudioTimeout,
 } from './helpers.mjs';
 import { getNoiseMix, getNoiseOscillator } from './noise.mjs';
+import { registerMicSound } from './mic.mjs';
 
 const waveforms = ['triangle', 'square', 'sawtooth', 'sine'];
 const waveformAliases = [
@@ -37,6 +38,7 @@ function makeSaturationCurve(amount, n_samples) {
 }
 
 export function registerSynthSounds() {
+  registerMicSound();
   [...waveforms].forEach((s) => {
     registerSound(
       s,
