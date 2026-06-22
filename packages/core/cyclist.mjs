@@ -62,7 +62,7 @@ export class Cyclist {
           haps.forEach((hap) => {
             if (hap.hasOnset()) {
               const targetTime =
-                (hap.whole.begin - this.num_cycles_at_cps_change) / this.cps + this.seconds_at_cps_change + latency;
+                (hap.whole.begin - this.num_cycles_at_cps_change) / this.cps + this.seconds_at_cps_change + this.latency;
               const duration = hap.duration / this.cps;
               // the following line is dumb and only here for backwards compatibility
               // see https://codeberg.org/uzu/strudel/pulls/1004
@@ -132,6 +132,9 @@ export class Cyclist {
     }
     this.cps = cps;
     this.num_ticks_since_cps_change = 0;
+  }
+  setLatency(latency) {
+    this.latency = latency;
   }
   log(begin, end, haps) {
     const onsets = haps.filter((h) => h.hasOnset());

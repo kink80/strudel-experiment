@@ -22,6 +22,7 @@ export function repl({
   clearInterval,
   id,
   mondo = false,
+  latency,
 }) {
   const state = {
     schedulerError: undefined,
@@ -56,6 +57,7 @@ export function repl({
     setInterval,
     clearInterval,
     beforeStart,
+    ...(latency !== undefined ? { latency } : {}),
   };
 
   // NeoCyclist uses a shared worker to communicate between instances, which is not supported on mobile chrome
@@ -110,6 +112,19 @@ export function repl({
    */
   const setCpm = (cpm) => {
     scheduler.setCps(unpure(cpm) / 60);
+    return silence;
+  };
+
+  /**
+   * Sets the scheduler lookahead in seconds — how far ahead each hap is scheduled.
+   * Larger values give sound sources more time to prepare (useful for slow VST patches)
+   * at the cost of added latency. Default is 0.1 (100ms).
+   *
+   * @name setLatency
+   * @param {number} latency lookahead in seconds, e.g. 0.2
+   */
+  const setLatency = (latency) => {
+    scheduler.setLatency?.(unpure(latency));
     return silence;
   };
 
@@ -194,6 +209,8 @@ export function repl({
       setcps: setCps,
       setCpm,
       setcpm: setCpm,
+      setLatency,
+      setlatency: setLatency,
       start,
       stop,
       pause,
@@ -260,7 +277,7 @@ export function repl({
     }
   };
   const setCode = (code) => updateState({ code });
-  return { scheduler, evaluate, start, stop, pause, setCps, setPattern, setCode, toggle, state };
+  return { scheduler, evaluate, start, stop, pause, setCps, setLatency, setPattern, setCode, toggle, state };
 }
 
 export const getTrigger =

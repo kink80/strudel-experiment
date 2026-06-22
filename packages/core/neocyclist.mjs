@@ -8,7 +8,7 @@ import { logger } from './logger.mjs';
 import { ClockCollator, cycleToSeconds } from './util.mjs';
 
 export class NeoCyclist {
-  constructor({ onTrigger, onToggle, getTime }) {
+  constructor({ onTrigger, onToggle, getTime, latency = 0.1 }) {
     this.started = false;
     this.cps = 0.5;
     this.getTime = getTime; // get absolute time
@@ -19,7 +19,7 @@ export class NeoCyclist {
     // in order to schedule events consistently.
     this.collator = new ClockCollator({ getTargetClockTime: getTime });
     this.onToggle = onToggle;
-    this.latency = 0.1; // fixed trigger time offset
+    this.latency = latency; // fixed trigger time offset
     this.cycle = 0;
     this.id = Math.round(Date.now() * Math.random());
     this.worker = new SharedWorker(new URL('./clockworker.js', import.meta.url));
@@ -73,6 +73,9 @@ export class NeoCyclist {
   }
   setCps(cps = 1) {
     this.sendMessage('cpschange', { cps });
+  }
+  setLatency(latency) {
+    this.latency = latency;
   }
   setCycle(cycle) {
     this.sendMessage('setcycle', { cycle });
